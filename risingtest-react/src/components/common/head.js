@@ -1,14 +1,23 @@
 import styled from "styled-components";
 import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Search } from '../../svg/ic-search.svg';
-import { ReactComponent as Nofi } from '../../svg/ic-notification.svg';
+import { useDispatch } from "react-redux";
+import { openMoAction } from "../../store/actions/modal";
 
 const Head = () => {
+    const dispatch = useDispatch();
+
+    const openMoRedux = () => {
+        dispatch(
+            openMoAction()
+        );
+    };
+
     return(
         <Outline>
                 <div className="left">
                     <button className="btn-menu side-margin">
-                        <img className="menu" src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
+                        <img className="menu" alt="" src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
                     </button>
                     <span className="logo">
                     <Logo width={74.38} height={17.33}/>
@@ -28,7 +37,7 @@ const Head = () => {
                             <button className="btn-menu"><Search /></button>
                         </li>
                         <li>
-                            <button className="btn-menu">회원가입/로그인</button>
+                            <button className="btn-menu" onClick={openMoRedux}>회원가입/로그인</button>
                         </li>
                         <li>
                             <Line></Line>
