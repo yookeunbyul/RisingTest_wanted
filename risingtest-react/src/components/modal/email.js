@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { ReactComponent as EmailIcon } from '../../svg/ic-email.svg';
 import { ReactComponent as Kakao } from '../../svg/ic-kakao.svg';
 import { ReactComponent as Facebook } from '../../svg/ic-facebook.svg';
@@ -6,6 +8,16 @@ import { ReactComponent as Google } from '../../svg/ic-google.svg';
 import { ReactComponent as Apple } from '../../svg/ic-apple.svg';
 
 const Email = () => {
+    const { register, handleSubmit, formState: { errors }, } = useForm();
+
+    const [email, setEmail] = useState("");
+
+    const onChange = (e) => {
+        setEmail(e.target.value);
+    }
+    const onSubmit = (data) => {
+        alert(JSON.stringify(data));
+    }
     return(
         <>
             <Outline>
@@ -19,14 +31,29 @@ const Email = () => {
                     <br />
                     지금 원티드에서 시작하세요.
                 </Sub>
-                <Form>
+                <Form onSubmit={handleSubmit(onSubmit)}>
                     <div className="label-wrap">
-                        <label className="style-label" for="email">이메일</label>
+                        <label className="style-label" htmlFor="email">이메일</label>
                     </div>
                     <div className="input-wrap">
-                        <input className="style-input" type="email" id="email" placeholder="이메일을 입력해 주세요."/>
+                        <Input
+                            type="email" 
+                            id="email"
+                            isError={errors.email}
+                            placeholder="이메일을 입력해 주세요."
+                            {...register("email", {
+                                required: "올바른 이메일 형식을 입력해주세요.",
+                                pattern: {
+                                    value: /\S+@\S+\.\S+/,
+                                    message: "올바른 이메일 형식을 입력해주세요.",
+                                },
+                            })} 
+                            value={email}
+                            onChange={onChange}
+                        />
                     </div>
-                    <button className="input-btn">
+                    {errors.email && <Error>{errors.email.message}</Error>}
+                    <button className="input-btn" type="submit">
                         <EmailIcon />
                         이메일로 계속하기
                     </button>
@@ -159,7 +186,7 @@ const Sub = styled.div`
     text-align: center;
 `;
 
-const Form = styled.div`
+const Form = styled.form`
     margin-top: 40px;
 
     .label-wrap{
@@ -170,21 +197,6 @@ const Form = styled.div`
         font-size: 14px;
         font-weight: 400;
         color: #767676;
-    }
-
-    .style-input{
-        width: 318px;
-        height: 50px;
-        padding-right: 15px;
-        padding-left: 15px;
-        border-radius: 5px;
-        border: 1px solid #e1e2e3;
-        background-color: #fff;
-        font-size: 15px;
-
-        &:focus{
-            outline: 1px solid #36f;
-        }
     }
 
     .input-btn{
@@ -198,12 +210,34 @@ const Form = styled.div`
         font-weight: 600;
         color: #fff;
         cursor: pointer;
-        margin: 20px 0px;
+        margin: 10px 0px;
 
         display: flex;
         justify-content: center;
         align-items: center;
     }
+`;
+
+const Error = styled.div`
+    color: #fe415c;
+    font-size: 12px;
+    padding: 10px 0px;
+`;
+
+const Input = styled.input`
+    width: 318px;
+    height: 50px;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 5px;
+    border: ${props=>props.isError ? "1px solid #fe415c" : "1px solid #e1e2e3"};
+    background-color: #fff;
+    font-size: 15px;
+
+    &:focus{
+        border: 1px solid #36f;
+        outline: none;
+    }   
 `;
 
 export default Email;
