@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { closeMoAction } from "../../store/actions/modal";
+import { openSignMoAction } from "../../store/actions/signModal";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ReactComponent as EmailIcon } from '../../svg/ic-email.svg';
@@ -9,29 +12,48 @@ import { ReactComponent as Apple } from '../../svg/ic-apple.svg';
 
 const Email = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
+    const [valid, setValid] = useState(false);
 
     const onChange = (e) => {
         setEmail(e.target.value);
-    }
+        setValid(false);
+    };
+
     const onSubmit = (data) => {
-        alert(JSON.stringify(data));
-    }
+        // alert(JSON.stringify(data));
+        closeMoRedux();
+        openSignMoRedux();
+    };
+
+    const closeMoRedux = () => {
+        dispatch(closeMoAction());
+    };
+
+    const openSignMoRedux = () => {
+        dispatch(openSignMoAction());
+    };
+    
+    const onError = (error) => {
+        console.log(error);
+        setValid(true);
+    };
     return(
         <>
             <Outline>
                 <Head>
                     직장인을 위한
                     <br />
-                    커리어 플랫폼, 원티드
+                    커리어 플랫폼, 원티드!
                 </Head>
                 <Sub>
                     커리어 성장과 행복을 위한 여정
                     <br />
                     지금 원티드에서 시작하세요.
                 </Sub>
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form onSubmit={handleSubmit(onSubmit, onError)}>
                     <div className="label-wrap">
                         <label className="style-label" htmlFor="email">이메일</label>
                     </div>
@@ -52,7 +74,7 @@ const Email = () => {
                             onChange={onChange}
                         />
                     </div>
-                    {errors.email && <Error>{errors.email.message}</Error>}
+                    {errors.email && valid ? <Error>{errors.email.message}</Error> : null}
                     <button className="input-btn" type="submit">
                         <EmailIcon />
                         이메일로 계속하기
@@ -210,7 +232,7 @@ const Form = styled.form`
         font-weight: 600;
         color: #fff;
         cursor: pointer;
-        margin: 10px 0px;
+        margin: 20px 0px;
 
         display: flex;
         justify-content: center;
