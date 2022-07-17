@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import {closeMoAction} from "../../store/actions/modal";
+import { ReactComponent as Close } from '../../svg/ic-close.svg';
 import styled from 'styled-components';
 
 const Modal = ({header, children}) => {
@@ -44,7 +45,7 @@ const Modal = ({header, children}) => {
                             <header>
                                 {header}
                                 <button className="close" onClick={closeMoRedux}>
-                                    &times;
+                                    <Close />
                                 </button>
                             </header>
                             <main>{children}</main>
@@ -75,7 +76,7 @@ const Wrap = styled.div`
         }
     .modal > section {
         width: 90%;
-        max-width: 450px;
+        max-width: 400px;
         margin: 0 auto;
         border-radius: 0.3rem;
         background-color: #fff;
@@ -83,8 +84,7 @@ const Wrap = styled.div`
         }
     .modal > section > header {
         position: relative;
-        padding: 16px 64px 16px 16px;
-        background-color: #f1f1f1;
+        padding: 20px 163px;
         font-weight: 700;
         }
     .modal > section > header button {
@@ -101,7 +101,6 @@ const Wrap = styled.div`
     .modal > section > main {
         padding: 16px;
         border-bottom: 1px solid #dee2e6;
-        border-top: 1px solid #dee2e6;
         }
     .modal > section > footer {
         padding: 12px 16px;
@@ -117,16 +116,6 @@ const Wrap = styled.div`
     .modal.openModal {
         display: flex;
         align-items: center;
-        /* 팝업이 열릴때 스르륵 열리는 효과 */
-        animation: modal-bg-show 0.3s;
-        }
-    @keyframes modal-bg-show {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
         }
 `;
 
