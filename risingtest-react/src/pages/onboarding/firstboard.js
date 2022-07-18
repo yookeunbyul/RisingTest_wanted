@@ -4,8 +4,11 @@ import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Arow } from '../../svg/ic-select-arrow.svg';
 import { ReactComponent as Search } from '../../svg/ic-search.svg';
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const FirstBoard = () => {
+    const navigate = useNavigate();
+
     const [index,setIndex] = useState("");
     const [job, setJob] = useState(false);
     const [cateSelect, setCateSelect] = useState(false);
@@ -18,6 +21,10 @@ const FirstBoard = () => {
             setAllselect(true);
         }
     }, [cateSelect, jobSelect, annuSelect])
+
+    const onClick = () => {
+        navigate(`/second`);
+    }
 
     const onCateChange = (e) => {
         setCateSelect(true);
@@ -161,7 +168,7 @@ const FirstBoard = () => {
                             </div>
                         }
                         <div className="footer">
-                            <Next type="button" valid={allSelect}>다음</Next>
+                            <Next type="button" valid={allSelect} onClick={onClick}>다음</Next>
                             <div className="or-style">or</div>
                             <button type="button" className="upload-btn">내 이력서 업로드하기</button>
                         </div>
@@ -422,10 +429,10 @@ const Box = styled.div`
 `;
 
 const Next = styled.button`
-    background-color: #f2f4f7;
+    background-color: ${props=>props.valid ? "#36f" : "#f2f4f7"};
     border-color: transparent;
-    color: #cacaca;
-    pointer-events: none;
+    color: ${props=>props.valid? "#fff" : "#cacaca"};
+    pointer-events : ${props=>props.valid ? "auto" : "none"};
 
     display: flex;
     justify-content: center;

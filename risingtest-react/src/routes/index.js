@@ -2,6 +2,8 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { ReactComponent as Logo } from '../svg/ic-wanted-logo.svg';
 import LandingPage from "../pages/landing";
 import FirstBoard from "../pages/onboarding/firstboard";
+import SecondBoard from "../pages/onboarding/secondboard";
+import ThridBoard from "../pages/onboarding/thirdboard";
 import Modal from "../components/common/modal";
 import SignModal from "../components/common/signModal";
 import Email from "../components/modal/email";
@@ -14,6 +16,8 @@ const RootRoute = () => {
                 <Routes>
                     <Route path="/" element={<LandingPage />}></Route>
                     <Route path="/first" element={<FirstBoard />}></Route>
+                    <Route path="/second" element={<SecondBoard />}></Route>
+                    <Route path="/third" element={<ThridBoard />}></Route>
                 </Routes>
 
                 {/* 모달 */}

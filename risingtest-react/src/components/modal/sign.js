@@ -402,7 +402,8 @@ const SignBtn = styled.button`
     border-color: transparent;
     color: ${props=>props.check ? "#fff" : "#cacaca"};
     pointer-events : ${props=>props.check ? "auto" : "none"};
-
+    cursor: ${props=>props.check ? "pointer" : null};
+    
     align-items: center;
     width: 100%;
     height: 54px;
