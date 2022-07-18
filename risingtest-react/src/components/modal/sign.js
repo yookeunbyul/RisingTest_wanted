@@ -17,7 +17,6 @@ const Sign = () => {
     const [check, setCheck] = useState(false);
     const [password, setPassword] = useState("");
     const [repeatPW, setRepeatPW] = useState("");
-    const [valid, setValid] = useState(false);
     const [repeatValid, setRepeatValid] = useState(false);
 
     const closeSignMoRedux = () => {
@@ -32,7 +31,6 @@ const Sign = () => {
 
     const onPasswordChange = (e) => {
         setPassword(e.target.value);
-        setValid(false);
     };
 
     const onRepeatPWChange = (e) => {
@@ -42,7 +40,6 @@ const Sign = () => {
 
     const onError = (error) => {
         console.log(error);
-        setValid(true);
         setRepeatValid(true);
     };
 
@@ -149,7 +146,7 @@ const Sign = () => {
                         name="userPassword"
                         placeholder="비밀번호를 입력해 주세요."
                         id="userPassword"
-                        isError={valid}
+                        isError={errors.password}
                         {...register("password", {
                             required: "영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합하여 8자 이상 입력해 주세요.",
                             minLength: {
@@ -159,7 +156,7 @@ const Sign = () => {
                         value={password}
                         onChange={onPasswordChange}
                     />
-                    <Guidance error={valid}>
+                    <Guidance error={errors.password}>
                         영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합하여 8자 이상 입력해 주세요.
                     </Guidance>
                 </div>
@@ -167,12 +164,12 @@ const Sign = () => {
                     <div className="label-wrap">
                         <label className="style-label" htmlFor="userPasswordRepeat">비밀번호 확인</label>
                     </div>
-                    <Input
+                    <RepeatInput
                         type="password"
                         name="userPasswordRepeat"
                         placeholder="비밀번호를 다시 한번 입력해 주세요."
                         id="userPasswordRepeat"
-                        isError={repeatValid}
+                        isError={errors.repetPassword}
                         {...register("repetPassword", {
                             required: "영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합하여 8자 이상 입력해 주세요.",
                             minLength: {
@@ -398,6 +395,22 @@ const Guide = styled.div`
 `;
 
 const Input = styled.input`
+    width: 318px;
+    height: 50px;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 5px;
+    border: ${props=>props.isError ? "1px solid #fe415c" : "1px solid #e1e2e3"};
+    background-color: #fff;
+    font-size: 15px;
+
+    &:focus{
+        border: 1px solid #36f;
+        outline: none;
+    }   
+`;
+
+const RepeatInput = styled.input`
     width: 318px;
     height: 50px;
     padding-right: 15px;

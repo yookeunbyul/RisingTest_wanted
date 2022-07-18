@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Search } from '../../svg/ic-search.svg';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { openMoAction } from "../../store/actions/modal";
 
 const Head = () => {

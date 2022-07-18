@@ -12,14 +12,11 @@ const RootRoute = () => {
     return (
         <>
             <BrowserRouter>
-                {/* 헤더 */}
-                <Head />
-
                 <Routes>
                     <Route path="/" element={<LandingPage />}></Route>
                     <Route path="/first" element={<FirstBoard />}></Route>
                 </Routes>
-                
+
                 {/* 모달 */}
                 <Modal header={<Logo width={70} height={16.67}/>}>
                     <Email />
