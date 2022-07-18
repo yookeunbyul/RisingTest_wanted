@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { ReactComponent as Arrow } from '../../svg/ic-right-arrow.svg';
 import { useForm } from "react-hook-form";
@@ -40,6 +41,20 @@ const Sign = () => {
 
     const onSubmit = (data) => {
         // alert(JSON.stringify(data));
+
+        axios.post("https://zezeserver.shop/app/users",{
+            name : `${name}`,
+            phoneNumber: `${phone}`,
+            email: `${email}`,
+            password: `${password}`,
+            IsAcceptedPrivacyTerm: `${privacyCheck}`,
+            IsAcceptedMarketingTerm: `${useCheck}`,
+        })
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => console.log(err))
+
         closeSignMoRedux();
         navigate(`/first`);
     };
