@@ -5,6 +5,7 @@ import { ReactComponent as Arrow } from '../../svg/ic-right-arrow.svg';
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { closeSignMoAction } from "../../store/actions/signModal";
+import { addJobGroupAction } from "../../store/actions/jobGroup";
 import { useNavigate } from 'react-router-dom';
 
 const Sign = () => {
@@ -52,6 +53,12 @@ const Sign = () => {
         })
         .then(res => {
             console.log(res);
+            dispatch(
+                addJobGroupAction({
+                    jobList : res.data.result.jobGroup,
+                    userId : res.data.result.userId,
+                })
+            );
         })
         .catch(err => console.log(err))
 
@@ -403,7 +410,7 @@ const SignBtn = styled.button`
     color: ${props=>props.check ? "#fff" : "#cacaca"};
     pointer-events : ${props=>props.check ? "auto" : "none"};
     cursor: ${props=>props.check ? "pointer" : null};
-    
+
     align-items: center;
     width: 100%;
     height: 54px;

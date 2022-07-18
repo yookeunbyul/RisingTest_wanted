@@ -1,13 +1,18 @@
 import styled from 'styled-components';
+import axios from "axios";
 import { ReactComponent as Symbol } from '../../svg/ic-wanted-symbol.svg';
 import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Arow } from '../../svg/ic-select-arrow.svg';
 import { ReactComponent as Search } from '../../svg/ic-search.svg';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 const FirstBoard = () => {
     const navigate = useNavigate();
+    const { jobList, userId } = useSelector((state) => state.JobGroupReducer);
+
+    // console.log(jobList);
 
     const [index,setIndex] = useState("");
     const [job, setJob] = useState(false);
@@ -15,6 +20,9 @@ const FirstBoard = () => {
     const [jobSelect, setJobSelect] = useState(false);
     const [annuSelect, setAnnuSelect] = useState(false);
     const [allSelect, setAllselect] = useState(false);
+    const [skill, setSkill] = useState("");
+
+    const [jobCate, setJobCate] = useState("");
 
     useEffect(() => {
         if(cateSelect === true && jobSelect === true && annuSelect === true){
@@ -28,9 +36,21 @@ const FirstBoard = () => {
 
     const onCateChange = (e) => {
         setCateSelect(true);
-        setJob(true);
         setIndex(e.target.value);
-        if(e.target.value === "0"){
+        setJob(true);
+        console.log(e.target.value);
+
+        if(e.target.value === "1"){
+            axios.get("https://zezeserver.shop/app/jobgroup/1/jobcategories",{
+            })
+            .then(res => {
+                console.log(res);
+                setJobCate(res.data.result);
+            })
+            .catch(err => console.log(err))
+        }
+
+        if(e.target.value === "5813"){
             setJob(false);
         }
     }
@@ -41,6 +61,18 @@ const FirstBoard = () => {
 
     const onAnnuChange = (e) => {
         setAnnuSelect(true);
+    }
+
+    const onSkillChange = (e) => {
+        setSkill(e.target.value);
+        console.log(skill);
+
+        axios.get(`https://zezeserver.shop/app/skills/${skill}`,{
+            })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => console.log(err))
     }
 
     return(
@@ -86,26 +118,13 @@ const FirstBoard = () => {
                             <div className="input-body">
                                 <div className="select-wrap">
                                     <select name="category_id" onChange={onCateChange}>
-                                        <option value="0">선택 해주세요.</option>
-                                        <option value="518">개발</option>
-                                        <option value="507">경영·비즈니스</option>
-                                        <option value="523">마케팅·광고</option>
-                                        <option value="511">디자인</option>
-                                        <option value="530">영업</option>
-                                        <option value="510">고객서비스·리테일</option>
-                                        <option value="517">HR</option>
-                                        <option value="959">게임 제작</option>
-                                        <option value="524">미디어</option>
-                                        <option value="513">엔지니어링·설계</option>
-                                        <option value="508">금융</option>
-                                        <option value="532">물류·무역</option>
-                                        <option value="515">의료·제약·바이오</option>
-                                        <option value="522">제조·생산</option>
-                                        <option value="10101">교육</option>
-                                        <option value="10057">식·음료</option>
-                                        <option value="521">법률·법집행기관</option>
-                                        <option value="509">건설·시설</option>
-                                        <option value="514">공공·복지</option>
+                                        <option value="5813">선택 해주세요.</option>
+                                        {jobList ? (
+                                            jobList.map((job) => {
+                                            return(
+                                                <option key={job.jobGroupCategoryId} value={job.jobGroupCategoryId}>{job.name}</option>
+                                            )
+                                        })) : <option>로딩</option>}
                                     </select>
                                     <span className="arrow-style">
                                         <Arow />
@@ -120,8 +139,13 @@ const FirstBoard = () => {
                                 <div className="input-body">
                                     <div className="select-wrap">
                                         <select name="job" onChange={onJobChange}>
-                                            <option value>선택해 주세요.</option>
-                                            <option value="1">웹 개발자</option>
+                                            <option value="1013">선택해 주세요.</option>
+                                            {jobCate ? (
+                                                jobCate.map((cate) => {
+                                                return(
+                                                    <option key={cate.categoryId} value={cate.categoryId}>{cate.name}</option>
+                                                )
+                                            })) : <option>로딩</option>}
                                         </select>
                                         <span className="arrow-style">
                                             <Arow />
@@ -154,12 +178,19 @@ const FirstBoard = () => {
                                 </div>
                             </div>
                         </div>
-                        {index === "518" && 
+                        {index === "1" && 
                             <div className="input-wrap">
                                 <label htmlFor="skills" className="style-label">스킬</label>
                                 <div className="input-body">
                                     <div className="input-box">
-                                        <input className="input-skill" type="text" name="skills" placeholder="보유 스킬을 검색해주세요." />
+                                        <input 
+                                            className="input-skill" 
+                                            type="text" 
+                                            name="skills" 
+                                            placeholder="보유 스킬을 검색해주세요."
+                                            value={skill}
+                                            onChange={onSkillChange}
+                                        />
                                         <span>
                                             <Search />
                                         </span>
