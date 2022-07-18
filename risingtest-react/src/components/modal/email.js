@@ -26,6 +26,7 @@ const Email = () => {
         // alert(JSON.stringify(data));
         closeMoRedux();
         openSignMoRedux();
+        window.localStorage.setItem("email", email);
     };
 
     const closeMoRedux = () => {
@@ -35,7 +36,7 @@ const Email = () => {
     const openSignMoRedux = () => {
         dispatch(openSignMoAction());
     };
-    
+
     const onError = (error) => {
         console.log(error);
         setValid(true);

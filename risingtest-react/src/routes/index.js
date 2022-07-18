@@ -2,7 +2,6 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { ReactComponent as Logo } from '../svg/ic-wanted-logo.svg';
 import LandingPage from "../pages/landing";
 import FirstBoard from "../pages/onboarding/firstboard";
-import Head from "../components/common/head";
 import Modal from "../components/common/modal";
 import SignModal from "../components/common/signModal";
 import Email from "../components/modal/email";

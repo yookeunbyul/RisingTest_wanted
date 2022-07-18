@@ -9,15 +9,30 @@ import { useNavigate } from 'react-router-dom';
 const Sign = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const localEmail = localStorage.getItem("email");
 
     const { register, handleSubmit, watch, formState: { errors }, } = useForm();
     const [allCheck, setAllCheck] = useState(false);
-    const [privacyCheck, setPrivacyCheck] = useState(false);
-    const [useCheck, setUseCheck] = useState(false);
     const [check, setCheck] = useState(false);
-    const [password, setPassword] = useState("");
     const [repeatPW, setRepeatPW] = useState("");
     const [repeatValid, setRepeatValid] = useState(false);
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState(localEmail);
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const [privacyCheck, setPrivacyCheck] = useState(false);
+    const [useCheck, setUseCheck] = useState(false);
+
+    console.log(name,email, phone, password, privacyCheck, useCheck);
+
+    const onNameChange = (e) => {
+        setName(e.target.value);
+    }
+
+    const onPhoneChange = (e) => {
+        setPhone(e.target.value);
+    }
 
     const closeSignMoRedux = () => {
         dispatch(closeSignMoAction());
@@ -98,6 +113,8 @@ const Sign = () => {
                         name="username"
                         placeholder="이름을 입력해 주세요."
                         id="username"
+                        value={name}
+                        onChange={onNameChange}
                     />
                 </div>
                 <div className="section">
@@ -124,7 +141,10 @@ const Sign = () => {
                             type="text"
                             name="userPhoneNumber"
                             placeholder="(예시) 01034567890"
-                            id="useruserPhoneNumbername"/>
+                            id="useruserPhoneNumbername"
+                            value={phone}
+                            onChange={onPhoneChange}
+                            />
                         <button className="btn-phone" type="button" disabled>인증번호 받기</button>
                     </div>
                     <div className="code-wrap">
