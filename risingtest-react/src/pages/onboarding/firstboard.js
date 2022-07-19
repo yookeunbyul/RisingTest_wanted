@@ -4,13 +4,15 @@ import { ReactComponent as Symbol } from '../../svg/ic-wanted-symbol.svg';
 import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Arow } from '../../svg/ic-select-arrow.svg';
 import { ReactComponent as Search } from '../../svg/ic-search.svg';
-import { useState, useEffect } from "react";
+import { ReactComponent as Del } from '../../svg/ic-delete.svg';
+import { useState, useEffect, useRef  } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
 const FirstBoard = () => {
     const navigate = useNavigate();
     const { jobList, userId } = useSelector((state) => state.JobGroupReducer);
+    const selectRef = useRef();
 
     // console.log(jobList);
 
@@ -21,6 +23,11 @@ const FirstBoard = () => {
     const [annuSelect, setAnnuSelect] = useState(false);
     const [allSelect, setAllselect] = useState(false);
     const [skill, setSkill] = useState("");
+    const [skillSelect, setSkillSelect] = useState("");
+    const [change, setChange] = useState(false);
+    const [nextId, setNextId] = useState(1);
+
+    const [skillList, setSkillList] = useState([]);
 
     const [jobCate, setJobCate] = useState("");
 
@@ -29,6 +36,20 @@ const FirstBoard = () => {
             setAllselect(true);
         }
     }, [cateSelect, jobSelect, annuSelect])
+
+    useEffect(() => {
+        document.addEventListener('mousedown', clickOutside);
+    
+        return () => {
+            document.removeEventListener('mousedown', clickOutside);
+        };
+    });
+
+    const clickOutside = event => {
+        if (change && !selectRef.current.contains(event.target)) {
+            setChange(false);
+        }
+    };
 
     const onClick = () => {
         navigate(`/second`);
@@ -66,14 +87,31 @@ const FirstBoard = () => {
     const onSkillChange = (e) => {
         setSkill(e.target.value);
         console.log(skill);
-
+        setChange(true);
         axios.get(`https://zezeserver.shop/app/skills/${skill}`,{
             })
             .then(res => {
-                console.log(res);
+                // console.log(res);
+                setSkillSelect(res.data.result);
             })
             .catch(err => console.log(err))
     }
+
+    const onAddList = (e) => {
+        setChange(false);
+        setSkillList(skillList => [...skillList, {
+            id : nextId,
+            skill : e.target.value,
+        }]);
+        setNextId(nextId + 1);
+    }
+
+    const onRemove = (id) => {
+        setSkillList(skillList => skillList.filter(skill => skill.id !== id));
+    }
+
+    console.log(skillList);
+
 
     return(
         <Wrap>
@@ -195,9 +233,36 @@ const FirstBoard = () => {
                                             <Search />
                                         </span>
                                     </div>
+                                    {change ? <ul className="select-box" ref={selectRef}>
+                                        {skillSelect ? (
+                                            skillSelect.map((skill) => {
+                                                return(
+                                                    <li className="select-option" key={skill.skillId}>
+                                                        <button type="button" value={skill.name} onClick={onAddList}>{skill.name}</button>
+                                                    </li>
+                                                )
+                                            })
+                                        ) : null}    
+                                    </ul> : null}
                                 </div>
                             </div>
                         }
+                        <ul className="tag-wrap">
+                            {skillList ? (
+                                skillList.map((item, index) => {
+                                    return(
+                                        <li className="tag-list" key={index}>
+                                            <span>
+                                                {item.skill}
+                                            </span>
+                                            <button type="button" className="tag-btn" onClick={() => onRemove(item.id)}>
+                                                <Del />
+                                            </button>
+                                        </li>
+                                    )
+                                })
+                            ) : null}
+                        </ul>
                         <div className="footer">
                             <Next type="button" valid={allSelect} onClick={onClick}>다음</Next>
                             <div className="or-style">or</div>
@@ -335,6 +400,7 @@ const Box = styled.div`
 
     .input-body{
         margin-top: 11px;
+        position: relative;
     }
 
     .select-wrap{
@@ -456,6 +522,89 @@ const Box = styled.div`
         height: 28px;
         background-color: #ececec;
         transform: translateY(-50%);
+    }
+
+    .select-box{
+        position: absolute;
+        z-index: 1;
+        width: 355px;
+        max-height: 210px;
+        overflow: auto;
+        border: 1px solid #e1e2e3;
+        border-radius: 3px;
+        box-shadow: 0 2px 1px 0 rgb(0 0 0 / 10%);
+        background-color: #fff;
+        transform: translateY(4px);
+        font-size: 16px;
+        color: #333;
+    }
+
+    .select-box::-webkit-scrollbar{
+        display: none;
+    }
+
+    .select-option{
+        display: flex;
+        align-items: center;
+        height: 45px;
+    }
+
+    .select-option > button {
+        width: 100%;
+        height: 100%;
+        padding-right: 20px;
+        padding-left: 20px;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border: none;
+        background-color: #fff;
+
+        &:hover{
+            background-color: #f2f4f7;
+            cursor: pointer;
+        }
+    }
+
+    .tag-wrap{
+        position: relative;
+        margin-top: -16px;
+        margin-bottom: 40px
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        padding-left: 0;
+        transform: translateX(-10px);
+    }
+
+    .tag-list{
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+        height: 38px;
+        padding-right: 17px;
+        padding-left: 17px;
+        border-radius: 19px;
+        border: 1px solid transparent;
+        margin-top: 10px;
+        margin-left: 10px;
+        background-color: #f3f5f8;
+        font-size: 13px;
+        color: #333;
+
+        &:hover{
+            border: 1px solid #36f;
+        }
+    }
+
+    .tag-btn{
+        padding: 0;
+        border: 0;
+        background: 0;
+        margin-left: 10px;
+        color: #939393;
+        cursor: pointer;
     }
 `;
 
