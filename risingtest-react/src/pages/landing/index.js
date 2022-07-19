@@ -1,4 +1,5 @@
 import Head from "../../components/common/head";
+import Carousel from "../../components/common/carousel";
 
 const LandingPage = () => {
 
@@ -6,6 +7,7 @@ const LandingPage = () => {
         <>
             {/* 헤더 */}
             <Head />
+            <Carousel />
         </>
     );
 }
