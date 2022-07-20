@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 
 const Insites = ({children}) => {
     const [postList, setPostList] = useState("");
-    console.log(postList);
 
     const settings = {
         dots: false,
@@ -50,7 +49,7 @@ const Insites = ({children}) => {
                     {postList ? (
                         postList.map((post) => {
                             return(
-                                <div>
+                                <div key={post.postName}>
                                     <ImgWrap>
                                         <Thumbnail src={post.postThumbnailUrl} />
                                     </ImgWrap>
@@ -100,7 +99,7 @@ const Section = styled.section`
     padding: 60px 0px 0px 0px;
     position: relative;
     scroll-margin-top: 4px;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     text-align: center;
 
     width: 1060px;

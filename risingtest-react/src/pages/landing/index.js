@@ -1,5 +1,13 @@
 import Head from "../../components/common/head";
+import Footer from "../../components/common/footer";
 import Insites from "../../components/landing/insites";
+import Recommend from "../../components/landing/recommend";
+import Article from "../../components/landing/article";
+import Vod from "../../components/landing/vod";
+import RecoBtn from "../../components/landing/recoBtn";
+import Event from "../../components/landing/event";
+import Subscribe from "../../components/landing/subscribe";
+import Information from "../../components/landing/information";
 import styled from 'styled-components';
 import { useEffect, useState } from "react";
 import { ReactComponent as Arrow } from '../../svg/ic-right-arrow.svg';
@@ -80,8 +88,35 @@ const LandingPage = () => {
                         )
                     })
                 ) : null}
-                
             </Insites>
+
+            {/* 콘텐츠 추천 */}
+            <Recommend />
+
+            {/* 아티클 */}
+            <Article />
+            
+            <Hr>
+                <hr className="line"/>
+            </Hr>
+
+            {/* vod */}
+            <Vod />
+
+            {/* 추천 버튼 */}
+            <RecoBtn />
+
+            {/* 이벤트 */}
+            <Event />
+
+            {/* 구독 */}
+            <Subscribe />
+
+            {/* 정보 */}
+            <Information />
+
+            {/* footer */}
+            <Footer />
         </>
     );
 }
@@ -257,6 +292,17 @@ const Menu = styled.button`
 
 const Wrap =styled.div`
     /* border:1px solid red; */
+`;
+
+const Hr = styled.div`
+    width: 1060px;
+    margin: 0 auto;
+
+    .line{
+        background-color: #ececec;
+        height:1px;
+        border:0;
+    }
 `;
 
 

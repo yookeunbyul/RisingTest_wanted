@@ -13,46 +13,50 @@ const Head = () => {
         );
     };
     return(
-        <Outline>
-            <nav className="nav">
-                <div>
-                    <button className="btn-menu side-margin">
-                        <img className="menu" alt="" src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
-                    </button>
-                    <span className="logo">
-                    <Logo width={74.38} height={17.33}/>
-                    </span>
-                </div>
-                <ul>
-                    <li className="menu-list"><a>채용</a></li>
-                    <li className="menu-list"><a>이벤트</a></li>
-                    <li className="menu-list"><a>직군별 연봉</a></li>
-                    <li className="menu-list"><a>이력서</a></li>
-                    <li className="menu-list"><a>커뮤니티</a></li>
-                    <li className="menu-list"><a>프리랜서</a></li>
-                    <li className="menu-list"><a>AI 합격예측</a></li>
-                </ul>
-                <aside className="aside">
+        <div>
+            <Outline>
+                <nav className="nav">
+                    <div>
+                        <button className="btn-menu side-margin">
+                            <img className="menu" alt="" src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
+                        </button>
+                        <span className="logo">
+                        <Logo width={74.38} height={17.33}/>
+                        </span>
+                    </div>
                     <ul>
-                        <li className="right-menu">
-                            <button className="search-btn"><Search /></button>
-                        </li>
-                        <li className="right-menu">
-                            <button className="sign-btn" onClick={openMoRedux}>회원가입/로그인</button>
-                        </li>
-                        <li className="right-menu division">
-                            <a className="a-dashboard">기업 서비스</a>
-                        </li>
+                        <li className="menu-list"><a>채용</a></li>
+                        <li className="menu-list"><a>이벤트</a></li>
+                        <li className="menu-list"><a>직군별 연봉</a></li>
+                        <li className="menu-list"><a>이력서</a></li>
+                        <li className="menu-list"><a>커뮤니티</a></li>
+                        <li className="menu-list"><a>프리랜서</a></li>
+                        <li className="menu-list"><a>AI 합격예측</a></li>
                     </ul>
-                </aside>
-            </nav>
-        </Outline>
+                    <aside className="aside">
+                        <ul>
+                            <li className="right-menu">
+                                <button className="search-btn"><Search /></button>
+                            </li>
+                            <li className="right-menu">
+                                <button className="sign-btn" onClick={openMoRedux}>회원가입/로그인</button>
+                            </li>
+                            <li className="right-menu division">
+                                <a className="a-dashboard">기업 서비스</a>
+                            </li>
+                        </ul>
+                    </aside>
+                </nav>
+            </Outline>
+        </div>
     );
 }
 
-const Outline = styled.nav`
+const Outline = styled.div`
     position: sticky;
     top: 0;
+    z-index: 99;
+    
     border-bottom: 1px solid #dddddd;
     background-color: #fff;
 
