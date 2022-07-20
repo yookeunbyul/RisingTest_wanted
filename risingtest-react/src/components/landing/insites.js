@@ -4,8 +4,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { ReactComponent as More } from '../../svg/ic-menu.svg';
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const Insites = ({children}) => {
+    const [postList, setPostList] = useState("");
+    console.log(postList);
 
     const settings = {
         dots: false,
@@ -14,6 +18,16 @@ const Insites = ({children}) => {
         slidesToShow: 8,
         slidesToScroll: 3
     };
+
+    useEffect(() => {
+        axios.get("https://zezeserver.shop/app/posts",{
+            })
+            .then(res => {
+                console.log(res);
+                setPostList(res.data.insitePosts);
+            })
+            .catch(err => console.log(err))
+    }, [])
 
     return(
         <>
@@ -32,16 +46,61 @@ const Insites = ({children}) => {
                         <More />
                     </button>
                 </div>
+                <div className="post">
+                    {postList ? (
+                        postList.map((post) => {
+                            return(
+                                <div>
+                                    <ImgWrap>
+                                        <Thumbnail src={post.postThumbnailUrl} />
+                                    </ImgWrap>
+                                    <Title>{post.postName}</Title>
+                                    <Sub>{post.postContent}</Sub>
+                                    <Writer>
+                                        <span>
+                                            <Logo src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Ft1.daumcdn.net%2Fbrunch%2Fstatic%2Ficon%2Fios%2Ficon120.png&w=60&q=90" />
+                                        </span>
+                                        <Name>{post.writer}</Name>
+                                    </Writer>
+                                </div>
+                            )
+                        })
+                    ) : null}
+                    {postList ? (
+                        postList.map((post) => {
+                            return(
+                                <div>
+                                    <ImgWrap>
+                                        <Thumbnail src={post.postThumbnailUrl} />
+                                    </ImgWrap>
+                                    <Title>{post.postName}</Title>
+                                    <Sub>{post.postContent}</Sub>
+                                    <Writer>
+                                        <span>
+                                            <Logo src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Ft1.daumcdn.net%2Fbrunch%2Fstatic%2Ficon%2Fios%2Ficon120.png&w=60&q=90" />
+                                        </span>
+                                        <Name>{post.writer}</Name>
+                                    </Writer>
+                                </div>
+                            )
+                        })
+                    ) : null}
+                </div>
+                <div className="more-box">
+                    <MoreContent>
+                        <span className="btn-text">더 많은 콘텐츠 보기</span>
+                    </MoreContent>
+                </div>
             </Section>
         </>
     );
 }
 
 const Section = styled.section`
-    padding: 60px 0px;
+    padding: 60px 0px 0px 0px;
     position: relative;
     scroll-margin-top: 4px;
-    /* border: 1px solid blue; */
+    border: 1px solid blue;
     text-align: center;
 
     width: 1060px;
@@ -86,6 +145,19 @@ const Section = styled.section`
         color: #939393;
         background-color: #fff;
         margin-left: 20px;
+    }
+
+    .post{
+        /* border: 1px solid violet; */
+        display: grid;
+        grid-template-columns: 250px 250px 250px 250px;
+        grid-template-rows: 355px;
+        column-gap: 19px;
+        row-gap: 30px;
+    }
+
+    .more-box{
+        margin: 50px 0px;
     }
 `;
 
@@ -152,6 +224,78 @@ const StyledSlide = styled(Slider)`
 
     .slick-next.slick-disabled::before{
         opacity: 0;
+    }
+`;
+
+const ImgWrap = styled.div`
+    width: 250px;
+    height: 175px;
+`;
+
+const Thumbnail = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    outline: 1px solid rgba(0,0,0,.05);
+`;
+
+const Title = styled.div`
+    text-align: left;
+    margin: 17px 0px 8px 0px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333;
+`;
+
+const Sub = styled.div`
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 21px;
+    color: #aaa;
+`;
+
+const Writer = styled.div`
+    text-align: left;
+    display: flex;
+    align-items: center;
+
+    margin-top: 12px;
+`;
+
+const Logo = styled.img`
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #ececec;
+`;
+
+const Name = styled.span`
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 19px;
+    color: #aaa;
+    margin-left: 10px;
+`;
+
+const MoreContent = styled.button`
+    width: 345px;
+    height: 50px;
+    font-size: 16px;
+    background-color: #fff;
+    border: 1px solid #e1e2e3;
+    border-radius: 30px;
+    font-weight: 900;
+
+    .btn-text::after{
+        content: "\f078";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        line-height: 1;
+        color: #222;
+        margin-left: 5px;
     }
 `;
 
