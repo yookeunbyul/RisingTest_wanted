@@ -128,7 +128,7 @@ const Outline = styled.nav`
         width: 1px;
         height: 10px;
         background-color: #e1e2e3;
-        margin: auto 10px;
+        margin: auto 5px;
     }
 
     .a-dashboard{
@@ -138,13 +138,13 @@ const Outline = styled.nav`
         height: 30px;
         border: 1px solid #e1e2e3;
         border-radius: 15px;
-        padding: 10px 10px;
-        margin-left: 15px;
+        padding: 5px 10px;
+        margin-left: 12px;
         font-weight: 400;
     }
 
     .aside{
-        margin-left: 21px;
+        margin-left: 34px;
     }
 
     .aside > ul > li >*{
@@ -153,7 +153,6 @@ const Outline = styled.nav`
         /* color: #333; */
         /* font-weight: 600; */
         line-height: 1;
-        padding: 0 10px;
     }
 
     .sign-btn{

@@ -11,6 +11,7 @@ import Slider from "react-slick";
 
 const LandingPage = () => {
     const [slide, setSlide] = useState("");
+    const [insiteTag, setInsiteTag] = useState("");
 
     useEffect(() => {
         axios.get("https://zezeserver.shop/app/posts",{
@@ -18,6 +19,7 @@ const LandingPage = () => {
             .then(res => {
                 console.log(res);
                 setSlide(res.data.carousels);
+                setInsiteTag(res.data.insitePostTags);
             })
             .catch(err => console.log(err))
     }, [])
@@ -32,8 +34,8 @@ const LandingPage = () => {
         slidesToScroll: 1,
         variableWidth: true,
         autoplay: true,
-        speed: 2000,
-        autoplaySpeed: 2000,
+        speed: 3000,
+        autoplaySpeed: 3000,
         };
 
     return(
@@ -68,7 +70,18 @@ const LandingPage = () => {
             </Container>
 
             {/* 인사이트 */}
-            <Insites />
+            <Insites>
+                {insiteTag ? (
+                    insiteTag.map((menu) => {
+                        return(
+                            <Wrap key={menu.tagId}>
+                                <Menu>{menu.name}</Menu>
+                            </Wrap>
+                        )
+                    })
+                ) : null}
+                
+            </Insites>
         </>
     );
 }
@@ -222,5 +235,29 @@ const StyledSlide = styled(Slider)`
         right:248px;
     }
 `;
+
+const Menu = styled.button`
+    height: 50px;
+    border: 1px none;
+    background-color: #f2f4f7;
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 0px 20px;
+    width: 100%;
+    letter-spacing: -1px;
+
+    &:hover{
+        font-weight: 700;
+        background-color: #fff;
+        border: 1px solid #36f;
+        color: #36f;
+        outline: none;
+    }
+`;
+
+const Wrap =styled.div`
+    /* border:1px solid red; */
+`;
+
 
 export default LandingPage;
