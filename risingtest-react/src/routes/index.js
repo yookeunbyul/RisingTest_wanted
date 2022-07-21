@@ -1,6 +1,8 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { ReactComponent as Logo } from '../svg/ic-wanted-logo.svg';
+import Head from "../components/common/head";
 import LandingPage from "../pages/landing";
+import JobFeedPage from "../pages/jobfeed";
 import FirstBoard from "../pages/onboarding/firstboard";
 import SecondBoard from "../pages/onboarding/secondboard";
 import ThridBoard from "../pages/onboarding/thirdboard";
@@ -18,6 +20,7 @@ const RootRoute = () => {
                     <Route path="/first" element={<FirstBoard />}></Route>
                     <Route path="/second" element={<SecondBoard />}></Route>
                     <Route path="/third" element={<ThridBoard />}></Route>
+                    <Route path="/jobfeed" element={<JobFeedPage />}></Route>
                 </Routes>
 
                 {/* 모달 */}

@@ -3,15 +3,24 @@ import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Search } from '../../svg/ic-search.svg';
 import { useDispatch } from "react-redux";
 import { openMoAction } from "../../store/actions/modal";
+import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
 
 const Head = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [openJobFeed, setOpenJobFeed] = useState(false);
 
     const openMoRedux = () => {
         dispatch(
             openMoAction()
         );
     };
+
+    const onJobClick = () => {
+        navigate(`/jobfeed`);
+    }
     return(
         <div>
             <Outline>
@@ -25,7 +34,7 @@ const Head = () => {
                         </span>
                     </div>
                     <ul>
-                        <li className="menu-list"><a>채용</a></li>
+                        <li className="menu-list" onClick={onJobClick}><a>채용</a></li>
                         <li className="menu-list"><a>이벤트</a></li>
                         <li className="menu-list"><a>직군별 연봉</a></li>
                         <li className="menu-list"><a>이력서</a></li>
@@ -94,9 +103,27 @@ const Outline = styled.div`
         text-align: center;
         height: inherit;
         display: inline-block;
+        cursor: pointer;
     }
 
     .menu-list:hover::after{
+        display: block;
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: #dddddd;
+        /* margin: auto 10px; */
+    }
+
+    .menu-list.open::after{
+        display: block;
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: #36f;
+    }
+
+    .menu-list.open:hover::after{
         display: block;
         content: "";
         width: 100%;

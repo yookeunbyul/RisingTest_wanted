@@ -6,13 +6,38 @@ import { ReactComponent as Search } from '../../svg/ic-search.svg';
 import { ReactComponent as Arrow } from '../../svg/ic-right-arrow.svg';
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const SecondBoard = () => {
     const navigate = useNavigate();
     const selectRef = useRef();
+    const selectCompanyRef = useRef();
 
-    const [change, setChange] = useState(false);
+    const [changeSchool, setChangeSchool] = useState(false);
+    const [changeCompany, setChangeCompany] = useState(false);
     const [valid, setValid] = useState(false);
+    const [schoolList, setSchoolList] = useState([]);
+    const [companyList, setCompanyList] = useState([]);
+    const [school, setSchool] = useState("");
+    const [company, setCompany] = useState("");
+
+    useEffect(() => {
+        axios.get("https://zezeserver.shop/app/schools",{
+            })
+            .then(res => {
+                console.log(res);
+                setSchoolList(res.data.result);
+            })
+            .catch(err => console.log(err))
+
+        axios.get("https://zezeserver.shop/app/companies",{
+            })
+            .then(res => {
+                console.log(res);
+                setCompanyList(res.data.result);
+            })
+            .catch(err => console.log(err))        
+    }, [])
 
     useEffect(() => {
         document.addEventListener('mousedown', clickOutside);
@@ -22,14 +47,36 @@ const SecondBoard = () => {
         };
     });
 
+    useEffect(() => {
+        if(school && company){
+            setValid(true);
+        }
+    }, [school, company])
+
+    const filtered = schoolList && schoolList.filter((itemList) => {
+        return (
+            itemList.name.includes(school)
+        )
+    });
+
+    const Companyfiltered = companyList && companyList.filter((itemList) => {
+        return (
+            itemList.companyName.includes(company)
+        )
+    });
+
     const clickOutside = event => {
-        if (change && !selectRef.current.contains(event.target)) {
-            setChange(false);
+        if (changeSchool && !selectRef.current.contains(event.target)) {
+            setChangeSchool(false);
+        }
+
+        if (changeCompany && !selectCompanyRef.current.contains(event.target)){
+            setChangeCompany(false);
         }
     };
 
-    const onChange = () => {
-        setValid(true);
+    const onChange = (e) => {
+        setSchool(e.target.value);
     }
 
     const onClick = () => {
@@ -37,8 +84,35 @@ const SecondBoard = () => {
     }
 
     const onSchoolClick = () => {
-        setChange(true);
+        setChangeSchool(true);
     }
+
+    const onCompanyClick = () => {
+        setChangeCompany(true);
+    }
+
+    const onTypeClick = () => {
+        setChangeSchool(false);
+    }
+
+    const onTypeingClick = () => {
+        setChangeCompany(false);
+    }
+
+    const onListClick = (e) => {
+        setChangeSchool(false);
+        setSchool(e.target.value);
+    }
+
+    const onCompanyChange = (e) => {
+        setCompany(e.target.value);
+    }
+
+    const onNameClick = (e) => {
+        setChangeCompany(false);
+        setCompany(e.target.value);
+    }
+
     return(
         <Wrap>
             <Box>
@@ -81,17 +155,33 @@ const SecondBoard = () => {
                             <label htmlFor="school_name" className="style-label">학교</label>
                             <div className="input-body">
                                 <div className="input-box">
-                                    <input onChange={onChange} onClick={onSchoolClick} className="school-name" type="text" name="school_name" placeholder="검색해 주세요." />
+                                    <input 
+                                        onChange={onChange} 
+                                        onClick={onSchoolClick} 
+                                        className="school-name" 
+                                        type="text" 
+                                        name="school_name" 
+                                        placeholder="검색해 주세요."
+                                        value={school}
+                                    />
                                     <span>
                                         <Search />
                                     </span>
-                                    {change ? 
-                                        <ul className="select-box" ref={selectRef}>
-                                            <li className="select-option">
-                                                <button type="button">직접 입력 " 사용하기</button>
-                                            </li>
-                                        </ul> 
-                                    : null}
+                                    {changeSchool ? 
+                                    <ul className="select-box" ref={selectRef}>
+                                        <li className="select-option">
+                                            <button type="button" onClick={onTypeClick}>직접 입력 '{school}' 사용하기</button>
+                                        </li>
+                                        {filtered ? (
+                                            filtered.map((item, index) => {
+                                                return(
+                                                    <li className="select-option" key={index}>
+                                                        <button type="button" value={item.name} onClick={onListClick}>{item.name}</button>
+                                                    </li>
+                                                )
+                                            })
+                                        ) : null}    
+                                    </ul> : null}
                                 </div>
                             </div>
                         </div>
@@ -99,10 +189,33 @@ const SecondBoard = () => {
                             <label htmlFor="company_name" className="style-label">직장</label>
                             <div className="input-body">
                                 <div className="input-box">
-                                    <input className="company-name" type="text" name="company_name" placeholder="검색해 주세요." />
+                                    <input 
+                                        className="company-name" 
+                                        type="text" 
+                                        name="company_name" 
+                                        placeholder="검색해 주세요."
+                                        onChange={onCompanyChange}
+                                        onClick={onCompanyClick}
+                                        value={company} 
+                                    />
                                     <span>
                                         <Search />
                                     </span>
+                                    {changeCompany ? 
+                                    <ul className="select-box" ref={selectCompanyRef}>
+                                        <li className="select-option">
+                                            <button type="button" onClick={onTypeingClick}>직접 입력 '{company}' 사용하기</button>
+                                        </li>
+                                        {Companyfiltered ? (
+                                            Companyfiltered.map((item, index) => {
+                                                return(
+                                                    <li className="select-option" key={index}>
+                                                        <button type="button" value={item.companyName} onClick={onNameClick}>{item.companyName}</button>
+                                                    </li>
+                                                )
+                                            })
+                                        ) : null}    
+                                    </ul> : null}
                                 </div>
                                 <div className="guide">신입의 경우, '신입' 또는 '없음'을 직접 입력해 주세요.</div>
                             </div>
@@ -377,6 +490,7 @@ const Box = styled.div`
 
     .select-option{
         display: flex;
+        /* flex-direction: column; */
         align-items: center;
         height: 45px;
     }
@@ -406,6 +520,8 @@ const Next = styled.button`
     border-color: transparent;
     color: ${props=>props.valid? "#fff" : "#cacaca"};
     pointer-events : ${props=>props.valid ? "auto" : "none"};
+    cursor: pointer;
+
     margin-top: 18px;
     display: flex;
     justify-content: center;

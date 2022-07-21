@@ -189,7 +189,7 @@ const Img = styled.img`
 
 const Container = styled.div`
     margin: 0 auto;
-    width: 1705px;
+    width: 1690.67px;
     /* border: 1px solid blue; */
     
     .box{
