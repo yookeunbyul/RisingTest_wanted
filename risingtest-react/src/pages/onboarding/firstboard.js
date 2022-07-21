@@ -13,8 +13,7 @@ const FirstBoard = () => {
     const navigate = useNavigate();
     const { jobList, userId } = useSelector((state) => state.JobGroupReducer);
     const selectRef = useRef();
-
-    // console.log(jobList);
+    const bodyFormData = new FormData();
 
     const [index,setIndex] = useState("");
     const [job, setJob] = useState(false);
@@ -26,10 +25,15 @@ const FirstBoard = () => {
     const [skillSelect, setSkillSelect] = useState("");
     const [change, setChange] = useState(false);
     const [nextId, setNextId] = useState(1);
-
+    const [jobId, setJobId] = useState("");
+    const [carrer, setCarrer] = useState("");
     const [skillList, setSkillList] = useState([]);
-
+    const [skillIdList, setSkillIdList] = useState([]);
     const [jobCate, setJobCate] = useState("");
+
+    const JobGroudID = parseInt(index);
+    const JobID = parseInt(jobId);
+    const Annual = parseInt(carrer);
 
     useEffect(() => {
         if(cateSelect === true && jobSelect === true && annuSelect === true){
@@ -53,6 +57,17 @@ const FirstBoard = () => {
 
     const onClick = () => {
         navigate(`/second`);
+        axios.post("https://zezeserver.shop/app/job",{
+            userId : `${userId}`,
+            JobGroupId : `${JobGroudID}`,
+            JobId: `${JobID}`,
+            career: `${Annual}`,
+            skills: skillIdList,
+        })
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => console.log(err))
     }
 
     const onCateChange = (e) => {
@@ -78,10 +93,12 @@ const FirstBoard = () => {
 
     const onJobChange = (e) => {
         setJobSelect(true);
+        setJobId(e.target.value);
     }
 
     const onAnnuChange = (e) => {
         setAnnuSelect(true);
+        setCarrer(e.target.value);
     }
 
     const onSkillChange = (e) => {
@@ -91,7 +108,7 @@ const FirstBoard = () => {
         axios.get(`https://zezeserver.shop/app/skills/${skill}`,{
             })
             .then(res => {
-                // console.log(res);
+                console.log(res);
                 setSkillSelect(res.data.result);
             })
             .catch(err => console.log(err))
@@ -99,6 +116,8 @@ const FirstBoard = () => {
 
     const onAddList = (e) => {
         setChange(false);
+        //input value 초기화
+        setSkill("");
         setSkillList(skillList => [...skillList, {
             id : nextId,
             skill : e.target.value,
@@ -110,8 +129,16 @@ const FirstBoard = () => {
         setSkillList(skillList => skillList.filter(skill => skill.id !== id));
     }
 
-    console.log(skillList);
+    const onSkillClik = (id) => {
+        console.log(id);
+        setSkillIdList( skillIdList => [...skillIdList, id]);
+    }
 
+    skillIdList.forEach((item) => {
+        bodyFormData.append('skillIdList[]', item);
+    });
+
+    console.log(userId, JobGroudID, JobID, Annual, skillIdList);
 
     return(
         <Wrap>
@@ -237,7 +264,7 @@ const FirstBoard = () => {
                                         {skillSelect ? (
                                             skillSelect.map((skill) => {
                                                 return(
-                                                    <li className="select-option" key={skill.skillId}>
+                                                    <li className="select-option" key={skill.skillId} onClick={() => onSkillClik(skill.skillId)}>
                                                         <button type="button" value={skill.name} onClick={onAddList}>{skill.name}</button>
                                                     </li>
                                                 )
@@ -613,7 +640,7 @@ const Next = styled.button`
     border-color: transparent;
     color: ${props=>props.valid? "#fff" : "#cacaca"};
     pointer-events : ${props=>props.valid ? "auto" : "none"};
-
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
