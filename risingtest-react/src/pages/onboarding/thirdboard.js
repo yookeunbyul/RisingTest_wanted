@@ -4,39 +4,57 @@ import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Completed } from '../../svg/ic-completed.svg';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 const ThridBoard = () => {
     const navigate = useNavigate();
+    const { userId } = useSelector((state) => state.JobGroupReducer);
 
+    const [worryList, setWorryList] = useState([]);
     const [interests, setInterests] = useState([]);
-    const [id, setId] = useState("");
+    const [checkList, setCheckList] = useState([]);
+    const [trendList, setTrendList] = useState([]);
 
-    let [btnActive, setBtnActive] = useState("");
+    const bodyFormData = new FormData();
 
-    const toggleActive = (id) => {
-        setBtnActive(id);
-    };
+    checkList.forEach((item) => {
+        bodyFormData.append('checkList[]', item);
+    });
 
     useEffect(() => {
         axios.get("https://zezeserver.shop/app/post-tags",{
             })
             .then(res => {
                 console.log(res);
+                setWorryList(res.data.result.officeWorkerEmpathy);
                 setInterests(res.data.result.interests);
+                setTrendList(res.data.result.trend);
             })
             .catch(err => console.log(err))      
     }, [])
 
-    const onClick = (id) => {
-        setId(id);
-    }
-
     const onStart = () => {
         navigate(`/`);
+        axios.post("https://zezeserver.shop/app/users/interestedTags",{
+            userId : `${userId}`,
+            postTagList : checkList,
+        })
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => console.log(err))
     }
 
-    console.log(id);
+    const onAddList = (id) => {
+        setCheckList(checkList => [...checkList, id]);
+
+        if(checkList.includes(id)){
+            setCheckList(checkList => checkList.filter(check => check !== id));
+        }
+    }
+
+    console.log(userId, checkList);
 
     return(
         <Wrap>
@@ -84,10 +102,11 @@ const ThridBoard = () => {
                                         <span>직장인 공감</span>
                                     </div>
                                     <ul className="list-wrap">
-                                        {interests ? (
-                                            interests.map((tag) => {
+                                        {worryList ? (
+                                            worryList.map((tag) => {
                                                 return(
-                                                    <li key={tag.tagId}><button className={"btn" + (tag.tagId === btnActive ? " active" : "")} onClick={() => toggleActive(tag.tagId)} value={tag.tagId}>{tag.name}</button></li>
+                                                    
+                                                    <li key={tag.tagId}><Btn onClick={() => onAddList(tag.tagId)} click={checkList.includes(tag.tagId)}>{tag.name}</Btn></li>
                                                 )
                                             })
                                         ) : null}
@@ -99,13 +118,15 @@ const ThridBoard = () => {
                                         <span>관심분야</span>
                                     </div>
                                     <ul className="list-wrap">
-                                        <li><Btn>개발</Btn></li>
-                                        <li><Btn>데이터</Btn></li>
-                                        <li><Btn>HR</Btn></li>
-                                        <li><Btn>서비스기획</Btn></li>
-                                        <li><Btn>마케팅</Btn></li>
-                                        <li><Btn>디자인</Btn></li>
-                                        <li><Btn>경영/전략</Btn></li>
+                                        {interests ? (
+                                                interests.map((tag) => {
+                                                    console.log(checkList.includes(tag.tagId));
+                                                    return(
+                                                        
+                                                        <li key={tag.tagId}><Btn onClick={() => onAddList(tag.tagId)} click={checkList.includes(tag.tagId)}>{tag.name}</Btn></li>
+                                                    )
+                                                })
+                                            ) : null}
                                     </ul>
                                 </li>
                                 <li className="interests-second-list">
@@ -114,13 +135,15 @@ const ThridBoard = () => {
                                         <span>트렌드/인사이트</span>
                                     </div>
                                     <ul className="list-wrap">
-                                        <li><Btn>IT/기술</Btn></li>
-                                        <li><Btn>브랜딩</Btn></li>
-                                        <li><Btn>라이프스타일</Btn></li>
-                                        <li><Btn>UX/UI</Btn></li>
-                                        <li><Btn>노무</Btn></li>
-                                        <li><Btn>리더십</Btn></li>
-                                        <li><Btn>조직문화</Btn></li>
+                                        {trendList ? (
+                                                    trendList.map((tag) => {
+                                                        console.log(checkList.includes(tag.tagId));
+                                                        return(
+                                                            
+                                                            <li key={tag.tagId}><Btn onClick={() => onAddList(tag.tagId)} click={checkList.includes(tag.tagId)}>{tag.name}</Btn></li>
+                                                        )
+                                                    })
+                                                ) : null}
                                     </ul>
                                 </li>
                             </ul>

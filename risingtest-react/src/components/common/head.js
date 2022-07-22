@@ -193,7 +193,7 @@ const Outline = styled.div`
     }
 
     .aside{
-        margin-left: 34px;
+        margin-left: 30px;
     }
 
     .aside > ul > li >*{
@@ -215,7 +215,7 @@ const Outline = styled.div`
     .search-btn{
         border: 0;
         background: none;
-        margin-right: 5px;
+        margin-right: 4px;
     }
 
     .noti-btn{

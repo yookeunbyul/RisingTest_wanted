@@ -24,7 +24,7 @@ const AiPosition = () => {
         axios.get("https://zezeserver.shop/app/employment/mainpage",{
             })
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 setAiList(res.data.result.recommendHighPassRateEmployment);
             })
             .catch(err => console.log(err))
