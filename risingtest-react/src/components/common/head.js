@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Search } from '../../svg/ic-search.svg';
+import { ReactComponent as Noti } from '../../svg/ic-notification.svg';
 import { useDispatch } from "react-redux";
 import { openMoAction } from "../../store/actions/modal";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -11,8 +12,7 @@ const Head = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-
-    const [openJobFeed, setOpenJobFeed] = useState(false);
+    const isLogin = localStorage.getItem("jwt");
 
     const openMoRedux = () => {
         dispatch(
@@ -49,9 +49,24 @@ const Head = () => {
                             <li className="right-menu">
                                 <button className="search-btn"><Search /></button>
                             </li>
-                            <li className="right-menu">
-                                <button className="sign-btn" onClick={openMoRedux}>회원가입/로그인</button>
-                            </li>
+                            {isLogin ? (
+                                <>
+                                <li className="right-menu">
+                                    <button className="noti-btn"><Noti /></button>
+                                </li>
+                                <li className="right-menu">
+                                    <div className="profile">
+                                        <img width="28" height="28" alt="" src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png" />
+                                    </div>
+                                </li>
+                                </>
+                            ) : (
+                                <>
+                                    <li className="right-menu">
+                                        <button className="sign-btn" onClick={openMoRedux}>회원가입/로그인</button>
+                                    </li>
+                                </>
+                            )}
                             <li className="right-menu division">
                                 <a className="a-dashboard">기업 서비스</a>
                             </li>
@@ -144,8 +159,9 @@ const Outline = styled.div`
     .right-menu{
         position: relative;
         display: inline-block;
-        height: 100%;
+        height: 32px;
         vertical-align: middle;
+        /* border: 1px solid blue; */
     }
 
     .right-menu.division{
@@ -165,12 +181,15 @@ const Outline = styled.div`
         font-size: 13px;
         color: #666;
         line-height: 30px;
-        height: 30px;
+        /* height: 30px; */
         border: 1px solid #e1e2e3;
-        border-radius: 15px;
-        padding: 5px 10px;
+        border-radius: 30px;
+        padding: 0px 10px;
         margin-left: 12px;
         font-weight: 400;
+
+        display:flex;
+        align-items:center;
     }
 
     .aside{
@@ -196,6 +215,13 @@ const Outline = styled.div`
     .search-btn{
         border: 0;
         background: none;
+        margin-right: 5px;
+    }
+
+    .noti-btn{
+        border: 0;
+        background: none;
+        margin: 0px 8px;
     }
 
     .btn-menu{
@@ -205,6 +231,25 @@ const Outline = styled.div`
 
     .btn-menu.side-margin{
         margin-right: 10px;
+    }
+
+    .profile{
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid #e1e2e3;
+        background-color: #fff;
+        margin: 0px 15px 0px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile > img{
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
 `;

@@ -58,6 +58,7 @@ const Sign = () => {
                 addJobGroupAction({
                     jobList : res.data.result.jobGroup,
                     userId : res.data.result.userId,
+                    password : password,
                 })
             );
         })

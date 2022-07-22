@@ -35,6 +35,13 @@ const HotFeed = () => {
                                 <div className="txt-box">
                                     <div className="job">{item.jobName}</div>
                                     <div className="company">{item.companyName}</div>
+                                    {item.responseRate ? (
+                                        <>
+                                            <div className="response-box">
+                                                <div className="response">{item.responseRate}</div>
+                                            </div>
+                                        </>
+                                    ) : null}
                                     <div className="country">{item.city}·{item.country}</div>
                                     <div className="money">채용 보상금 1,000,000원</div>
                                 </div>
@@ -215,6 +222,24 @@ const Section = styled.div`
         color: #333;
         font-size: 14px;
         font-weight: 600;
+    }
+
+    .response-box{
+        border: 1px solid #00aead;
+        color: #00aead;
+        border-radius: 2px;
+        background-color: #fff;
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 600;
+        height: 19px;
+        line-height: 19px;
+        margin-top: 8px;
+        padding: 0 5px;
+    }
+
+    .response{
+        /* margin-top: 10px; */
     }
 `;
 

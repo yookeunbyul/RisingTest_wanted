@@ -1,4 +1,4 @@
-import Head from "../../components/common/head";
+import Footer from "../../components/common/footer";
 import Position from "../../components/jobfeed/position";
 import AiPosition from "../../components/jobfeed/aiposition";
 import Annual from "../../components/jobfeed/annual";
@@ -100,6 +100,8 @@ const JobFeedPage = () => {
 
             {/* 요즘 뜨는 */}
             <HotFeed />
+
+            <Footer />
         </>
     );
 }

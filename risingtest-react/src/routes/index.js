@@ -26,8 +26,6 @@ const RootRoute = () => {
                     <Route path="/third" element={<ThridBoard />}></Route>
                 </Routes>
 
-                <Footer />
-
                 {/* 모달 */}
                 <Modal header={<Logo width={70} height={16.67}/>}>
                     <Email />

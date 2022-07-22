@@ -13,10 +13,11 @@ import { addJobInfoAction } from "../../store/actions/jobinfo";
 
 const FirstBoard = () => {
     const navigate = useNavigate();
-    const { jobList, userId } = useSelector((state) => state.JobGroupReducer);
+    const { jobList, userId, password } = useSelector((state) => state.JobGroupReducer);
     const dispatch = useDispatch();
     const selectRef = useRef();
     const bodyFormData = new FormData();
+    const localEmail = localStorage.getItem("email");
 
     const [index,setIndex] = useState("");
     const [job, setJob] = useState(false);
@@ -33,6 +34,8 @@ const FirstBoard = () => {
     const [skillList, setSkillList] = useState([]);
     const [skillIdList, setSkillIdList] = useState([]);
     const [jobCate, setJobCate] = useState("");
+    const [email, setEmail] = useState(localEmail);
+    const [jwt, setJWT] = useState("");
 
     const JobGroudID = parseInt(index);
     const JobID = parseInt(jobId);
@@ -79,6 +82,16 @@ const FirstBoard = () => {
         })
         .then(res => {
             console.log(res);
+        })
+        .catch(err => console.log(err))
+
+        axios.post("https://zezeserver.shop/app/login",{
+            email: `${email}`,
+            password: `${password}`,
+        })
+        .then(res => {
+            console.log(res.data.result.jwt);
+            window.localStorage.setItem("jwt", res.data.result.jwt);
         })
         .catch(err => console.log(err))
     }
@@ -147,7 +160,7 @@ const FirstBoard = () => {
         setSkillIdList( skillIdList => [...skillIdList, id]);
     }
 
-    console.log(userId, JobGroudID, JobID, Annual, skillIdList);
+    console.log(userId, JobGroudID, JobID, Annual, skillIdList, password);
 
     return(
         <Wrap>

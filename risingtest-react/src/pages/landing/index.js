@@ -116,7 +116,7 @@ const LandingPage = () => {
             <Information />
 
             {/* footer */}
-            {/* <Footer /> */}
+            <Footer />
         </>
     );
 }

@@ -8,6 +8,7 @@ const JobGroupReducer = (state = intialState, action) => {
                 ...state,
                 jobList : action.data.jobList,
                 userId : action.data.userId,
+                password: action.data.password,
             }
         }
         default : {
