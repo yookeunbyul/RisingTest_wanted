@@ -16,11 +16,13 @@ const RootRoute = () => {
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<LandingPage />}></Route>
+                    <Route element={<Head />}>
+                        <Route path="/" element={<LandingPage />}></Route>
+                        <Route path="/jobfeed" element={<JobFeedPage />}></Route>
+                    </Route>
                     <Route path="/first" element={<FirstBoard />}></Route>
                     <Route path="/second" element={<SecondBoard />}></Route>
                     <Route path="/third" element={<ThridBoard />}></Route>
-                    <Route path="/jobfeed" element={<JobFeedPage />}></Route>
                 </Routes>
 
                 {/* 모달 */}

@@ -1,4 +1,6 @@
 import Head from "../../components/common/head";
+import Position from "../../components/jobfeed/position";
+import AiPosition from "../../components/jobfeed/aiposition";
 import styled from 'styled-components';
 import { ReactComponent as Arrow } from '../../svg/ic-right-arrow.svg';
 import { useEffect, useState } from "react";
@@ -6,6 +8,7 @@ import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { Outlet } from "react-router-dom";
 
 const JobFeedPage = () => {
     const [slide, setSlide] = useState("");
@@ -39,7 +42,7 @@ const JobFeedPage = () => {
     return(
         <>
             {/* 헤더 */}
-            <Head />
+            {/* <Outlet /> */}
 
             {/* 캐러셀 */}
             <Container>
@@ -64,8 +67,14 @@ const JobFeedPage = () => {
                             )
                         })
                     ) : null}
-                    </StyledSlide>
-                </Container>
+                </StyledSlide>
+            </Container>
+
+            {/* 채용포지션 */}
+            <Position />
+
+            {/* AI 포지션 */}
+            <AiPosition />
         </>
     );
 }

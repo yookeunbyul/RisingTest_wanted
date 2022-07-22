@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { closeSignMoAction } from "../../store/actions/signModal";
 import { addJobGroupAction } from "../../store/actions/jobGroup";
+import { addUserAction } from "../../store/actions/user";
 import { useNavigate } from 'react-router-dom';
 
 const Sign = () => {
@@ -63,6 +64,11 @@ const Sign = () => {
         .catch(err => console.log(err))
 
         closeSignMoRedux();
+        dispatch(
+            addUserAction({
+            username: name,
+            userphone: phone,
+        }));
         navigate(`/first`);
     };
 
@@ -121,6 +127,8 @@ const Sign = () => {
             setCheck(false);
         } 
     }, [privacyCheck, useCheck])
+
+    console.log(name, phone);
 
     return (
         <Outline>

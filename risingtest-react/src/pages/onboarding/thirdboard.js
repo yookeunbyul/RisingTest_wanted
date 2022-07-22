@@ -2,21 +2,41 @@ import styled from 'styled-components';
 import { ReactComponent as Symbol } from '../../svg/ic-wanted-symbol.svg';
 import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Completed } from '../../svg/ic-completed.svg';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const ThridBoard = () => {
     const navigate = useNavigate();
 
-    const [click, setClick] = useState(false);
+    const [interests, setInterests] = useState([]);
+    const [id, setId] = useState("");
 
-    const onClick = () => {
-        setClick(!click);
+    let [btnActive, setBtnActive] = useState("");
+
+    const toggleActive = (id) => {
+        setBtnActive(id);
+    };
+
+    useEffect(() => {
+        axios.get("https://zezeserver.shop/app/post-tags",{
+            })
+            .then(res => {
+                console.log(res);
+                setInterests(res.data.result.interests);
+            })
+            .catch(err => console.log(err))      
+    }, [])
+
+    const onClick = (id) => {
+        setId(id);
     }
 
     const onStart = () => {
         navigate(`/`);
     }
+
+    console.log(id);
 
     return(
         <Wrap>
@@ -64,10 +84,13 @@ const ThridBoard = () => {
                                         <span>직장인 공감</span>
                                     </div>
                                     <ul className="list-wrap">
-                                        <li><Btn onClick={onClick} click={click}>커리어고민</Btn></li>
-                                        <li><Btn>취업/이직</Btn></li>
-                                        <li><Btn>회사생활</Btn></li>
-                                        <li><Btn>인간관계</Btn></li>
+                                        {interests ? (
+                                            interests.map((tag) => {
+                                                return(
+                                                    <li key={tag.tagId}><button className={"btn" + (tag.tagId === btnActive ? " active" : "")} onClick={() => toggleActive(tag.tagId)} value={tag.tagId}>{tag.name}</button></li>
+                                                )
+                                            })
+                                        ) : null}
                                     </ul>
                                 </li>
                                 <li className="interests-second-list">
@@ -117,6 +140,24 @@ const Wrap = styled.div`
     padding-top: 105px;
     padding-bottom: 105px;
     background-color: #f8f8fa;
+
+    .btn {
+    display: inline-block;
+    padding: 0 15px;
+    font-size: 15px;
+    height: 100%;
+    font-weight: 500;
+    color: #666;
+    border: 1px solid transparent;
+    border-radius: 21px;
+    background-color: #f2f4f7;
+    line-height: 1em;
+    cursor: pointer;
+
+    &.active {
+        background-color: lightblue;
+    }
+}
 `;
 
 const Box = styled.div`

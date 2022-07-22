@@ -49,7 +49,7 @@ const LandingPage = () => {
     return(
         <>
             {/* 헤더 */}
-            <Head />
+            
 
             {/* 캐러셀 */}
             <Container>

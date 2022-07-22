@@ -6,12 +6,18 @@ import { ReactComponent as Search } from '../../svg/ic-search.svg';
 import { ReactComponent as Arrow } from '../../svg/ic-right-arrow.svg';
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 const SecondBoard = () => {
+    const { userId } = useSelector((state) => state.JobGroupReducer);
+    const { username, userphone } = useSelector((state) => state.UserReducer);
+    const { jobid, career, skills } = useSelector((state) => state.JobInfoReducer);
     const navigate = useNavigate();
     const selectRef = useRef();
     const selectCompanyRef = useRef();
+    const localEmail = localStorage.getItem("email");
+    const bodyFormData = new FormData();
 
     const [changeSchool, setChangeSchool] = useState(false);
     const [changeCompany, setChangeCompany] = useState(false);
@@ -20,6 +26,12 @@ const SecondBoard = () => {
     const [companyList, setCompanyList] = useState([]);
     const [school, setSchool] = useState("");
     const [company, setCompany] = useState("");
+    const [email, setEmail] = useState(localEmail);
+    const [companyID, setCompanyID] = useState("");
+
+    skills.forEach((item) => {
+        bodyFormData.append('skills[]', item);
+    });
 
     useEffect(() => {
         axios.get("https://zezeserver.shop/app/schools",{
@@ -53,6 +65,8 @@ const SecondBoard = () => {
         }
     }, [school, company])
 
+
+
     const filtered = schoolList && schoolList.filter((itemList) => {
         return (
             itemList.name.includes(school)
@@ -81,6 +95,22 @@ const SecondBoard = () => {
 
     const onClick = () => {
         navigate(`/third`);
+        axios.post("https://zezeserver.shop/app/users/post-default-resume",{
+            userId : `${userId}`,
+            userName : `${username}`,
+            email: `${email}`,
+            telephone: `${userphone}`,
+            jobId : `${jobid}`,
+            career: `${career}`,
+            companyId: `${companyID}`,
+            companyName: `${company}`,
+            schoolName: `${school}`,
+            skills: skills,
+        })
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => console.log(err))
     }
 
     const onSchoolClick = () => {
@@ -112,6 +142,12 @@ const SecondBoard = () => {
         setChangeCompany(false);
         setCompany(e.target.value);
     }
+
+    const onCompanyId = (id) => {
+        setCompanyID(id);
+    }
+
+    console.log(userId, username, email, userphone, jobid, career, companyID, company, school, skills);
 
     return(
         <Wrap>
@@ -207,9 +243,9 @@ const SecondBoard = () => {
                                             <button type="button" onClick={onTypeingClick}>직접 입력 '{company}' 사용하기</button>
                                         </li>
                                         {Companyfiltered ? (
-                                            Companyfiltered.map((item, index) => {
+                                            Companyfiltered.map((item) => {
                                                 return(
-                                                    <li className="select-option" key={index}>
+                                                    <li className="select-option" key={item.companyId} onClick={() => onCompanyId(item.companyId)}>
                                                         <button type="button" value={item.companyName} onClick={onNameClick}>{item.companyName}</button>
                                                     </li>
                                                 )

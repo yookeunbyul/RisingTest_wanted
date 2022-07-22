@@ -8,10 +8,13 @@ import { ReactComponent as Del } from '../../svg/ic-delete.svg';
 import { useState, useEffect, useRef  } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addJobInfoAction } from "../../store/actions/jobinfo";
 
 const FirstBoard = () => {
     const navigate = useNavigate();
     const { jobList, userId } = useSelector((state) => state.JobGroupReducer);
+    const dispatch = useDispatch();
     const selectRef = useRef();
     const bodyFormData = new FormData();
 
@@ -35,6 +38,10 @@ const FirstBoard = () => {
     const JobID = parseInt(jobId);
     const Annual = parseInt(carrer);
 
+    skillIdList.forEach((item) => {
+        bodyFormData.append('skillIdList[]', item);
+    });
+
     useEffect(() => {
         if(cateSelect === true && jobSelect === true && annuSelect === true){
             setAllselect(true);
@@ -57,6 +64,12 @@ const FirstBoard = () => {
 
     const onClick = () => {
         navigate(`/second`);
+        dispatch(
+            addJobInfoAction({
+                jobid: JobID,
+                career: Annual,
+                skills : skillIdList,
+        }));
         axios.post("https://zezeserver.shop/app/job",{
             userId : `${userId}`,
             JobGroupId : `${JobGroudID}`,
@@ -133,10 +146,6 @@ const FirstBoard = () => {
         console.log(id);
         setSkillIdList( skillIdList => [...skillIdList, id]);
     }
-
-    skillIdList.forEach((item) => {
-        bodyFormData.append('skillIdList[]', item);
-    });
 
     console.log(userId, JobGroudID, JobID, Annual, skillIdList);
 

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { openMoAction } from "../../store/actions/modal";
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 const Head = () => {
     const navigate = useNavigate();
@@ -57,15 +58,12 @@ const Head = () => {
                     </aside>
                 </nav>
             </Outline>
+            <Outlet />
         </div>
     );
 }
 
-const Outline = styled.div`
-    position: sticky;
-    top: 0;
-    z-index: 99;
-    
+const Outline = styled.div`    
     border-bottom: 1px solid #dddddd;
     background-color: #fff;
 
