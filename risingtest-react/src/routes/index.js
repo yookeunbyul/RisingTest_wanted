@@ -1,6 +1,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { ReactComponent as Logo } from '../svg/ic-wanted-logo.svg';
 import Head from "../components/common/head";
+import Footer from "../components/common/footer";
 import LandingPage from "../pages/landing";
 import JobFeedPage from "../pages/jobfeed";
 import FirstBoard from "../pages/onboarding/firstboard";
@@ -24,6 +25,8 @@ const RootRoute = () => {
                     <Route path="/second" element={<SecondBoard />}></Route>
                     <Route path="/third" element={<ThridBoard />}></Route>
                 </Routes>
+
+                <Footer />
 
                 {/* 모달 */}
                 <Modal header={<Logo width={70} height={16.67}/>}>

@@ -3,13 +3,14 @@ import { ReactComponent as Logo } from '../../svg/ic-wanted-logo.svg';
 import { ReactComponent as Search } from '../../svg/ic-search.svg';
 import { useDispatch } from "react-redux";
 import { openMoAction } from "../../store/actions/modal";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 const Head = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const [openJobFeed, setOpenJobFeed] = useState(false);
 
@@ -35,7 +36,7 @@ const Head = () => {
                         </span>
                     </div>
                     <ul>
-                        <li className="menu-list" onClick={onJobClick}><a>채용</a></li>
+                        <Menu className="menu-list" onClick={onJobClick} current={location.pathname !== "/jobfeed"}><a>채용</a></Menu>
                         <li className="menu-list"><a>이벤트</a></li>
                         <li className="menu-list"><a>직군별 연봉</a></li>
                         <li className="menu-list"><a>이력서</a></li>
@@ -206,6 +207,30 @@ const Outline = styled.div`
         margin-right: 10px;
     }
 
+`;
+
+const Menu = styled.li`
+    text-align: center;
+    height: inherit;
+    display: inline-block;
+    cursor: pointer;
+    /* color: ${props=>props.current ? "36f" : "#dddddd"}; */
+
+    &:hover::after{
+        display: block;
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: #dddddd;
+    }
+
+    &::after{
+        display: block;
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: ${props=>props.current ? "#fff" : "#36f"};
+    }
 `;
 
 export default Head;

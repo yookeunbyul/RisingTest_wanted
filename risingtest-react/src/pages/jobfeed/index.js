@@ -2,6 +2,10 @@ import Head from "../../components/common/head";
 import Position from "../../components/jobfeed/position";
 import AiPosition from "../../components/jobfeed/aiposition";
 import Annual from "../../components/jobfeed/annual";
+import SubNav from "../../components/jobfeed/subNav";
+import CompanyTag from "../../components/jobfeed/companyTag";
+import ThemeSlide from "../../components/jobfeed/themeSlide";
+import HotFeed from "../../components/jobfeed/hotFeed";
 import styled from 'styled-components';
 import { ReactComponent as Arrow } from '../../svg/ic-right-arrow.svg';
 import { useEffect, useState } from "react";
@@ -9,7 +13,6 @@ import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { Outlet } from "react-router-dom";
 
 const JobFeedPage = () => {
     const [slide, setSlide] = useState("");
@@ -23,8 +26,6 @@ const JobFeedPage = () => {
             })
             .catch(err => console.log(err))
     }, [])
-
-    console.log(slide);
 
     //옵션
     const settings = {
@@ -79,13 +80,33 @@ const JobFeedPage = () => {
 
             {/* 경력 */}
             <Annual />
+
+            {/* 서브메뉴 */}
+            <SubNav />
+
+            {/* 회사태그슬라이드1 */}
+            <CompanyTag />
+
+            <Hr>
+                <hr className="line"/>
+            </Hr>
+
+            {/* 테마 */}
+            <ThemeSlide />
+
+            <Hr>
+                <hr className="line"/>
+            </Hr>
+
+            {/* 요즘 뜨는 */}
+            <HotFeed />
         </>
     );
 }
 
 const Container = styled.div`
     margin: 0 auto;
-    width: 1708px;
+    width: 1690.97px;
     /* border: 1px solid blue; */
     
     .box{
@@ -231,6 +252,17 @@ const Section = styled.p`
 const Img = styled.img`
     margin: 0 auto;
     border-radius: 5px;
+`;
+
+const Hr = styled.div`
+    width: 1060px;
+    margin: 0 auto;
+
+    .line{
+        background-color: #ececec;
+        height:1px;
+        border:0;
+    }
 `;
 
 export default JobFeedPage;
