@@ -1,6 +1,7 @@
 import Head from "../../components/common/head";
 import Position from "../../components/jobfeed/position";
 import AiPosition from "../../components/jobfeed/aiposition";
+import Annual from "../../components/jobfeed/annual";
 import styled from 'styled-components';
 import { ReactComponent as Arrow } from '../../svg/ic-right-arrow.svg';
 import { useEffect, useState } from "react";
@@ -75,6 +76,9 @@ const JobFeedPage = () => {
 
             {/* AI 포지션 */}
             <AiPosition />
+
+            {/* 경력 */}
+            <Annual />
         </>
     );
 }
