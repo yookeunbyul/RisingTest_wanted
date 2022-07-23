@@ -1,7 +1,9 @@
+import ResumeList from "./resumeList";
+
 const LoginResume = () => {
     return(
         <>
-            로그인했어요
+            <ResumeList />
         </>
     );
 }

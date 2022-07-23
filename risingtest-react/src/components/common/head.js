@@ -29,78 +29,81 @@ const Head = () => {
     }
 
     return(
-        <div>
+        <>
             <div style={{position: "fixed", top: "0", left: "0,", right: "0", zIndex: "99"}}>
-            <Outline>
-                <nav className="nav">
-                    <div>
-                        <button className="btn-menu side-margin">
-                            <img className="menu" alt="" src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
-                        </button>
-                        <span className="logo">
-                        <Logo width={74.38} height={17.33}/>
-                        </span>
-                    </div>
-                    <ul>
-                        <Menu className="menu-list" onClick={onJobClick} current={location.pathname !== "/jobfeed"}><a>채용</a></Menu>
-                        <li className="menu-list"><a>이벤트</a></li>
-                        <li className="menu-list"><a>직군별 연봉</a></li>
-                        <Menu className="menu-list" onClick={onReClick} current={location.pathname !== "/resume"}><a>이력서</a></Menu>
-                        <li className="menu-list"><a>커뮤니티</a></li>
-                        <li className="menu-list"><a>프리랜서</a></li>
-                        <li className="menu-list"><a>AI 합격예측</a></li>
-                    </ul>
-                    <aside className="aside">
+                {/* <div style={{border: "1px solid #222", width: "100vw"}}>
+                    dd
+                </div> */}
+                <Outline>
+                    <nav className="nav">
+                        <div>
+                            <button className="btn-menu side-margin">
+                                <img className="menu" alt="" src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
+                            </button>
+                            <span className="logo">
+                            <Logo width={74.38} height={17.33}/>
+                            </span>
+                        </div>
                         <ul>
-                            <li className="right-menu">
-                                <button className="search-btn"><Search /></button>
-                            </li>
-                            {isLogin ? (
-                                <>
-                                <li className="right-menu">
-                                    <button className="noti-btn"><Noti /></button>
-                                </li>
-                                <li className="right-menu">
-                                    <div className="profile">
-                                        <img width="28" height="28" alt="" src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png" />
-                                    </div>
-                                </li>
-                                </>
-                            ) : (
-                                <>
-                                    <li className="right-menu">
-                                        <button className="sign-btn" onClick={openMoRedux}>회원가입/로그인</button>
-                                    </li>
-                                </>
-                            )}
-                            <li className="right-menu division">
-                                <a className="a-dashboard">기업 서비스</a>
-                            </li>
+                            <Menu className="menu-list" onClick={onJobClick} current={location.pathname !== "/jobfeed"}><a>채용</a></Menu>
+                            <li className="menu-list"><a>이벤트</a></li>
+                            <li className="menu-list"><a>직군별 연봉</a></li>
+                            <Menu className="menu-list" onClick={onReClick} current={location.pathname !== "/resume"}><a>이력서</a></Menu>
+                            <li className="menu-list"><a>커뮤니티</a></li>
+                            <li className="menu-list"><a>프리랜서</a></li>
+                            <li className="menu-list"><a>AI 합격예측</a></li>
                         </ul>
-                    </aside>
-                </nav>
-            </Outline>
+                        <aside className="aside">
+                            <ul>
+                                <li className="right-menu">
+                                    <button className="search-btn"><Search /></button>
+                                </li>
+                                {isLogin ? (
+                                    <>
+                                    <li className="right-menu">
+                                        <button className="noti-btn"><Noti /></button>
+                                    </li>
+                                    <li className="right-menu">
+                                        <div className="profile">
+                                            <img width="28" height="28" alt="" src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png" />
+                                        </div>
+                                    </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li className="right-menu">
+                                            <button className="sign-btn" onClick={openMoRedux}>회원가입/로그인</button>
+                                        </li>
+                                    </>
+                                )}
+                                <li className="right-menu division">
+                                    <a className="a-dashboard">기업 서비스</a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </nav>
+                </Outline>
             </div>
             <Outlet />
-        </div>
+        </>
     );
 }
 
 const Outline = styled.div`    
-    border-bottom: 1px solid #dddddd;
+    border: 1px solid #dddddd;
     background-color: #fff;
-
-    padding: 0px 305px;
-
-    position: relative;
-    /* max-width: 1060px; */
+    width: 100vw;
 
     .nav{
         display: flex;
         align-items: center;
         /* justify-content: space-between; */
         flex-direction: row;
-        flex-wrap: wrap;
+        /* flex-wrap: wrap; */
+        /* border: 1px solid #222; */
+        width: 1060px;
+        margin: 0 auto;
+        padding-left: 10px;
     }
 
     .menu{
@@ -114,7 +117,7 @@ const Outline = styled.div`
     }
 
     .logo{
-        margin-right: 80px;
+        margin-right: 70px;
     }
 
     .menu-list{
