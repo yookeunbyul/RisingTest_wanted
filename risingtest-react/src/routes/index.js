@@ -1,10 +1,11 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { ReactComponent as Logo } from '../svg/ic-wanted-logo.svg';
 import Head from "../components/common/head";
-import Footer from "../components/common/footer";
+// import Footer from "../components/common/footer";
 import LandingPage from "../pages/landing";
 import JobFeedPage from "../pages/jobfeed";
 import ResumePage from "../pages/resume";
+import WritePage from "../pages/resume/write";
 import FirstBoard from "../pages/onboarding/firstboard";
 import SecondBoard from "../pages/onboarding/secondboard";
 import ThridBoard from "../pages/onboarding/thirdboard";
@@ -22,7 +23,9 @@ const RootRoute = () => {
                         <Route path="/" element={<LandingPage />}></Route>
                         <Route path="/jobfeed" element={<JobFeedPage />}></Route>
                         <Route path="/resume" element={<ResumePage />}></Route>
+                        <Route path="/resume/write" element={<WritePage />}></Route>
                     </Route>
+                        
                     <Route path="/first" element={<FirstBoard />}></Route>
                     <Route path="/second" element={<SecondBoard />}></Route>
                     <Route path="/third" element={<ThridBoard />}></Route>

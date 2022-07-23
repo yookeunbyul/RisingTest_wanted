@@ -36,7 +36,7 @@ const Head = () => {
                 </div> */}
                 <Outline>
                     <nav className="nav">
-                        <div>
+                        <div className="first">
                             <button className="btn-menu side-margin">
                                 <img className="menu" alt="" src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
                             </button>
@@ -44,16 +44,16 @@ const Head = () => {
                             <Logo width={74.38} height={17.33}/>
                             </span>
                         </div>
-                        <ul>
-                            <Menu className="menu-list" onClick={onJobClick} current={location.pathname !== "/jobfeed"}><a>채용</a></Menu>
-                            <li className="menu-list"><a>이벤트</a></li>
-                            <li className="menu-list"><a>직군별 연봉</a></li>
-                            <Menu className="menu-list" onClick={onReClick} current={location.pathname !== "/resume"}><a>이력서</a></Menu>
-                            <li className="menu-list"><a>커뮤니티</a></li>
-                            <li className="menu-list"><a>프리랜서</a></li>
-                            <li className="menu-list"><a>AI 합격예측</a></li>
-                        </ul>
-                        <aside className="aside">
+                        <div className="second">
+                            <Menu onClick={onJobClick} current={location.pathname.includes(`/jobfeed`)}><a>채용</a></Menu>
+                            <Menu className="menu-list"><a>이벤트</a></Menu>
+                            <Menu className="menu-list"><a>직군별 연봉</a></Menu>
+                            <Menu onClick={onReClick} current={location.pathname.includes(`/resume`)}><a>이력서</a></Menu>
+                            <Menu className="menu-list"><a>커뮤니티</a></Menu>
+                            <Menu className="menu-list"><a>프리랜서</a></Menu>
+                            <Menu className="menu-list"><a>AI 합격예측</a></Menu>
+                        </div>
+                        <div className="aside">
                             <ul>
                                 <li className="right-menu">
                                     <button className="search-btn"><Search /></button>
@@ -80,7 +80,7 @@ const Head = () => {
                                     <a className="a-dashboard">기업 서비스</a>
                                 </li>
                             </ul>
-                        </aside>
+                        </div>
                     </nav>
                 </Outline>
             </div>
@@ -90,7 +90,7 @@ const Head = () => {
 }
 
 const Outline = styled.div`    
-    border: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
     background-color: #fff;
     width: 100vw;
 
@@ -103,7 +103,16 @@ const Outline = styled.div`
         /* border: 1px solid #222; */
         width: 1060px;
         margin: 0 auto;
-        padding-left: 10px;
+        /* padding-left: 10px; */
+    }
+
+    .first{
+        display: flex;
+        /* border: 1px solid #222; */
+    }
+
+    .second{
+        /* border: 1px solid #222; */
     }
 
     .menu{
@@ -131,23 +140,6 @@ const Outline = styled.div`
     }
 
     .menu-list:hover::after{
-        display: block;
-        content: "";
-        width: 100%;
-        height: 2px;
-        background-color: #dddddd;
-        /* margin: auto 10px; */
-    }
-
-    .menu-list.open::after{
-        display: block;
-        content: "";
-        width: 100%;
-        height: 2px;
-        background-color: #36f;
-    }
-
-    .menu-list.open:hover::after{
         display: block;
         content: "";
         width: 100%;
@@ -203,7 +195,8 @@ const Outline = styled.div`
     }
 
     .aside{
-        margin-left: 30px;
+        margin-left: 54px;
+        /* border: 1px solid #222; */
     }
 
     .aside > ul > li >*{
@@ -264,12 +257,10 @@ const Outline = styled.div`
 
 `;
 
-const Menu = styled.li`
+const Menu = styled.div`
     text-align: center;
-    height: inherit;
     display: inline-block;
     cursor: pointer;
-    /* color: ${props=>props.current ? "36f" : "#dddddd"}; */
 
     &:hover::after{
         display: block;
@@ -284,7 +275,18 @@ const Menu = styled.li`
         content: "";
         width: 100%;
         height: 2px;
-        background-color: ${props=>props.current ? "#fff" : "#36f"};
+        background-color: ${props=>props.current ? "#36f" : "#fff"};
+    }
+
+    a{
+        position: relative;
+        vertical-align: middle;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+        /* border: 1px solid #222; */
+        padding: 15px 10px 15px 10px;
+        display: inline-block;
     }
 `;
 

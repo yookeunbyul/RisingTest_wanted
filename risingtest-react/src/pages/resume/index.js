@@ -6,7 +6,11 @@ const ResumePage = () => {
 
     return(
         <>
-            {isLogin ? (<LoginResume />) : (<NoLoginResume />)}
+            {isLogin ? (
+                <LoginResume />
+            ) : (
+                <NoLoginResume />
+            )}
         </>
     );
 }

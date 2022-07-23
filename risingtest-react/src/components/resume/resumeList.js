@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const ResumeList = () => {
     const dropRef = useRef();
+    const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
 
@@ -22,6 +24,10 @@ const ResumeList = () => {
         }
     };
 
+    const onWriteClick = () => {
+        navigate(`/resume/write`);
+    }
+
     const onClick = () => {
         setOpen(!open);
     }
@@ -37,7 +43,7 @@ const ResumeList = () => {
                     </div>
                 </div>
                 <div className="list">
-                    <div className="resume upload">
+                    <div className="resume upload" onClick={onWriteClick}>
                         <div className="btn">
                             <span></span>
                         </div>
@@ -134,6 +140,7 @@ const Wrap = styled.div`
     .resume{
         border: 1px solid #dbdbdb;
         background-color: #fff;
+        cursor: pointer;
     }
 
     .resume.upload{
@@ -181,6 +188,7 @@ const Wrap = styled.div`
         font-family: "Font Awesome 5 Free";
         font-weight: 300;
         line-height: 1;
+        font-size: 24px;
         color: #fff;
     }
 
@@ -189,6 +197,7 @@ const Wrap = styled.div`
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
         line-height: 1;
+        font-size: 24px;
         color: #fff;
     }
 
