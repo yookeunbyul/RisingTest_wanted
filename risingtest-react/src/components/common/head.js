@@ -23,8 +23,14 @@ const Head = () => {
     const onJobClick = () => {
         navigate(`/jobfeed`);
     }
+
+    const onReClick = () => {
+        navigate(`/resume`);
+    }
+
     return(
         <div>
+            <div style={{position: "fixed", top: "0", left: "0,", right: "0", zIndex: "99"}}>
             <Outline>
                 <nav className="nav">
                     <div>
@@ -39,7 +45,7 @@ const Head = () => {
                         <Menu className="menu-list" onClick={onJobClick} current={location.pathname !== "/jobfeed"}><a>채용</a></Menu>
                         <li className="menu-list"><a>이벤트</a></li>
                         <li className="menu-list"><a>직군별 연봉</a></li>
-                        <li className="menu-list"><a>이력서</a></li>
+                        <Menu className="menu-list" onClick={onReClick} current={location.pathname !== "/resume"}><a>이력서</a></Menu>
                         <li className="menu-list"><a>커뮤니티</a></li>
                         <li className="menu-list"><a>프리랜서</a></li>
                         <li className="menu-list"><a>AI 합격예측</a></li>
@@ -74,6 +80,7 @@ const Head = () => {
                     </aside>
                 </nav>
             </Outline>
+            </div>
             <Outlet />
         </div>
     );

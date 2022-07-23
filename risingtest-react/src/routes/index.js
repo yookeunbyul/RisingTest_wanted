@@ -4,6 +4,7 @@ import Head from "../components/common/head";
 import Footer from "../components/common/footer";
 import LandingPage from "../pages/landing";
 import JobFeedPage from "../pages/jobfeed";
+import ResumePage from "../pages/resume";
 import FirstBoard from "../pages/onboarding/firstboard";
 import SecondBoard from "../pages/onboarding/secondboard";
 import ThridBoard from "../pages/onboarding/thirdboard";
@@ -20,6 +21,7 @@ const RootRoute = () => {
                     <Route element={<Head />}>
                         <Route path="/" element={<LandingPage />}></Route>
                         <Route path="/jobfeed" element={<JobFeedPage />}></Route>
+                        <Route path="/resume" element={<ResumePage />}></Route>
                     </Route>
                     <Route path="/first" element={<FirstBoard />}></Route>
                     <Route path="/second" element={<SecondBoard />}></Route>
