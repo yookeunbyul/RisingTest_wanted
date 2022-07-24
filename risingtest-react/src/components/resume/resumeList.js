@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const ResumeList = () => {
     const dropRef = useRef();
     const navigate = useNavigate();
+    const token = localStorage.getItem("jwt");
 
     const [open, setOpen] = useState(false);
+    const [resume, setResume] = useState([]);
 
     //Life Cycle 선언
     useEffect(() => {
@@ -16,6 +19,19 @@ const ResumeList = () => {
             document.removeEventListener('mousedown', clickOutside);
         };
     });
+
+    useEffect(() => {
+        axios.get("https://zezeserver.shop/app/resumes",{
+            headers: {
+                'x-access-token': token,
+            }
+        })
+        .then(res => {
+            console.log(res);
+            setResume(res.data.result);
+        })
+        .catch(err => console.log(err))
+    }, [])
 
     //함수 선언
     const clickOutside = event => {
@@ -55,29 +71,36 @@ const ResumeList = () => {
                         </div>
                         <p>파일 업로드</p>
                     </div>
-                    <div className="resume item">
-                        <div className="name">실비아 1</div>
-                        <div className="day">2022.07.23</div>
-                        <div className="under">
-                            <div className="menu">
-                                <div className="lang">한</div>
-                                <div className="write">작성 중</div>
-                            </div>
-                            <div className="menu icon">
-                                <span onClick={onClick} ref={dropRef}>
-                                    {open && 
-                                        <>
-                                            <div className="drop">
-                                                <button>이름 변경</button>
-                                                <button>다운로드</button>
-                                                <button>삭제</button>
-                                            </div>
-                                        </>
-                                    }
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    {resume ? (
+                        resume.map((item) => {
+                            return(
+                                <div className="resume item" key={item.resumeName}>
+                                    <div className="name">{item.resumeName}</div>
+                                    <div className="day">{item.updatedAt}</div>
+                                    <div className="under">
+                                        <div className="menu">
+                                            <div className="lang">한</div>
+                                            <div className="write">{item.status}</div>
+                                        </div>
+                                        <div className="menu icon">
+                                            <span onClick={onClick} ref={dropRef}>
+                                                {open && 
+                                                    <>
+                                                        <div className="drop">
+                                                            <button>이름 변경</button>
+                                                            <button>다운로드</button>
+                                                            <button>삭제</button>
+                                                        </div>
+                                                    </>
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    ) : null}
+                    
                 </div>
             </div>
         </Wrap>

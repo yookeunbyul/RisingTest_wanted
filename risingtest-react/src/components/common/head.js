@@ -28,8 +28,6 @@ const Head = () => {
             .catch(err => console.log(err))
     }, [])
 
-    console.log(category);
-
     const openMoRedux = () => {
         dispatch(
             openMoAction()
