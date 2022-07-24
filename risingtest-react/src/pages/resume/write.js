@@ -67,6 +67,7 @@ const WritePage = () => {
 }
 
 const Wrap = styled.div`
+    padding-top: 50px;
 
     .menu{
         /* border: 1px solid red; */
@@ -76,7 +77,7 @@ const Wrap = styled.div`
         top: 52px;
         left: 0;
         right: 0;
-        z-index: 99;
+        z-index: 50;
     }
 
     .box{

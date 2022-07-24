@@ -109,6 +109,7 @@ const JobFeedPage = () => {
 const Container = styled.div`
     margin: 0 auto;
     width: 1690.97px;
+    padding-top: 50px;
     /* border: 1px solid blue; */
     
     .box{

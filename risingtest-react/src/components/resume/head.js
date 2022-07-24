@@ -26,6 +26,7 @@ const Head  = () => {
 
 const Wrap = styled.div`
     /* border: 1px solid #222; */
+    padding-top: 50px;
 
     .box{
         height: 440px;

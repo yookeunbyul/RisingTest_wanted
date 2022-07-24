@@ -87,6 +87,7 @@ const ResumeList = () => {
 const Wrap = styled.div`
     background-color: #f8f8f8;
     height: 94.5vh;
+    padding-top: 50px;
 
     .box{
         width: 1060px;
@@ -202,7 +203,7 @@ const Wrap = styled.div`
     }
 
     .under{
-        margin-top: 72px;
+        margin-top: 80px;
         width: 247px;
         height: 41px;
         border-top: 1px solid #dbdbdb;
@@ -225,7 +226,7 @@ const Wrap = styled.div`
     }
 
     .resume.item{
-        padding-top: 30px;
+        padding-top: 20px;
     }
 
     .menu > span::before{

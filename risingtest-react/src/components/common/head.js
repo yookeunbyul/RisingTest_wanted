@@ -5,14 +5,30 @@ import { ReactComponent as Noti } from '../../svg/ic-notification.svg';
 import { useDispatch } from "react-redux";
 import { openMoAction } from "../../store/actions/modal";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import axios from "axios";
 
 const Head = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
     const isLogin = localStorage.getItem("jwt");
+
+    const [onHover, setOnHover] = useState(false);
+    const [category, setCategory] = useState([]);
+
+    useEffect(() => {
+        axios.get("https://zezeserver.shop/app/jobgroups",{
+            })
+            .then(res => {
+                // console.log(res);
+                setCategory(res.data.result);
+            })
+            .catch(err => console.log(err))
+    }, [])
+
+    console.log(category);
 
     const openMoRedux = () => {
         dispatch(
@@ -28,14 +44,57 @@ const Head = () => {
         navigate(`/resume`);
     }
 
+    const onLogoClick = () => {
+        navigate(`/`);
+    }
+
+    const onMouseOver = () => {
+        setOnHover(true);
+    }
+
+    const onMouseOut = () => {
+        setOnHover(false);
+    }
+
     return(
         <>
             <Wrap>
                 <div className="menu">
                     <div className="box">
                         <div className="section">
-                            <img width="17" alt="" src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
-                            <Logo className="logo" width={74.38} height={17.33}/>
+                            <img
+                                onMouseOver={onMouseOver}
+                                class="menubar" 
+                                width="17"
+                                alt=""
+                                src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
+                            {onHover &&
+                                <>
+                                    <div onMouseOver={onMouseOver} onMouseOut={onMouseOut} className="menu-category">
+                                        <div className="job-menu">
+                                            <span>직군 전체</span>
+                                        </div>
+                                        {category ? (
+                                            category.map((menu) => {
+                                                return(
+                                                    <>
+                                                    <div className="job-menu" key={menu.jobGroupCategoryId}>
+                                                        <span>{menu.name}</span>
+                                                    </div>
+                                                    </>
+                                                )
+                                            })
+                                        ) : null}
+                                        <div className="job-free">
+                                            <span>
+                                                프리랜서
+                                            </span>
+                                        </div>
+                                    </div>
+                                </>
+                            }
+                            
+                            <Logo onClick={onLogoClick} className="logo" width={74.38} height={17.33}/>
                         </div>
                         <div className="section second">
                             <Menu onClick={onJobClick} current={location.pathname.includes(`/jobfeed`)}><a>채용</a></Menu>
@@ -102,6 +161,61 @@ const Wrap = styled.div`
 
         display:flex;
         align-items: center;
+        position: relative;
+    }
+
+    .menu-category{
+        position: absolute;
+        width: 220px;
+        /* border: 1px solid #222; */
+        background-color: #fff;
+        left: -20px;
+        top: 51px;
+        z-index: 100 !important;
+
+        display:flex;
+        flex-direction: column;
+    }
+
+    .job-menu{
+        height: 40px;
+        padding: 0.5px 20px;
+        font-size: 14px;
+        font-weight: 700;
+        font-style: normal;
+        line-height: 2.86;
+        letter-spacing: normal;
+        cursor: pointer;
+        z-index: 100 !important;
+
+        &:hover{
+            color: #36f;
+            background-color: #f7f9fa;
+        }
+    }
+
+    .job-free{
+        height: 50px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 3px;
+        font-size: 13px;
+        font-weight: 700;
+        font-style: normal;
+        line-height: 2.86;
+        letter-spacing: normal;
+        cursor: pointer;
+        z-index: 100 !important;
+        color: #36f;
+    }
+
+    .job-free > span{
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        background: #f5f7ff url(https://image.wanted.co.kr/gigs/www/wanted/gigs_banner_background_img.png) no-repeat 100%;
+        background-size: 160px 50px;
+        padding: 0px 0px 0px 15px;
     }
 
     .section.second{
@@ -115,7 +229,13 @@ const Wrap = styled.div`
     }
 
     .logo{
-        margin-left: 10px;
+        margin-left: 15px;
+        margin-bottom: 4px;
+        cursor: pointer;
+    }
+
+    .menubar{
+        cursor: pointer;
     }
 
     .a-section{
@@ -164,8 +284,8 @@ const Wrap = styled.div`
     }
 
     .profile{
-        width: 32px;
-        height: 32px;
+        width: 31.5px;
+        height: 31px;
         border-radius: 50%;
         border: 1px solid #e1e2e3;
         background-color: #fff;
