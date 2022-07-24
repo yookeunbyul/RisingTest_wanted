@@ -41,7 +41,16 @@ const ResumeList = () => {
     };
 
     const onWriteClick = () => {
-        navigate(`/resume/write`);
+        // navigate(`/resume/write`);
+        axios.post("https://zezeserver.shop/app/newResume",{
+            headers: {
+                'x-access-token': token,
+            }
+        })
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => console.log(err))
     }
 
     const onClick = () => {
@@ -109,8 +118,8 @@ const ResumeList = () => {
 
 const Wrap = styled.div`
     background-color: #f8f8f8;
-    height: 94.5vh;
-    padding-top: 50px;
+    height: 100%;
+    padding: 50px 0px;
 
     .box{
         width: 1060px;

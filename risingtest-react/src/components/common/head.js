@@ -54,6 +54,11 @@ const Head = () => {
         setOnHover(false);
     }
 
+    const onAllClick = () => {
+        navigate(`/joblist`);
+        setOnHover(false);
+    }
+
     return(
         <>
             <Wrap>
@@ -69,7 +74,7 @@ const Head = () => {
                             {onHover &&
                                 <>
                                     <div onMouseOver={onMouseOver} onMouseOut={onMouseOut} className="menu-category">
-                                        <div className="job-menu">
+                                        <div className="job-menu" onClick={onAllClick}>
                                             <span>직군 전체</span>
                                         </div>
                                         {category ? (
@@ -329,7 +334,7 @@ const Menu = styled.div`
         line-height: 20px;
         font-weight: 500;
         /* border: 1px solid #222; */
-        padding: 15px 10px 15px 10px;
+        padding: 15px 15px 15px 15px;
         display: inline-block;
     }
 `;

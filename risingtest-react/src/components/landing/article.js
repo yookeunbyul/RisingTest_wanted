@@ -152,7 +152,7 @@ const StyledSlide = styled(Slider)`
 
     .slick-prev{
         top: -60px;
-        z-index: 99;
+        z-index: 66;
         left: 0;
     }
 
