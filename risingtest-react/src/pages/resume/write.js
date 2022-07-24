@@ -2,6 +2,12 @@ import styled from 'styled-components';
 import ResumeHead from "../../components/resume/resumeHead";
 import Intro from "../../components/resume/intro";
 import Annual from "../../components/resume/annual";
+import School from "../../components/resume/school";
+import Skill from "../../components/resume/skill";
+import Prize from "../../components/resume/prize";
+import Language from "../../components/resume/language";
+import Link from "../../components/resume/link";
+import Footer from "../../components/resume/footer";
 
 const WritePage = () => {
     return(
@@ -39,6 +45,23 @@ const WritePage = () => {
 
             {/* 경력 */}
             <Annual />
+
+            {/* 학력 */}
+            <School />
+            
+            {/* 스킬 */}
+            <Skill />
+
+            {/* 수상 및 기타 */}
+            <Prize />
+
+            {/* 외국어 */}
+            <Language />
+
+            {/* 링크 */}
+            <Link />
+
+            <Footer />
         </Wrap>
     );
 }
@@ -50,7 +73,7 @@ const Wrap = styled.div`
         height: 80px;
         position: fixed;
         background-color: #fff;
-        top: 55px;
+        top: 52px;
         left: 0;
         right: 0;
         z-index: 99;

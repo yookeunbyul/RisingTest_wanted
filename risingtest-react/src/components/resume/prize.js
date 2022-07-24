@@ -1,28 +1,14 @@
 import styled from 'styled-components';
 
-const Annual = () => {
+const Prize = () => {
     return(
         <Wrap>
-            <div className="title">경력</div>
+            <div className="title">수상 및 기타</div>
             <p className="guide-box">
-                • 담당하신 업무 중 우선순위가 높은 업무를 선별하여 최신순으로 작성해주세요. 
+                • 수상 이력, 직무 관련 자격증, 수료한 교육이나 참석한 외부활동 등이 있다면 간략히 작성해주세요.
                 <br />
-                • 신입의 경우, 직무와 관련된 대외활동, 인턴, 계약직 경력 등이 있다면 작성해주세요. 
-                <br />
-                • 업무 또는 활동 시 담당했던 역할과 과정, 성과에 대해 자세히 작성해주세요.  
-                <br />
-                • 업무 성과는 되도록 구체적인 숫자 혹은 [%]로 표현해주세요! 
-                <br />
-                • 경력 조회 후 기업명이 실제와 다른 경우, 부서명/직책 란에 원하시는 기업명을 작성해주세요.
+                • 지원하는 회사에서 요구하는 경우가 아니라면 운전면허증과 같은 자격증은 생략하는 것이 좋습니다!
             </p>
-            <button className="more">
-                <div className="section">
-                    내 경력 정보를 한 번에 불러올까요? 기억 안 나는 경력 정보, 알아서 채워드려요!
-                </div>
-                <div className="section right">
-                    <span>내 경력 한눈에 모아보기</span>
-                </div>
-            </button>
             <div className="add">
                 <button>+ 추가</button>
             </div>
@@ -129,4 +115,4 @@ const Hr = styled.div`
     }
 `;
 
-export default Annual;
+export default Prize;
