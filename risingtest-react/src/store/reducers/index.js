@@ -4,6 +4,7 @@ import SignModalReducer from './signModal';
 import JobGroupReducer from './jobGroup';
 import UserReducer from './user';
 import JobInfoReducer from "./jobinfo";
+import ResumeIdReducer from "./resumeId";
 
 
 const RootReducer = combineReducers({
@@ -12,6 +13,7 @@ const RootReducer = combineReducers({
     JobGroupReducer,
     UserReducer,
     JobInfoReducer,
+    ResumeIdReducer
 })
 
 export default RootReducer;

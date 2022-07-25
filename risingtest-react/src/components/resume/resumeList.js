@@ -2,8 +2,11 @@ import styled from 'styled-components';
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { UpdateIDAction } from "../../store/actions/resumeId";
 
 const ResumeList = () => {
+    const dispatch = useDispatch();
     const dropRef = useRef();
     const navigate = useNavigate();
     const token = localStorage.getItem("jwt");
@@ -36,7 +39,7 @@ const ResumeList = () => {
 
     //함수 선언
     const clickOutside = event => {
-        if (id && !dropRef.current.contains(event.target)) {
+        if (!dropRef.current.contains(event.target)) {
             setId("");
         }
     };
@@ -44,7 +47,6 @@ const ResumeList = () => {
     const onWriteClick = () => {
         navigate(`/resume/write`);
         axios.post("https://zezeserver.shop/app/resumes",{
-
         },
         {
             headers: {
@@ -53,13 +55,27 @@ const ResumeList = () => {
         })
         .then(res => {
             console.log(res);
+            dispatch(
+                UpdateIDAction({
+                    resumeId : res.data.result.resumeId,
+                })
+            );
         })
         .catch(err => console.log(err))
     }
 
     const onClick = (clickid) => {
         setId(clickid);
+
+        if(id){
+            setId("");
+        }
     }
+
+    const onDelete = (id) => {
+        console.log(id);
+    }
+
     return(
             <Wrap>
                     <div className="box">
@@ -102,7 +118,7 @@ const ResumeList = () => {
                                                                 <div className="drop" ref={dropRef}>
                                                                     <button>이름 변경</button>
                                                                     <button>다운로드</button>
-                                                                    <button>삭제</button>
+                                                                    <button onClick={() => onDelete(item.resumeId)}>삭제</button>
                                                                 </div>
                                                             </>
                                                         )}
@@ -329,9 +345,15 @@ const Wrap = styled.div`
     .drop > button{
         text-align: left;
         border:none;
-        background-color: transparent;
+        background-color: #fff;
         padding: 3px 20px;
         cursor: pointer;
+
+        &:hover{
+        background-color: #f8f8f8;
+        }
     }
+
+
 `;
 export default ResumeList;

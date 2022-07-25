@@ -1,18 +1,62 @@
 import styled from 'styled-components';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const ResumeHead = () => {
+    const { resumeId } = useSelector((state) => state.ResumeIdReducer);
+    const token = localStorage.getItem("jwt");
+    const [titleValue, setTitleValue] = useState("");
+    const [NameValue, setNameValue] = useState("");
+    const [EmailValue, setEmailValue] = useState("");
+    const [PhoneValue, setPhoneValue] = useState("");
+
+    useEffect(() => {
+        axios.get(`https://zezeserver.shop/app/resumes/${resumeId}`,{
+            headers: {
+                'x-access-token': token,
+            }
+        })
+        .then(res => {
+            console.log(res);
+            setTitleValue(res.data.result.resumInfo.map(i=>i.resumeName));
+            setNameValue(res.data.result.resumInfo.map(i=>i.userName));
+            setEmailValue(res.data.result.resumInfo.map(i=>i.userEmail));
+            setPhoneValue(res.data.result.resumInfo.map(i=>i.userTel));
+        })
+        .catch(err => console.log(err))
+    }, [])
+
+    const onTitleChange = (e) => {
+        setTitleValue(e.target.value);
+    }
+
+    const onNameChange = (e) => {
+        setNameValue(e.target.value);
+    }
+
+    const onEmailChange = (e) => {
+        setEmailValue(e.target.value);
+    }
+
+    const onPhoneChange = (e) => {
+        setPhoneValue(e.target.value);
+    }
+
     return(
         <Wrap>
-            <input className="title" value="실비아 2"/>
+            <input className="title" value={titleValue} onChange={onTitleChange}/>
             <div className="info-wrap">
-                <input className="info" value="실비아"/>
+                <input className="info" value={NameValue} onChange={onNameChange}/>
             </div>
             <div>
-                <input className="info" value="si89336@naver.com"/>
+                <input className="info" value={EmailValue} onChange={onEmailChange}/>
             </div>
             <div>
-                <input className="info" value="+8201011111111"/>
+                <input className="info" value={PhoneValue} onChange={onPhoneChange}/>
             </div>
+
+            
         </Wrap>
     );
 }
