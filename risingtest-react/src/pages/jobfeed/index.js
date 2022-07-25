@@ -42,7 +42,7 @@ const JobFeedPage = () => {
         };
 
     return(
-        <>
+        <Out>
             {/* 헤더 */}
             {/* <Outlet /> */}
 
@@ -102,9 +102,13 @@ const JobFeedPage = () => {
             <HotFeed />
 
             <Footer />
-        </>
+        </Out>
     );
 }
+
+const Out = styled.div`
+    overflow-x: hidden;
+`;
 
 const Container = styled.div`
     margin: 0 auto;

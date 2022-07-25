@@ -65,8 +65,6 @@ const SecondBoard = () => {
         }
     }, [school, company])
 
-
-
     const filtered = schoolList && schoolList.filter((itemList) => {
         return (
             itemList.name.includes(school)

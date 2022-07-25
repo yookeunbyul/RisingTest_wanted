@@ -10,5 +10,6 @@ const JobListPage = () => {
 
 const Wrap = styled.div`
     padding-top: 50px;
+    overflow-x: hidden;
 `;
 export default JobListPage;

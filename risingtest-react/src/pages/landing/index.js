@@ -47,7 +47,7 @@ const LandingPage = () => {
         };
 
     return(
-        <>
+        <Out>
             {/* 헤더 */}
             
 
@@ -117,9 +117,13 @@ const LandingPage = () => {
 
             {/* footer */}
             <Footer />
-        </>
+        </Out>
     );
 }
+
+const Out = styled.div`
+    overflow-x: hidden;
+`;
 
 const Box = styled.div`
     width: 1095px;

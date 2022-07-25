@@ -8,8 +8,11 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useState, useEffect } from "react";
 import ScrollFilter from "./scrollFilter";
+import { useNavigate } from 'react-router-dom';
 
 const Filter = () => {
+    const navigate = useNavigate();
+
     const [showCate, setShowCate] = useState(false);
     const [showAnnual, setShowAnnual] = useState(false);
     const [showSkill, setShowSkill] = useState(false);
@@ -34,6 +37,10 @@ const Filter = () => {
         slidesToShow: 8,
         slidesToScroll: 3
     };
+
+    const onJonInfo = () => {
+        navigate(`/jobinfo`);
+    }
 
     return(
         <>
@@ -151,7 +158,7 @@ const Filter = () => {
 
                 <div className="info">
                     <div className="position-wrap">
-                        <div className="head">
+                        <div className="head" onClick={onJonInfo}>
                             <button><Bookmark/></button>
                             <div className="img-wrap">
                                 <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
