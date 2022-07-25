@@ -8,7 +8,8 @@ const ResumeList = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem("jwt");
 
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
+    const [id, setId] = useState("");
     const [resume, setResume] = useState([]);
 
     //Life Cycle 선언
@@ -35,13 +36,13 @@ const ResumeList = () => {
 
     //함수 선언
     const clickOutside = event => {
-        if (open && !dropRef.current.contains(event.target)) {
-            setOpen(false);
+        if (id && !dropRef.current.contains(event.target)) {
+            setId("");
         }
     };
 
     const onWriteClick = () => {
-        // navigate(`/resume/write`);
+        navigate(`/resume/write`);
         axios.post("https://zezeserver.shop/app/resumes",{
 
         },
@@ -56,9 +57,8 @@ const ResumeList = () => {
         .catch(err => console.log(err))
     }
 
-    const onClick = (id) => {
-        console.log(id);
-        setOpen(!open);
+    const onClick = (clickid) => {
+        setId(clickid);
     }
     return(
             <Wrap>
@@ -96,16 +96,16 @@ const ResumeList = () => {
                                                     <div className="write">{item.status}</div>
                                                 </div>
                                                 <div className="menu icon">
-                                                    <span onClick={onClick} ref={dropRef}>
-                                                        {open && 
+                                                    <span onClick={() => onClick(item.resumeId)}>
+                                                        {item.resumeId === id && (
                                                             <>
-                                                                <div className="drop">
+                                                                <div className="drop" ref={dropRef}>
                                                                     <button>이름 변경</button>
                                                                     <button>다운로드</button>
                                                                     <button>삭제</button>
                                                                 </div>
                                                             </>
-                                                        }
+                                                        )}
                                                     </span>
                                                 </div>
                                             </div>
