@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import FilterHead from "../../components/joblist/filterHead";
+import Filter from "../../components/joblist/filter";
 const JobListPage = () => {
     return(
         <Wrap>
-            <FilterHead />
+            <Filter />
         </Wrap>
     );
 }
