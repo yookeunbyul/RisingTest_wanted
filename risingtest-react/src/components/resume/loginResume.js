@@ -10,11 +10,11 @@ const LoginResume = () => {
 }
 
 const Wrap = styled.div`
-    height: 100vh;
+    height: 89vh;
     width: 100vw;
     background-color: #f8f8f8;
-    overflow-y: auto;
-    /* padding-bottom: 100px; */
+    overflow: auto;
+    padding-bottom: 100px;
 `;
 
 export default LoginResume;

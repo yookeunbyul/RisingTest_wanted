@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { UpdateIDAction } from "../../store/actions/resumeId";
+import { openDeMoAction } from "../../store/actions/resumeModal";
 
 const ResumeList = () => {
     const dispatch = useDispatch();
@@ -25,16 +26,25 @@ const ResumeList = () => {
     });
 
     useEffect(() => {
+        let isCompleted = false;
         axios.get("https://zezeserver.shop/app/resumes",{
             headers: {
                 'x-access-token': token,
             }
         })
         .then(res => {
-            console.log(res);
-            setResume(res.data.result);
+            if(!isCompleted){
+                console.log(res);
+                setResume(res.data.result);
+            }
+            
         })
         .catch(err => console.log(err))
+
+        return() => {
+            console.log("done");
+            isCompleted = true;
+        };
     }, [])
 
     //함수 선언
@@ -54,7 +64,7 @@ const ResumeList = () => {
             }
         })
         .then(res => {
-            console.log(res);
+            console.log(res.data.result.resumeId);
             dispatch(
                 UpdateIDAction({
                     resumeId : res.data.result.resumeId,
@@ -65,6 +75,7 @@ const ResumeList = () => {
     }
 
     const onClick = (clickid) => {
+        console.log(clickid);
         setId(clickid);
 
         if(id){
@@ -72,8 +83,15 @@ const ResumeList = () => {
         }
     }
 
-    const onDelete = (id) => {
+    const onDelete = (id, name) => {
         console.log(id);
+        console.log(name);
+        dispatch(
+            openDeMoAction({
+                resumeName : name,
+                resumeId: id,
+            })
+        );
     }
 
     return(
@@ -118,7 +136,7 @@ const ResumeList = () => {
                                                                 <div className="drop" ref={dropRef}>
                                                                     <button>이름 변경</button>
                                                                     <button>다운로드</button>
-                                                                    <button onClick={() => onDelete(item.resumeId)}>삭제</button>
+                                                                    <button onClick={() => onDelete(item.resumeId, item.resumeName)}>삭제</button>
                                                                 </div>
                                                             </>
                                                         )}
@@ -141,7 +159,7 @@ const Wrap = styled.div`
         width: 1060px;
         margin: 0 auto;
         /* border: 1px solid #2222; */
-        padding-bottom: 100px;
+        /* padding-bottom: 100px; */
     }
 
     .head{

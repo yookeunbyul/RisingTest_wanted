@@ -16,16 +16,16 @@ const ResumeHead = () => {
             headers: {
                 'x-access-token': token,
             }
-        })
-        .then(res => {
+            })
+            .then(res => {
             console.log(res);
             setTitleValue(res.data.result.resumInfo.map(i=>i.resumeName));
             setNameValue(res.data.result.resumInfo.map(i=>i.userName));
             setEmailValue(res.data.result.resumInfo.map(i=>i.userEmail));
             setPhoneValue(res.data.result.resumInfo.map(i=>i.userTel));
-        })
-        .catch(err => console.log(err))
-    }, [])
+            })
+            .catch(err => console.log(err))
+    }, [resumeId])
 
     const onTitleChange = (e) => {
         setTitleValue(e.target.value);

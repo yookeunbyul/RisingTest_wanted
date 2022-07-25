@@ -12,8 +12,10 @@ import SecondBoard from "../pages/onboarding/secondboard";
 import ThridBoard from "../pages/onboarding/thirdboard";
 import Modal from "../components/common/modal";
 import SignModal from "../components/common/signModal";
+import ResumeModal from "../components/common/resumeModal";
 import Email from "../components/modal/email";
 import Sign from "../components/modal/sign";
+import DeleteResume from "../components/modal/deleteResume";
 
 const RootRoute = () => {
     return (
@@ -41,6 +43,10 @@ const RootRoute = () => {
                 <SignModal header="회원가입">
                     <Sign />
                 </SignModal>
+
+                <ResumeModal>
+                    <DeleteResume />
+                </ResumeModal>
             </BrowserRouter>
         </>
     );
