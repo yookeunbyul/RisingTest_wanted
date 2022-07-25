@@ -42,7 +42,10 @@ const ResumeList = () => {
 
     const onWriteClick = () => {
         // navigate(`/resume/write`);
-        axios.post("https://zezeserver.shop/app/newResume",{
+        axios.post("https://zezeserver.shop/app/resumes",{
+
+        },
+        {
             headers: {
                 'x-access-token': token,
             }
@@ -53,84 +56,82 @@ const ResumeList = () => {
         .catch(err => console.log(err))
     }
 
-    const onClick = () => {
+    const onClick = (id) => {
+        console.log(id);
         setOpen(!open);
     }
     return(
-        <Wrap>
-            <div className="box">
-                <div className="head">
-                    <div className="section left">
-                        최근 문서
-                    </div>
-                    <div className="section right">
-                        <span>원티드 이력서 소개</span>
-                    </div>
-                </div>
-                <div className="list">
-                    <div className="resume upload" onClick={onWriteClick}>
-                        <div className="btn">
-                            <span></span>
+            <Wrap>
+                    <div className="box">
+                        <div className="head">
+                            <div className="section left">
+                                최근 문서
+                            </div>
+                            <div className="section right">
+                                <span>원티드 이력서 소개</span>
+                            </div>
                         </div>
-                        <p>새 이력서 작성</p>
-                    </div>
-                    <div className="resume upload">
-                        <div className="file-btn">
-                            <span></span>
-                        </div>
-                        <p>파일 업로드</p>
-                    </div>
-                    {resume ? (
-                        resume.map((item) => {
-                            return(
-                                <div className="resume item" key={item.resumeName}>
-                                    <div className="name">{item.resumeName}</div>
-                                    <div className="day">{item.updatedAt}</div>
-                                    <div className="under">
-                                        <div className="menu">
-                                            <div className="lang">한</div>
-                                            <div className="write">{item.status}</div>
-                                        </div>
-                                        <div className="menu icon">
-                                            <span onClick={onClick} ref={dropRef}>
-                                                {open && 
-                                                    <>
-                                                        <div className="drop">
-                                                            <button>이름 변경</button>
-                                                            <button>다운로드</button>
-                                                            <button>삭제</button>
-                                                        </div>
-                                                    </>
-                                                }
-                                            </span>
-                                        </div>
-                                    </div>
+                        <div className="list">
+                            <div className="resume upload" onClick={onWriteClick}>
+                                <div className="btn">
+                                    <span></span>
                                 </div>
-                            )
-                        })
-                    ) : null}
-                    
-                </div>
-            </div>
-        </Wrap>
+                                <p>새 이력서 작성</p>
+                            </div>
+                            <div className="resume upload">
+                                <div className="file-btn">
+                                    <span></span>
+                                </div>
+                                <p>파일 업로드</p>
+                            </div>
+                            {resume ? (
+                                resume.map((item) => {
+                                    return(
+                                        <div className="resume item" key={item.resumeId}>
+                                            <div className="name">{item.resumeName}</div>
+                                            <div className="day">{item.updatedAt}</div>
+                                            <div className="under">
+                                                <div className="menu">
+                                                    <div className="lang">한</div>
+                                                    <div className="write">{item.status}</div>
+                                                </div>
+                                                <div className="menu icon">
+                                                    <span onClick={onClick} ref={dropRef}>
+                                                        {open && 
+                                                            <>
+                                                                <div className="drop">
+                                                                    <button>이름 변경</button>
+                                                                    <button>다운로드</button>
+                                                                    <button>삭제</button>
+                                                                </div>
+                                                            </>
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            ) : null}
+                        </div>
+                    </div>
+            </Wrap>
     );
 }
 
 const Wrap = styled.div`
-    background-color: #f8f8f8;
-    height: 100%;
-    padding: 50px 0px;
 
     .box{
         width: 1060px;
         margin: 0 auto;
-        /* border: 1px solid #2222 */
+        /* border: 1px solid #2222; */
+        padding-bottom: 100px;
     }
 
     .head{
         display: flex;
         flex-direction: row;
-        padding-top: 30px;
+        padding-top: 80px;
         margin-bottom: 20px;
     }
 
