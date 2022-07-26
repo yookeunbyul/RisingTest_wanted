@@ -17,7 +17,9 @@ const Head = () => {
 
     const [onHover, setOnHover] = useState(false);
     const [category, setCategory] = useState([]);
+    const [jobgroup, setJobGroup] = useState([]);
     const [clickProfile, setClickProfile] = useState(false);
+    const [onMenu, setOnMenu] = useState(false);
 
     useEffect(() => {
         axios.get("https://zezeserver.shop/app/jobgroups",{
@@ -28,6 +30,12 @@ const Head = () => {
             })
             .catch(err => console.log(err))
     }, [])
+
+    useEffect(() => {
+        if(onHover === false){
+            setJobGroup("");
+        }
+    }, [onHover])
 
     const openMoRedux = () => {
         dispatch(
@@ -73,6 +81,16 @@ const Head = () => {
         location.reload();
     }
 
+    const onMenuOver  = (id) => {
+        axios.get(`https://zezeserver.shop/app/jobgroup/${id}/jobcategories`,{
+            })
+            .then(res => {
+                console.log(res);
+                setJobGroup(res.data.result);
+            })
+            .catch(err => console.log(err))
+    }
+
     return(
         <>
             <Wrap>
@@ -85,32 +103,44 @@ const Head = () => {
                                 width="17"
                                 alt=""
                                 src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Ficon-menu.png&w=undefined&q=75" />
-                            {onHover &&
-                                <>
                                     <div onMouseOver={onMouseOver} onMouseOut={onMouseOut} className="menu-category">
-                                        <div className="job-menu" onClick={onAllClick}>
-                                            <span>직군 전체</span>
-                                        </div>
-                                        {category ? (
-                                            category.map((menu) => {
-                                                return(
-                                                    <>
-                                                    <div className="job-menu" key={menu.jobGroupCategoryId}>
-                                                        <span>{menu.name}</span>
-                                                    </div>
-                                                    </>
-                                                )
-                                            })
-                                        ) : null}
-                                        <div className="job-free">
-                                            <span>
-                                                프리랜서
-                                            </span>
-                                        </div>
+                                        {onHover && 
+                                            <>
+                                                <div className="job-group-wrap">
+                                                    {jobgroup ? (
+                                                        jobgroup.map((job) => {
+                                                            return(
+                                                                <div className="job-group" key={job.categoryId}>
+                                                                    {job.name}
+                                                                </div>
+                                                            )
+                                                        })
+                                                    ) : null}
+                                                </div>
+                                                <div className="job-menu" onClick={onAllClick}>
+                                                    <span>직군 전체</span>
+                                                </div>
+                                                {category ? (
+                                                    category.map((menu) => {
+                                                        return(
+                                                            <>
+                                                            <div className="job-menu" key={menu.jobGroupCategoryId} onMouseOver={() => onMenuOver(menu.jobGroupCategoryId)}>
+                                                                <span className="job-name">
+                                                                    {menu.name}
+                                                                </span>
+                                                            </div>
+                                                            </>
+                                                        )
+                                                    })
+                                                ) : null}
+                                                <div className="job-free">
+                                                    <span>
+                                                        프리랜서
+                                                    </span>
+                                                </div>
+                                            </>
+                                        }
                                     </div>
-                                </>
-                            }
-                            
                             <Logo onClick={onLogoClick} className="logo" width={74.38} height={17.33}/>
                         </div>
                         <div className="section second">
@@ -233,6 +263,33 @@ const Wrap = styled.div`
         }
     }
 
+    .job-group-wrap{
+        position: absolute;
+        right:-400px;
+        background-color: #f7f9fa;
+        /* border: 1px solid red; */
+
+        display:grid;
+        grid-template-columns: 200px 200px;
+    }
+
+    .job-group{
+        background-color: #f7f9fa;
+        /* width: 200px; */
+        padding: 0 20px;
+        /* border: 1px solid #222; */
+        height: 40px;
+        font-size: 13px;
+        display:flex;
+        align-items: center;
+        cursor: pointer;
+        letter-spacing: -1px;
+
+        &:hover{
+            color: #36f;
+        }
+    }
+
     .job-free{
         height: 50px;
         padding-left: 20px;
@@ -325,7 +382,7 @@ const Wrap = styled.div`
     }
 
     .profile{
-        width: 31.5px;
+        width: 30px;
         height: 31px;
         border-radius: 50%;
         background-color: #fff;
