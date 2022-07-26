@@ -6,19 +6,22 @@ import { ReactComponent as Bookmark } from '../../svg/ic-bookmark.svg';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ScrollFilter from "./scrollFilter";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const Filter = () => {
     const navigate = useNavigate();
+    const dropRef = useRef();
 
     const [showCate, setShowCate] = useState(false);
     const [showAnnual, setShowAnnual] = useState(false);
     const [showSkill, setShowSkill] = useState(false);
     const [showRes, setShowRes] = useState(false);
-
+    const [jobCate, setJobCate] = useState([]);
     const [scrollPosition, setScrollPosition] = useState(0);
+
     const updateScroll = () => {
         setScrollPosition(window.scrollY || document.documentElement.scrollTop);
     }
@@ -29,6 +32,22 @@ const Filter = () => {
             document.removeEventListener('scroll', updateScroll);
         }
     });
+
+    //Life Cycle 선언
+    useEffect(() => {
+        document.addEventListener('mousedown', clickDropOutside);
+
+        return() => {
+            document.removeEventListener('mousedown', clickDropOutside);
+        };
+    });
+
+    //함수 선언
+    const clickDropOutside = event => {
+        if (!dropRef.current.contains(event.target)) {
+            setShowCate(false);
+        }
+    };
 
     const settings = {
         dots: false,
@@ -42,6 +61,17 @@ const Filter = () => {
         navigate(`/jobinfo`);
     }
 
+    const onCateClick = () => {
+        setShowCate(!showCate);
+        axios.get(`https://zezeserver.shop/app/jobgroups`,{
+            })
+            .then(res => {
+                console.log(res);
+                setJobCate(res.data.result);
+            })
+            .catch(err => console.log(err))
+    }
+
     return(
         <>
             {scrollPosition > 250 ? <ScrollFilter /> : null}
@@ -49,9 +79,28 @@ const Filter = () => {
             <Wrap>
                 <div className="box">
                     <div className="cate">
-                        <button onClick={() => setShowCate(!showCate)} className={`select-box ${showCate ? 'open' : ''}`}>
+                        <button onClick={onCateClick} className={`select-box ${showCate ? 'open' : ''}`} ref={dropRef}>
                             <span className="title">전체</span>
                             <span className="under-btn"><UnderArrow /></span>
+                            {showCate &&
+                                <div className="jobcate-drop">
+                                    <div className="jobcate-list">
+                                        전체
+                                    </div>
+                                    {jobCate ? (
+                                        jobCate.map((cate) => {
+                                            return(
+                                                <>
+                                                    <div className="jobcate-list" key={cate.jobGroupCategoryId}>
+                                                        {cate.name}
+                                                    </div>
+                                                </>
+                                            )
+                                        })
+                                    ) : null}
+                                </div>
+                            }
+                            
                         </button>
                     </div>
                     <div className="job-option">
@@ -302,7 +351,7 @@ const Filter = () => {
 
 const Wrap = styled.div`
     /* border: 1px solid #222; */
-    overflow: hidden;
+    /* overflow: hidden; */
     width: 1060px;
     margin: 0 auto;
 
@@ -312,6 +361,33 @@ const Wrap = styled.div`
 
         display: flex;
         align-items: center;
+    }
+
+    .jobcate-drop{
+        position: absolute;
+        top: 40px;
+        left: -1px;
+        width: 190px;
+        height: 641.2px;
+        background-color: #fff;
+        border: 1px solid #e1e2e3;
+        box-shadow: 0 4px 8px rgb(0 0 0 / 15%);
+        border-radius: 5px;
+        z-index: 88;
+        padding: 15px 0;
+
+        overflow-y: auto;
+    }
+
+    .jobcate-list{
+        padding: 11px 25px 9px;
+        font-size: 16px;
+        text-align: left;
+        letter-spacing: -1.5px;
+
+        &:hover{
+            background-color: #f8f8f8;
+        }
     }
 
     .cate > button{
@@ -330,6 +406,10 @@ const Wrap = styled.div`
         line-height: 29px;
         font-weight: 700;
         color: #333;
+    }
+
+    .select-box{
+        position: relative;
     }
 
     .select-box > .under-btn{
@@ -462,6 +542,7 @@ const Wrap = styled.div`
 
     .scroll{
         display: flex;
+        overflow-x: hidden;
     }
 `;
 
