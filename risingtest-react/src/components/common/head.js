@@ -17,6 +17,7 @@ const Head = () => {
 
     const [onHover, setOnHover] = useState(false);
     const [category, setCategory] = useState([]);
+    const [clickProfile, setClickProfile] = useState(false);
 
     useEffect(() => {
         axios.get("https://zezeserver.shop/app/jobgroups",{
@@ -57,6 +58,10 @@ const Head = () => {
     const onAllClick = () => {
         navigate(`/joblist`);
         setOnHover(false);
+    }
+
+    const onProfileClick = () => {
+        setClickProfile(!clickProfile);
     }
 
     return(
@@ -113,9 +118,31 @@ const Head = () => {
                             {isLogin ? (
                                 <>
                                     <button className="noti-btn"><Noti /></button>
-                                    <div className="profile">
+                                    <Profile className="profile" onClick={onProfileClick} isClick={clickProfile}>
                                         <img width="28" height="28" alt="" src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png" />
-                                    </div>
+                                        {clickProfile &&
+                                            <>
+                                                <div className="drop-container">
+                                                    <div className="profile-drop">
+                                                        <ul>
+                                                            <li className="drop-menu">My 원티드</li>
+                                                            <li className="drop-menu">프로필</li>
+                                                            <hr />
+                                                            <li className="drop-menu">지원 현황</li>
+                                                            <li className="drop-menu">제안받기 현황</li>
+                                                            <li className="drop-menu">좋아요</li>
+                                                            <li className="drop-menu">북마크</li>
+                                                            <hr />
+                                                            <li className="drop-menu">추천</li>
+                                                            <li className="drop-menu">포인트</li>
+                                                            <li className="logout">로그아웃</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div className="bubble-point"></div>
+                                                </div>
+                                            </>
+                                        }
+                                    </Profile>
                                 </>
                             ) : (
                                 <>
@@ -291,12 +318,14 @@ const Wrap = styled.div`
         width: 31.5px;
         height: 31px;
         border-radius: 50%;
-        border: 1px solid #e1e2e3;
         background-color: #fff;
         display: flex;
         margin: 0px 5px;
         align-items: center;
         justify-content: center;
+
+        position: relative;
+        cursor: pointer;
     }
 
     .profile > img{
@@ -304,6 +333,88 @@ const Wrap = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .drop-container{
+        position: absolute;
+        top: 100%;
+        right: -40px;
+        margin-top: 13px;
+        padding: 0!important;
+        display: block;
+        transform: translate(50%,8px);
+    }
+
+    .profile-drop{
+        width: 192px;
+        background-color: #fff;
+        box-shadow: 1px 2px 10px 0 rgb(0 0 0 / 30%);
+        border: 1px solid #cdcdcd;
+        border-radius: 10px;
+    }
+
+    .profile-drop > ul{
+        padding-top: 14px;
+    }
+
+    .drop-menu{
+        height: 34px!important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #333;
+        /* border: 1px solid #222; */
+
+        &:hover{
+            background-color: #f7f7f7;
+            cursor: pointer;
+            margin: 0px 5px;
+            border-radius: 3px;
+        }
+    }
+
+    .logout{
+        border: 0;
+        margin-top: 9px;
+        background-color: #f7f7f7;
+        overflow: hidden;
+        height: 50px!important;
+        border-radius: 0 0 10px 10px;
+        border-top: 1px solid #ececec;
+
+        display:flex;
+        align-items:center;
+        justify-content: center;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .profile-drop > ul >hr{
+        border: 0;
+        border-top: 1px solid #e1e2e3;
+    }
+
+    .bubble-point{
+        position: absolute;
+        right: 50%;
+        bottom: 100%;
+        height: 11px;
+        overflow: hidden;
+        margin-bottom: -1px;
+        transform: translateX(-47px);
+    }
+
+    .bubble-point::after{
+        content: "";
+        margin-top: 4px;
+        border: 1px solid #cdcdcd;
+        background-color: #fff;
+        height: 14px;
+        width: 14px;
+        display: block;
+        border-top-right-radius: 30%;
+        transform: rotate(-55deg) skewX(-20deg);
     }
 `;
 
@@ -338,6 +449,10 @@ const Menu = styled.div`
         padding: 15px 15px 15px 15px;
         display: inline-block;
     }
+`;
+
+const Profile = styled.div`
+    border: ${(props) => props.isClick ? "1px solid #36f" : "1px solid #e1e2e3"}
 `;
 
 export default Head;
