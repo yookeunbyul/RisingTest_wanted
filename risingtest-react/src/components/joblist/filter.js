@@ -20,6 +20,7 @@ const Filter = () => {
     const [showSkill, setShowSkill] = useState(false);
     const [showRes, setShowRes] = useState(false);
     const [jobCate, setJobCate] = useState([]);
+    const [employmentList, setEmploymentList] = useState([]);
     const [scrollPosition, setScrollPosition] = useState(0);
 
     const updateScroll = () => {
@@ -41,6 +42,27 @@ const Filter = () => {
             document.removeEventListener('mousedown', clickDropOutside);
         };
     });
+
+    useEffect(() => {
+        axios.get(`https://zezeserver.shop/app/employments`,{
+                params: {
+                    jobGroupId : null,
+                    jobId: null,
+                    country: null,
+                    location: null,
+                    career: null,
+                    orderBy: null,
+                    companyTagId: null,
+                    skillTagId: null,
+                }
+            })
+            .then(res => {
+                console.log(res);
+                // setEmploymentList()
+                
+            })
+            .catch(err => console.log(err))
+    }, [])
 
     //함수 선언
     const clickDropOutside = event => {
@@ -72,10 +94,14 @@ const Filter = () => {
             .catch(err => console.log(err))
     }
 
+    const onResClick  = () => {
+        setShowRes(!showRes);
+    }
+
     return(
         <>
-            {scrollPosition > 250 ? <ScrollFilter /> : null}
-            {/* <ScrollFilter /> */}
+            {/* {scrollPosition > 250 ? <ScrollFilter /> : null} */}
+
             <Wrap>
                 <div className="box">
                     <div className="cate">
@@ -124,9 +150,17 @@ const Filter = () => {
                         </button>
                     </div>
                     <div className="section right">
-                        <button onClick={() => setShowRes(!showRes)} className={`res ${showRes ? 'open' : ''}`}>
+                        <button onClick={onResClick} className={`res ${showRes ? 'open' : ''}`}>
                             <span className="category">응답률순</span>
                             <svg width="8" height="7" viewBox="0 0 8 7" fill="none" xmlns="https://www.w3.org/2000/svg"><path d="M7.33334 0.494202C7.85691 0.494202 8.14842 1.1611 7.82205 1.61224L4.50038 6.20371C4.25071 6.54882 3.77503 6.54971 3.5243 6.20554L0.179295 1.61408C-0.149094 1.16332 0.14211 0.494202 0.666672 0.494202H7.33334Z" fill="#333333"></path></svg>
+                            {showRes &&
+                                <div className="res-drop">
+                                    <div className="res-drop-option first">최신순</div>
+                                    <div className="res-drop-option second">보상금순</div>
+                                    <div className="res-drop-option">인기순</div>
+                                </div>
+                            }
+                            
                         </button>
                     </div>
                 </div>
@@ -208,126 +242,6 @@ const Filter = () => {
                 <div className="info">
                     <div className="position-wrap">
                         <div className="head" onClick={onJonInfo}>
-                            <button><Bookmark/></button>
-                            <div className="img-wrap">
-                                <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                            </div>
-                            <div className="txt-box">
-                                <div className="job">개발리드</div>
-                                <div className="company">텔라</div>
-                                <div className="response-box">
-                                    <div className="response">응답률 매우 높음</div>
-                                </div>
-                                <div className="country">서울·한국</div>
-                                <div className="money">채용 보상금 1,000,000원</div>
-                            </div>
-                        </div>
-                        <div className="head">
-                            <button><Bookmark/></button>
-                            <div className="img-wrap">
-                                <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                            </div>
-                            <div className="txt-box">
-                                <div className="job">개발리드</div>
-                                <div className="company">텔라</div>
-                                <div className="response-box">
-                                    <div className="response">응답률 매우 높음</div>
-                                </div>
-                                <div className="country">서울·한국</div>
-                                <div className="money">채용 보상금 1,000,000원</div>
-                            </div>
-                        </div>
-                        <div className="head">
-                            <button><Bookmark/></button>
-                            <div className="img-wrap">
-                                <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                            </div>
-                            <div className="txt-box">
-                                <div className="job">개발리드</div>
-                                <div className="company">텔라</div>
-                                <div className="response-box">
-                                    <div className="response">응답률 매우 높음</div>
-                                </div>
-                                <div className="country">서울·한국</div>
-                                <div className="money">채용 보상금 1,000,000원</div>
-                            </div>
-                        </div>
-                        <div className="head">
-                            <button><Bookmark/></button>
-                            <div className="img-wrap">
-                                <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                            </div>
-                            <div className="txt-box">
-                                <div className="job">개발리드</div>
-                                <div className="company">텔라</div>
-                                <div className="response-box">
-                                    <div className="response">응답률 매우 높음</div>
-                                </div>
-                                <div className="country">서울·한국</div>
-                                <div className="money">채용 보상금 1,000,000원</div>
-                            </div>
-                        </div>
-                        <div className="head">
-                            <button><Bookmark/></button>
-                            <div className="img-wrap">
-                                <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                            </div>
-                            <div className="txt-box">
-                                <div className="job">개발리드</div>
-                                <div className="company">텔라</div>
-                                <div className="response-box">
-                                    <div className="response">응답률 매우 높음</div>
-                                </div>
-                                <div className="country">서울·한국</div>
-                                <div className="money">채용 보상금 1,000,000원</div>
-                            </div>
-                        </div>
-                        <div className="head">
-                            <button><Bookmark/></button>
-                            <div className="img-wrap">
-                                <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                            </div>
-                            <div className="txt-box">
-                                <div className="job">개발리드</div>
-                                <div className="company">텔라</div>
-                                <div className="response-box">
-                                    <div className="response">응답률 매우 높음</div>
-                                </div>
-                                <div className="country">서울·한국</div>
-                                <div className="money">채용 보상금 1,000,000원</div>
-                            </div>
-                        </div>
-                        <div className="head">
-                            <button><Bookmark/></button>
-                            <div className="img-wrap">
-                                <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                            </div>
-                            <div className="txt-box">
-                                <div className="job">개발리드</div>
-                                <div className="company">텔라</div>
-                                <div className="response-box">
-                                    <div className="response">응답률 매우 높음</div>
-                                </div>
-                                <div className="country">서울·한국</div>
-                                <div className="money">채용 보상금 1,000,000원</div>
-                            </div>
-                        </div>
-                        <div className="head">
-                            <button><Bookmark/></button>
-                            <div className="img-wrap">
-                                <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                            </div>
-                            <div className="txt-box">
-                                <div className="job">개발리드</div>
-                                <div className="company">텔라</div>
-                                <div className="response-box">
-                                    <div className="response">응답률 매우 높음</div>
-                                </div>
-                                <div className="country">서울·한국</div>
-                                <div className="money">채용 보상금 1,000,000원</div>
-                            </div>
-                        </div>
-                        <div className="head">
                             <button><Bookmark/></button>
                             <div className="img-wrap">
                                 <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
@@ -508,8 +422,13 @@ const Wrap = styled.div`
         background: #fff;
         color: #333;
         font-size: 13px;
+        position: relative;
 
         cursor: pointer;
+    }
+
+    .res.open{
+        border-radius: 5px 5px 0 0;
     }
 
     .res > svg {
@@ -519,6 +438,32 @@ const Wrap = styled.div`
     .res.open > svg {
         transform: rotate(180deg);
         transition: all ease 0.3s;
+    }
+
+    .res-drop{
+        position: absolute;
+        top: 38px;
+        left: -1px;
+        z-index: 55;
+        width: 109px;
+        background-color: #fff;
+        border: 1px solid #ececec;
+        border-radius: 0 0 4px 4px;
+    }
+
+    .res-drop-option{
+        padding: 0 0 0 16px;
+        height: 41px;
+        display: flex;
+        align-items: center;
+    }
+
+    .res-drop-option.first{
+        border-bottom: 1px solid #ececec;
+    }
+
+    .res-drop-option.second{
+        border-bottom: 1px solid #ececec;
     }
 
     .category{
