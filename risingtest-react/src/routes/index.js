@@ -1,6 +1,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { ReactComponent as Logo } from '../svg/ic-wanted-logo.svg';
 import Head from "../components/common/head";
+import ScrollToTop from "../components/common/scrollToTop";
 // import Footer from "../components/common/footer";
 import LandingPage from "../pages/landing";
 import JobFeedPage from "../pages/jobfeed";
@@ -8,6 +9,7 @@ import ResumePage from "../pages/resume";
 import WritePage from "../pages/resume/write";
 import JobListPage from "../pages/joblist";
 import JobInfoPage from "../pages/jobinfo";
+import CompanyInfoPage from "../pages/companyinfo";
 import FirstBoard from "../pages/onboarding/firstboard";
 import SecondBoard from "../pages/onboarding/secondboard";
 import ThridBoard from "../pages/onboarding/thirdboard";
@@ -22,6 +24,7 @@ const RootRoute = () => {
     return (
         <>
             <BrowserRouter>
+                <ScrollToTop />
                 <Routes>
                     <Route element={<Head />}>
                         <Route path="/" element={<LandingPage />}></Route>
@@ -30,6 +33,7 @@ const RootRoute = () => {
                         <Route path="/resume/write" element={<WritePage />}></Route>
                         <Route path="/joblist" element={<JobListPage />}></Route>
                         <Route path="/jobinfo" element={<JobInfoPage />}></Route>
+                        <Route path="/companyinfo" element={<CompanyInfoPage />}></Route>
                     </Route>
                         
                     <Route path="/first" element={<FirstBoard />}></Route>

@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import { ReactComponent as Share } from '../../svg/ic-share.svg';
 import { ReactComponent as Bookmark } from '../../svg/ic-bookmark.svg';
+import { useNavigate } from 'react-router-dom';
 import Footer from "../../components/common/footer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
 const JobInfo = () => {
+    const navigate = useNavigate();
+
     const settings = {
         dots: false,
         infinite: true,
@@ -14,6 +17,10 @@ const JobInfo = () => {
         slidesToShow: 1,
         slidesToScroll: 1
     };
+
+    const onClick = () =>{
+        navigate(`/companyinfo`);
+    }
 
     return(
         <>
@@ -211,7 +218,7 @@ const JobInfo = () => {
                                 
                             </div>
                             <div className="company-info">
-                                <div className="company-box">
+                                <div className="company-box left" onClick={onClick}>
                                     <img src="https://static.wanted.co.kr/images/wdes/0_5.5aa3e40a.jpg" width="50"/>
                                     <div>
                                         <div className="company-name">텔라</div>
@@ -675,6 +682,7 @@ const Wrap = styled.div`
 
         display:flex;
         align-items: center;
+        
     }
     
     .company-box > img{
@@ -684,6 +692,10 @@ const Wrap = styled.div`
     .company-box.right{
         display:flex;
         justify-content: end;
+    }
+
+    .company-box.left{
+        cursor: pointer;
     }
 
     .company-box.right > button {
@@ -884,6 +896,7 @@ const Wrap = styled.div`
     }
 
     .under{
+        width: 322px;
         margin-top: 4px;
         background-color: #f3f5f8;
         height: 40px;
