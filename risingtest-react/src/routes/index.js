@@ -10,6 +10,7 @@ import WritePage from "../pages/resume/write";
 import JobListPage from "../pages/joblist";
 import JobInfoPage from "../pages/jobinfo";
 import CompanyInfoPage from "../pages/companyinfo";
+import ProfilePage from "../pages/profile";
 import FirstBoard from "../pages/onboarding/firstboard";
 import SecondBoard from "../pages/onboarding/secondboard";
 import ThridBoard from "../pages/onboarding/thirdboard";
@@ -34,6 +35,7 @@ const RootRoute = () => {
                         <Route path="/joblist" element={<JobListPage />}></Route>
                         <Route path="/jobinfo" element={<JobInfoPage />}></Route>
                         <Route path="/companyinfo" element={<CompanyInfoPage />}></Route>
+                        <Route path="/profile" element={<ProfilePage />}></Route>
                     </Route>
                         
                     <Route path="/first" element={<FirstBoard />}></Route>

@@ -38,7 +38,7 @@ const SecondBoard = () => {
             })
             .then(res => {
                 console.log(res);
-                setSchoolList(res.data.result);
+                setSchoolList(res.data);
             })
             .catch(err => console.log(err))
 
@@ -46,7 +46,7 @@ const SecondBoard = () => {
             })
             .then(res => {
                 console.log(res);
-                setCompanyList(res.data.result);
+                setCompanyList(res.data);
             })
             .catch(err => console.log(err))        
     }, [])

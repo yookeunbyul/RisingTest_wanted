@@ -156,10 +156,11 @@ const ResumeList = () => {
 const Wrap = styled.div`
 
     .box{
+        height: 100%;
         width: 1060px;
         margin: 0 auto;
         /* border: 1px solid #2222; */
-        /* padding-bottom: 100px; */
+        padding-bottom: 100px;
     }
 
     .head{

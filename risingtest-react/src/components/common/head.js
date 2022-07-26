@@ -60,6 +60,10 @@ const Head = () => {
         setOnHover(false);
     }
 
+    const onProfile = () => {
+        navigate(`/profile`);
+    }
+
     const onProfileClick = () => {
         setClickProfile(!clickProfile);
     }
@@ -131,7 +135,7 @@ const Head = () => {
                                                     <div className="profile-drop">
                                                         <ul>
                                                             <li className="drop-menu">My 원티드</li>
-                                                            <li className="drop-menu">프로필</li>
+                                                            <li className="drop-menu" onClick={onProfile}>프로필</li>
                                                             <hr />
                                                             <li className="drop-menu">지원 현황</li>
                                                             <li className="drop-menu">제안받기 현황</li>

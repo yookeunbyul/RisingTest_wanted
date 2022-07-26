@@ -110,7 +110,7 @@ const StyledSlide = styled(Slider)`
     .slick-list{ //얘로 크기조정 했음
         width: 1060px;
         /* border: 1px solid #222; */
-        height: 290px;
+        height: 310px;
     }
 
     .slick-slide{
