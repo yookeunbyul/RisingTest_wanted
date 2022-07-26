@@ -265,6 +265,7 @@ const Wrap = styled.div`
         padding: 0 10px;
         margin-left: 5px;
         font-weight: 400;
+        text-decoration: none;
     }
 
     .search-btn{

@@ -2,14 +2,34 @@ import styled from 'styled-components';
 import { ReactComponent as Share } from '../../svg/ic-share.svg';
 import { ReactComponent as Bookmark } from '../../svg/ic-bookmark.svg';
 import Footer from "../../components/common/footer";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 const JobInfo = () => {
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
+
     return(
         <>
             <Wrap>
                 <div className="box">
                     <div className="section left">
-                        <div style={{width: "700px", height: "490px", border: "1px solid violet", borderRadius: "3px"}}></div>
+                        <div style={{width: "700px", height: "490px"}}>
+                        <StyledSlide {...settings}>
+                            <div className="img-wrap">
+                                <img src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Fcompany%2F2232%2Fiveehwxoeek9dkoj__1080_790.jpg&w=1000&q=75" />
+                            </div>
+                            <div className="img-wrap">
+                                <img src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Fcompany%2F2232%2F9ihcay4o77z2cjlc__1080_790.jpg&w=1000&q=75" />
+                            </div>
+                        </StyledSlide>
+                        </div>
                         <div className="header">
                             <div className="head">개발 리드</div>
                             <div>
@@ -404,6 +424,54 @@ const JobInfo = () => {
     )
 }
 
+const StyledSlide = styled(Slider)`
+    .slick-list{
+        width: 700px;
+        height: 490px;
+        margin: 0 auto;
+        background-color: #f0f9ff;
+        border-radius: 3px;
+    }
+    
+    .slick-prev::before{
+        content: "\f053";
+        font-family: "Font Awesome 5 Free";
+        font-size: 20px;
+        font-weight: 900;
+        line-height: 1;
+        color: #dddddd;
+    }
+
+    .slick-prev{
+        left:15px;
+        z-index: 55;
+    }
+
+    .slick-next{
+        right:15px;
+    }
+
+    .slick-next::before{
+        content: "\f054";
+        font-family: "Font Awesome 5 Free";
+        font-size: 20px;
+        font-weight: 900;
+        line-height: 1;
+        color: #dddddd;
+    }
+
+    .img-wrap{
+        width: 700px;
+        height: 490px;
+        object-fit: cover;
+    }
+
+    .img-wrap > img{
+        width: 100%;
+        height: 100%;
+    }
+`;
+
 const Wrap = styled.div`
     width: 1060px;
     /* border: 1px solid #222; */
@@ -448,6 +516,8 @@ const Wrap = styled.div`
     .tag-list{
         display: flex;
         margin-top: 20px;
+        /* border: 1px solid #222; */
+        padding-left: 0px !important;
     }
 
     .tag-list > li {
