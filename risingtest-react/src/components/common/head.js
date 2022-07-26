@@ -64,6 +64,11 @@ const Head = () => {
         setClickProfile(!clickProfile);
     }
 
+    const onLogout = () => {
+        localStorage.removeItem("jwt");
+        location.reload();
+    }
+
     return(
         <>
             <Wrap>
@@ -135,7 +140,7 @@ const Head = () => {
                                                             <hr />
                                                             <li className="drop-menu">추천</li>
                                                             <li className="drop-menu">포인트</li>
-                                                            <li className="logout">로그아웃</li>
+                                                            <li className="logout" onClick={onLogout}>로그아웃</li>
                                                         </ul>
                                                     </div>
                                                     <div className="bubble-point"></div>
@@ -306,6 +311,7 @@ const Wrap = styled.div`
         border: 0;
         background: none;
         font-weight: 600;
+        cursor: pointer;
     }
 
     .noti-btn{
