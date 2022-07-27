@@ -168,7 +168,7 @@ const ResumeList = () => {
                                         <div className="resume item" key={item.resumeId}>
                                             {nameClick && item.resumeId === nameId ? (
                                                 <>
-                                                    <div className="name"><input value={getName} onChange={onResumeNameChange} onKeyPress={onKeyPress}/></div>
+                                                    <div className="name"><input className="name-input" value={getName} onChange={onResumeNameChange} onKeyPress={onKeyPress}/></div>
                                                 </>
                                             ) : (
                                                 <>
@@ -206,6 +206,18 @@ const ResumeList = () => {
 }
 
 const Wrap = styled.div`
+
+    .name-input{
+        border: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        width: 200px;
+
+        &:focus{
+            outline: none;
+        }
+    }
 
     .box{
         height: 100%;

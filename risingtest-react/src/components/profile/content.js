@@ -1,6 +1,27 @@
 import styled from 'styled-components';
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Content = () => {
+    const { userId } = useSelector((state) => state.JobGroupReducer);
+    const token = localStorage.getItem("jwt");
+
+    const [userData, setUserData] = useState([]);
+
+    useEffect(() => {
+        axios.get(`https://dev.zezeserver.shop/app/users/${userId}`,{
+            headers: {
+                'x-access-token': token,
+            }
+            })
+            .then(res => {
+                console.log(res);
+                setUserData(res.data);
+            })
+            .catch(err => console.log(err))
+    }, [])
+
     return(
         <>
             <Wrap>
@@ -17,9 +38,17 @@ const Content = () => {
                                     </div>
                                 </div>
                                 <div className="me">
-                                    <div className="name">ㅇㅇㅇ</div>
-                                    <div className="email">dljfekjjfkd@naver.com</div>
-                                    <div className="tel">010-0000-0000</div>
+                                    {userData ? (
+                                        userData.map((data) => {
+                                            return(
+                                                <>
+                                                    <div className="name">{data.name}</div>
+                                                    <div className="email">{data.email}</div>
+                                                    <div className="tel">{data.phoneNumber}</div>
+                                                </>
+                                            )
+                                        })
+                                    ) : null}
                                 </div>
                                 <div className="patch">
                                     <button>기본정보 수정</button>
