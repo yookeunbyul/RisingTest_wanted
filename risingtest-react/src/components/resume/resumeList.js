@@ -17,6 +17,9 @@ const ResumeList = () => {
     // const [open, setOpen] = useState(false);
     const [id, setId] = useState("");
     const [resume, setResume] = useState([]);
+    const [nameClick, setNameClick] = useState(false);
+    const [nameId, setNameId] = useState("");
+    const [getName, setGetName] = useState("");
 
     //Life Cycle 선언
     useEffect(() => {
@@ -47,7 +50,7 @@ const ResumeList = () => {
             console.log("done");
             isCompleted = true;
         };
-    }, [])
+    }, [nameClick])
 
     //함수 선언
     const clickOutside = event => {
@@ -96,6 +99,45 @@ const ResumeList = () => {
         );
     }
 
+    const onNameChange = (clickid) => {
+        setNameClick(true);
+        setNameId(clickid);
+
+        axios.get(`https://dev.zezeserver.shop/app/resumes/${clickid}/title`,{
+            headers: {
+                'x-access-token': token,
+            }
+        })
+        .then(res => {
+            console.log(res);
+            setGetName(res.data.result.map(n=>n.resumeName));
+        })
+        .catch(err => console.log(err))
+    }
+
+    const onResumeNameChange = (e) => {
+        setGetName(e.target.value);
+    }
+
+    const onKeyPress = (e) => {
+        if(e.key === 'Enter'){
+            axios.patch(`https://dev.zezeserver.shop/app/resumes/${nameId}/title`,{
+                userId: `${userId}`,
+                resumeName: `${getName}`,
+            },
+            {
+                headers: {
+                    'x-access-token': token,
+                }
+            })
+            .then(res => {
+                console.log(res);
+                setNameClick(false);
+            })
+            .catch(err => console.log(err))
+        }
+    }
+
     return(
             <Wrap>
                     <div className="box">
@@ -124,7 +166,15 @@ const ResumeList = () => {
                                 resume.map((item) => {
                                     return(
                                         <div className="resume item" key={item.resumeId}>
-                                            <div className="name">{item.resumeName}</div>
+                                            {nameClick && item.resumeId === nameId ? (
+                                                <>
+                                                    <div className="name"><input value={getName} onChange={onResumeNameChange} onKeyPress={onKeyPress}/></div>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <div className="name">{item.resumeName}</div>
+                                                </>
+                                            )}
                                             <div className="day">{item.updatedAt}</div>
                                             <div className="under">
                                                 <div className="menu">
@@ -136,7 +186,7 @@ const ResumeList = () => {
                                                         {item.resumeId === id && (
                                                             <>
                                                                 <div className="drop" ref={dropRef}>
-                                                                    <button>이름 변경</button>
+                                                                    <button onClick={() =>onNameChange(item.resumeId)}>이름 변경</button>
                                                                     <button>다운로드</button>
                                                                     <button onClick={() => onDelete(item.resumeId, item.resumeName)}>삭제</button>
                                                                 </div>
