@@ -12,7 +12,7 @@ const ResumeHead = () => {
     const [PhoneValue, setPhoneValue] = useState("");
 
     useEffect(() => {
-        axios.get(`https://zezeserver.shop/app/resumes/${resumeId}`,{
+        axios.get(`https://dev.zezeserver.shop/app/resumes/${resumeId}`,{
             headers: {
                 'x-access-token': token,
             }

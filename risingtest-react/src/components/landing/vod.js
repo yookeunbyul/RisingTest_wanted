@@ -17,7 +17,7 @@ const Vod = () => {
     };
 
     useEffect(() => {
-        axios.get("https://zezeserver.shop/app/posts",{
+        axios.get("https://dev.zezeserver.shop/app/posts",{
             })
             .then(res => {
                 console.log(res);

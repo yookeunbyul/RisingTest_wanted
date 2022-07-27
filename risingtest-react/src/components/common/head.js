@@ -22,7 +22,7 @@ const Head = () => {
     const [onMenu, setOnMenu] = useState(false);
 
     useEffect(() => {
-        axios.get("https://zezeserver.shop/app/jobgroups",{
+        axios.get("https://dev.zezeserver.shop/app/jobgroups",{
             })
             .then(res => {
                 // console.log(res);
@@ -82,7 +82,7 @@ const Head = () => {
     }
 
     const onMenuOver  = (id) => {
-        axios.get(`https://zezeserver.shop/app/jobgroup/${id}/jobcategories`,{
+        axios.get(`https://dev.zezeserver.shop/app/jobgroup/${id}/jobcategories`,{
             })
             .then(res => {
                 console.log(res);

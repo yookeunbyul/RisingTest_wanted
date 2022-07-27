@@ -5,12 +5,14 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { UpdateIDAction } from "../../store/actions/resumeId";
 import { openDeMoAction } from "../../store/actions/resumeModal";
+import { useSelector } from "react-redux";
 
 const ResumeList = () => {
     const dispatch = useDispatch();
     const dropRef = useRef();
     const navigate = useNavigate();
     const token = localStorage.getItem("jwt");
+    const { userId } = useSelector((state) => state.JobGroupReducer);
 
     // const [open, setOpen] = useState(false);
     const [id, setId] = useState("");
@@ -27,7 +29,7 @@ const ResumeList = () => {
 
     useEffect(() => {
         let isCompleted = false;
-        axios.get("https://zezeserver.shop/app/resumes",{
+        axios.get("https://dev.zezeserver.shop/app/resumes",{
             headers: {
                 'x-access-token': token,
             }
@@ -56,7 +58,7 @@ const ResumeList = () => {
 
     const onWriteClick = () => {
         navigate(`/resume/write`);
-        axios.post("https://zezeserver.shop/app/resumes",{
+        axios.post("https://dev.zezeserver.shop/app/resumes",{
         },
         {
             headers: {

@@ -23,7 +23,7 @@ const ThridBoard = () => {
     });
 
     useEffect(() => {
-        axios.get("https://zezeserver.shop/app/post-tags",{
+        axios.get("https://dev.zezeserver.shop/app/post-tags",{
             })
             .then(res => {
                 console.log(res);
@@ -36,7 +36,7 @@ const ThridBoard = () => {
 
     const onStart = () => {
         navigate(`/`);
-        axios.post("https://zezeserver.shop/app/users/interestedTags",{
+        axios.post("https://dev.zezeserver.shop/app/users/interestedTags",{
             userId : `${userId}`,
             postTagList : checkList,
         })

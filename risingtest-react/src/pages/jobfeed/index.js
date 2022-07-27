@@ -18,7 +18,7 @@ const JobFeedPage = () => {
     const [slide, setSlide] = useState("");
 
     useEffect(() => {
-        axios.get("https://zezeserver.shop/app/employment/mainpage",{
+        axios.get("https://dev.zezeserver.shop/app/employment/mainpage",{
             })
             .then(res => {
                 console.log(res);

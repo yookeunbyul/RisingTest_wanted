@@ -22,7 +22,7 @@ const LandingPage = () => {
     const [insiteTag, setInsiteTag] = useState("");
 
     useEffect(() => {
-        axios.get("https://zezeserver.shop/app/posts",{
+        axios.get("https://dev.zezeserver.shop/app/posts",{
             })
             .then(res => {
                 console.log(res);

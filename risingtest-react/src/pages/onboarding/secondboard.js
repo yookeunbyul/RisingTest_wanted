@@ -34,7 +34,7 @@ const SecondBoard = () => {
     });
 
     useEffect(() => {
-        axios.get("https://zezeserver.shop/app/schools",{
+        axios.get("https://dev.zezeserver.shop/app/schools",{
             })
             .then(res => {
                 console.log(res);
@@ -42,7 +42,7 @@ const SecondBoard = () => {
             })
             .catch(err => console.log(err))
 
-        axios.get("https://zezeserver.shop/app/companies",{
+        axios.get("https://dev.zezeserver.shop/app/companies",{
             })
             .then(res => {
                 console.log(res);
@@ -93,7 +93,7 @@ const SecondBoard = () => {
 
     const onClick = () => {
         navigate(`/third`);
-        axios.post("https://zezeserver.shop/app/users/post-default-resume",{
+        axios.post("https://dev.zezeserver.shop/app/users/post-default-resume",{
             userId : `${userId}`,
             userName : `${username}`,
             email: `${email}`,

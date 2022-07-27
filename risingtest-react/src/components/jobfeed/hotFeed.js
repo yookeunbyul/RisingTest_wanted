@@ -7,7 +7,7 @@ const HotFeed = () => {
     const [hotList, setHotList] = useState([]);
 
     useEffect(() => {
-        axios.get("https://zezeserver.shop/app/employment/mainpage",{
+        axios.get("https://dev.zezeserver.shop/app/employment/mainpage",{
             })
             .then(res => {
                 console.log(res);
@@ -23,7 +23,7 @@ const HotFeed = () => {
             <div className="title-wrap">
                 <div className="title">요즘 뜨는 포지션</div>
             </div>
-            <div className="position-wrap" >
+            <div className="position-wrap">
                 {hotList ? hotList.map((item, index) => {
                     return(
                         <>
