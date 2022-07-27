@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { closeMoAction } from "../../store/actions/modal";
 import { openSignMoAction } from "../../store/actions/signModal";
+import { openPWMoAction } from "../../store/actions/passwordModal";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,6 +10,7 @@ import { ReactComponent as Kakao } from '../../svg/ic-kakao.svg';
 import { ReactComponent as Facebook } from '../../svg/ic-facebook.svg';
 import { ReactComponent as Google } from '../../svg/ic-google.svg';
 import { ReactComponent as Apple } from '../../svg/ic-apple.svg';
+import axios from "axios";
 
 const Email = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -23,10 +25,21 @@ const Email = () => {
     };
 
     const onSubmit = (data) => {
-        // alert(JSON.stringify(data));
-        closeMoRedux();
-        openSignMoRedux();
         window.localStorage.setItem("email", email);
+
+        axios.get(`https://dev.zezeserver.shop/app/users/is-member/${email}`,{
+            })
+            .then(res => {
+                console.log(res);
+                if(res.data.code === 1002){
+                    closeMoRedux();
+                    openPwMoRedux();
+                } else if (res.data.code === 1001){
+                    closeMoRedux();
+                    openSignMoRedux();
+                }
+            })
+            .catch(err => console.log(err))
     };
 
     const closeMoRedux = () => {
@@ -35,6 +48,10 @@ const Email = () => {
 
     const openSignMoRedux = () => {
         dispatch(openSignMoAction());
+    };
+
+    const openPwMoRedux = () => {
+        dispatch(openPWMoAction());
     };
 
     const onError = (error) => {

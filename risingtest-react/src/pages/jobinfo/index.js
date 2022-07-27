@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import JobInfo from "../../components/jobinfo/jobInfo";
 
+
 const JobInfoPage = () => {
     return(
         <Wrap>

@@ -260,8 +260,7 @@ export const Wrap = styled.div`
     }
 
     .skill-drop{
-        width: 584px;
-        height: 446px;
+        width: 570px;
         border: 1px solid #e1e2e3;
         border-radius: 5px;
         background-color: #fff;
@@ -270,41 +269,32 @@ export const Wrap = styled.div`
         position: absolute;
         z-index: 55;
         
-        /* overflow-y: auto; */
         top: 190px;
         left: 550px;
     }
 
     .skill-drop-top{
-        height: 396px;
-        padding: 26px 20px 20px;
-        overflow-y: auto;
-
+        padding: 26px 20px 10px 20px;
     }
 
-    .skill-drop > footer{
-        position: absolute;
-        right: -2px;
-        width: 565px;
-        height: 30px;
-        border: 1px solid #e1e2e3;
-        background-color: #fff;
-        border-radius: 0px 0px 5px 5px;
-        box-shadow: 0 4px 8px rgb(0 0 0 / 15%);
-        padding: 10px;
-
-        display:flex;
-        align-items: center;
-        justify-content: end;
+    .skill-drop-top > hr{
+        border:0;
+        border-top: 1px solid #e1e2e3;
     }
 
-    .skill-drop > footer > button{
+    .footer{
+        /* border: 1px solid #222; */
+        text-align: right;
+    }
+
+    .footer > button{
         height: 30px;
         font-size: 14px;
         background-color: transparent;
         border: 0;
         font-weight: 600;
         color: #767676;
+        padding: 0px 5px;
         cursor: pointer;
     }
 
@@ -408,6 +398,7 @@ export const Wrap = styled.div`
 
     .skill-guide{
         margin-top: 10px;
+        margin-bottom: 10px;
         font-size: 12px;
         font-weight: 400;
         line-height: 14px;

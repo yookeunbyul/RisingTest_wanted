@@ -17,9 +17,11 @@ import ThridBoard from "../pages/onboarding/thirdboard";
 import Modal from "../components/common/modal";
 import SignModal from "../components/common/signModal";
 import ResumeModal from "../components/common/resumeModal";
+import PasswordModal from "../components/common/passwordModal";
 import Email from "../components/modal/email";
 import Sign from "../components/modal/sign";
 import DeleteResume from "../components/modal/deleteResume";
+import Password from "../components/modal/password";
 
 const RootRoute = () => {
     return (
@@ -55,6 +57,11 @@ const RootRoute = () => {
                 <ResumeModal>
                     <DeleteResume />
                 </ResumeModal>
+
+                <PasswordModal header="비밀번호 입력">
+                    <Password />
+                </PasswordModal>
+
             </BrowserRouter>
         </>
     );

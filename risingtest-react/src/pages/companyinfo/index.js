@@ -10,7 +10,7 @@ const CompanyInfoPage = () => {
 
             <Content />
 
-            {/* <Footer /> */}
+            <Footer />
         </Wrap>
     )
 }
