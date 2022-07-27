@@ -1,16 +1,40 @@
 import styled from 'styled-components';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Head = () => {
+    const { companyId } = useParams();
+    const [CompanyDetails, setCompanyDetails] = useState("");
+
+    useEffect(() => {
+        axios.get(`https://dev.zezeserver.shop/app/companies/${companyId}`,{
+            })
+            .then(res => {
+                console.log(res);
+                setCompanyDetails(res.data.result.CompanyDetails);
+            })
+            .catch(err => console.log(err))
+    }, [companyId])
+
     return(
         <Wrap>
             <div className="box">
-                <div className="section">
-                    <img src="https://static.wanted.co.kr/images/wdes/0_4.5aa3e40a.jpg" width="50" />
-                    <div className="company-name">텔라</div>
-                </div>
-                <div className="section right">
-                    <button>팔로우</button>
-                </div>
+                {CompanyDetails ? (
+                    CompanyDetails.map((item) => {
+                        return(
+                            <>
+                                <div className="section">
+                                    <img src={item.Logo} width="50" alt=""/>
+                                    <div className="company-name">{item.companyName}</div>
+                                </div>
+                                <div className="section right">
+                                    <button>팔로우</button>
+                                </div>
+                            </>
+                        )
+                    })
+                ) : null}
             </div>  
         </Wrap>
     )

@@ -6,9 +6,52 @@ import Footer from "../../components/common/footer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const JobInfo = () => {
     const navigate = useNavigate();
+    const { employmentId } = useParams();
+    const { username } = useSelector((state) => state.UserReducer);
+
+    const [imgUrl, setImgUrl] = useState("");
+    const [jobName, setJobName] = useState("");
+    const [companyName, setCompanyName] = useState("");
+    const [city, setCity] = useState("");
+    const [country, setCountry] = useState("");
+    const [companyTag, setCompanyTag] = useState("");
+    const [address, setAddress] = useState("");
+    const [logo, setLogo] = useState("");
+    const [categoryName, setCategoryName] = useState("");
+    const [text, setText] = useState("");
+    const [companyId, setCompanyId] = useState("");
+    const [random, setRandom] = useState("");
+    const str = text.split('\n');
+
+    useEffect(() => {
+        axios.get(`https://dev.zezeserver.shop/app/employments/${employmentId}`,{
+            })
+            .then(res => {
+                console.log(res);
+                setImgUrl(res.data.result.employmentDetails.ImgUrls);
+                setJobName(res.data.result.employmentDetails.jobName);
+                setCompanyName(res.data.result.companyData.companyName);
+                setCity(res.data.result.employmentDetails.city);
+                setCountry(res.data.result.employmentDetails.country);
+                setCompanyTag(res.data.result.companyData.companyTag);
+                setAddress(res.data.result.employmentDetails.address);
+                setLogo(res.data.result.companyData.Logo);
+                setCategoryName(res.data.result.companyData.categoryName);
+                if(res.data.result.employmentDetails.description){
+                    setText(res.data.result.employmentDetails.description);
+                }
+                setCompanyId(res.data.result.employmentDetails.companyId);
+                setRandom(res.data.result.randomEmployments);
+            })
+            .catch(err => console.log(err))
+    }, [employmentId])
 
     const settings = {
         dots: false,
@@ -19,7 +62,7 @@ const JobInfo = () => {
     };
 
     const onClick = () =>{
-        navigate(`/companyinfo`);
+        navigate(`/companyinfo/${companyId}`);
     }
 
     return(
@@ -29,168 +72,53 @@ const JobInfo = () => {
                     <div className="section left">
                         <div style={{width: "700px", height: "490px"}}>
                         <StyledSlide {...settings}>
-                            <div className="img-wrap">
-                                <img src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Fcompany%2F2232%2Fiveehwxoeek9dkoj__1080_790.jpg&w=1000&q=75" />
-                            </div>
-                            <div className="img-wrap">
-                                <img src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Fstatic.wanted.co.kr%2Fimages%2Fcompany%2F2232%2F9ihcay4o77z2cjlc__1080_790.jpg&w=1000&q=75" />
-                            </div>
+                            {imgUrl ? (
+                                imgUrl.map((url, index) => {
+                                    return(
+                                        <>
+                                            <div className="img-wrap" key={index}>
+                                                <img src={url.ImgUrl} alt="" />
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            ) : null}
                         </StyledSlide>
                         </div>
                         <div className="header">
-                            <div className="head">개발 리드</div>
+                            <div className="head">{jobName}</div>
                             <div>
-                                <span className="company">텔라</span>
-                                <span className="res">응답률 평균 이상</span>
-                                <span className="country-info">서울 · 한국</span>
+                                <span className="company">{companyName}</span>
+                                <span className="res">응답률 매우 높음</span>
+                                <span className="country-info">{city} · {country}</span>
                             </div>
                             <div>
                                 <ul className="tag-list">
-                                    <li>#스타트업</li>
-                                    <li>#와인</li>
-                                    <li>#수면실</li>
-                                    <li>#택시비</li>
-                                    <li>#건강검진</li>
-                                    <li>#자기계발</li>
-                                    <li>#스터디지원</li>
-                                    <li>#어학교육</li>
-                                    <li>#교육</li>
+                                    {companyTag ? (
+                                        companyTag.map((tag) => {
+                                            return(
+                                                <>
+                                                    <li key={tag.tagId}>#{tag.name}</li>
+                                                </>
+                                            )
+                                        })
+                                    ) : null}
                                 </ul>
                             </div>
                         </div>
                         <div className="body">
                             <p>
                                 <span className="intro">
-                                    “Chat is New Normal!”
-                                    <br/><br/>
-                                    텔라는 영어 학습자들이 목표를 달성하는 과정에서 만나는 모든 허들을 넘고, 가장 효율적으로 목표를 달성하도록 Enlgish Personal Training을 제공하는 에듀테크 스타트업입니다.
-                                    <br/><br/>
-                                    현재까지 텔라는 스파크랩, 스트롱벤처스, 더벤처스, 디캠프로부터 시드 투자를 유치하였고, 40만건이 넘는 수업과 400만건이 넘는 첨삭을 진행하는 동안 코스 완주율 70%, 출석율 94% 등 타서비스 대비 높은 수강율을 달성하였습니다. 지표가 말해주듯 텔라는 많은 학습자들의 목표 달성을 함께 해왔으며 계속해서 텍스트, 즉 데이터에 기반한 영어 회화 서비스로 영어회화의 새로운 기준을 제시하고자 합니다.
-                                    <br/><br/>
-                                    저희와 함께 영어 회화의 새로운 상식을 만들어가실 분들을 환영합니다:)
-                                    <br/><br/>
-                                    [저희는 이렇게 일해요!]
-                                    <br/><br/>
-                                    - "Learner experience over everything": 학습자의 경험 최적화를 가장 중요시합니다. 학습의 허들을 낮추기 위한 모든 방향을 모색합니다.
-                                    <br/>
-                                    - "Growth through leverage": 가장 큰 효과를 낼 수 있는 지렛점을 찾아 더 큰 성장을 할 수 있도록 함께 고민합니다.
-                                    <br/>
-                                    - "Data and insight, hand in hand": 데이터 기반의 의사 결정과 겸험에 기반한 인사이트의 밸런스를 중시합니다.
-                                    <br/>
-                                    - "To tech what is tech’s and to human what is human’s": 기술에게 맡겨 퀄리티와 효율을 높일 수 있는 것은 기술에게 맡기고, 사람 고유의 영역을 더 극대화하는 방향으로 일합니다.
-                                    <br />- "The globe is our oyster": 전세계가 우리의 무대입니다. 전세계 학습자들의 문제를 볼 수 있는 넓은 시야로 접근합니다.
-                                    <br/><br/><br/>
-                                    [제출서류]
-                                    <br/><br/>
-                                    - 자유양식의 이력서 또는 경력기술서
-                                    <br/>
-                                    - 자유양식의 자기소개서
-                                    <br/><br/><br/>
-                                    [채용 프로세스]
-                                    <br/><br/>
-                                    - 서류전형 ＞ 캐주얼 커피챗 ＞ 실무 면접 ＞ 임원 면접(컬쳐핏) ＞ 근무조건 협의
-                                    <br/>
-                                    - 자유 양식의 이력서(필수)를 받고 있습니다. 포지션에 따라 포트폴리오 제출 및 실무 과제 요청드릴 수 있습니다.
-                                    <br/>
-                                    - 채용 프로세스는 회사와 인재 간의 니즈와 핏을 서로 확인해가는 과정이라고 생각합니다. 이를 충분하게 확인하기 위해 포지션과 인재에 따라 상기 채용 프로세스는 변동될 수 있습니다.
-                                    <br/>- 제출하신 서류는 2년간 보유하며, 삭제를 원하시는 경우 별도로 연락주시면 도와드리겠습니다.
-                                </span>
-                            </p>
-                            <div>
-                                <div className="sub-head">주요업무</div>
-                                <p>
-                                    <span className="option-list">
-                                        • 텔라의 서비스를 위한 모든 SW 개발
-                                        <br/>
-                                        • 개발팀 구성 및 개발 문화/환경 세팅
-                                        <br/>
-                                        • 프로젝트에 대한 판단 및 피드백, 그리고 실행
-                                        <br/>
-                                        • 향후 확장성을 고려한 인프라, 시스템, 로직 개선
-                                        <br/>
-                                        • 글로벌 APP 기획 및 개발 프로젝트 진행
-                                    </span>
-                                </p>
-                            </div>
-                            <div>
-                                <div className="sub-head">자격요건</div>
-                                <p>
-                                    <span className="option-list">
-                                        • 5인 이상의 개발팀 리딩 경험이 있는 분
-                                        <br/>
-                                        • Full Stack(서버 + 웹) 개발 경험이 있으신 분
-                                        <br/>
-                                        • 테스트 주도 개발 및 테스트 자동화 경험이 있는 분
-                                        <br/>
-                                        • 기획단의 요구 사항을 개발 가능한 기능 명세로 전환하고 피드백 및 새로운 제안을 하실 수 있는 분
-                                        <br/>
-                                        • 클라이언트 혹은 서버 중 하나에 대한 개발 경력은 최소 5년 이상 혹은 이에 준하는 능력이 있으신 분
-                                    </span>
-                                </p>
-                            </div>
-                            <div>
-                                <div className="sub-head">우대사항</div>
-                                <p>
-                                    <span className="option-list">
-                                    • AWS 의 다양한 서비스 (ec2, s3, cloudfront, RDS 등) 사용 경험이 있으신 분
-                                    <br/>
-                                    • 주니어들의 멘토가 되어 주실 수 있는 분
-                                    <br/>
-                                    • 컴퓨터공학 관련 학위를 소지한 분
-                                    <br/>
-                                    • 스타트업 및 애자일 업무 방식에 대한 경험을 보유하신 분
-                                    <br/>
-                                    • Vuejs, node.js 등을 실무에서 사용해보신 분
-                                    </span>
-                                </p>
-                            </div>
-                            <div className="advan">
-                                <div className="sub-head">혜택 및 복지</div>
-                                <p>
-                                    <span className="option-list">
-                                        # 몰입할 수 있는 환경을 제공합니다.
-                                    </span>
-                                </p>
-                            </div>
-                            <p>
-                                <span className="intro">
-                                    • 생산성 장비 제공
-                                    <br/>
-                                    노트북, 모니터 및 생산성을 위한 장비를 필요에 따라, 금액에 제한 없이 제공합니다.
-                                    <br/><br/>
-                                    • 접근성 좋은 오피스 위치
-                                    <br/>
-                                    선릉역(2,4,분당선)과 삼성역(2호선), 삼성중앙역(9호선) 각 7분 거리에 있는 공유오피스에서 근무합니다. (수면실, 안마실, 샤워실 등의 편의시설은 덤!)
-                                    <br/><br/>
-                                    • 자율적인 근무 시간
-                                    <br/>
-                                    8-10시 사이에 출근할 수 있으며, 야근이 필요한 경우 야근 식대와 택시비를 지원합니다.
-                                    <br/><br/>
-                                    • 2시간 단위 연차
-                                    <br/>
-                                    갑작스레 일이 생겼거나, 몇시간만 있으면 되는데 반일, 전일을 쉬긴 아까우셨죠? 편하게 2시간 단위로 연차를 사용하세요.
-                                    <br/><br/>
-                                    • 경조사 유급휴가 및 경조사비 제공
-                                    <br/>
-                                    나와 가족에게 기쁜일, 슬픈일에 눈치보거나 계산하면서 쉬지 마세요. 편한 마음으로 다녀오실 수 있도록 경조사 관련 제도를 마련했어요.
-                                    <br/><br/><br/>
-                                    # 동료들의 성장을 지원합니다.
-                                    <br/><br/>
-                                    • 자기계발비 최대 연200만원
-                                    <br/>
-                                    성장을 돕기 위한 도서, 컨퍼런스, 세미나 참여를 적극 장려합니다. 배운 내용을 텔라의 지식 라이브러리에 공유하여 동료들과 인사이트를 나누게 됩니다.
-                                    <br/><br/>
-                                    • 사내 스터디 지원
-                                    <br/>
-                                    성장을 위한 사내 스터디를 환영합니다. 자기계발비와 별도로 제공합니다.
-                                    <br/><br/>
-                                    • 어학 교육 지원 (*텔라 서비스 무제한!)
-                                    <br/>
-                                    텔라에 조인해서 영어는 끝장낼 수 있습니다! 텔라 서비스는 항상 무제한으로 이용할 수 있습니다. 그 외 여러 어학 교육 서비스도 이용해볼 수 있어요.
-                                    <br/><br/>
-                                    • 건강 지원금 연50만원
-                                    <br/>
-                                    동료들의 건강을 중시합니다. 건강검진, 헬스 트레이닝 등에 자유롭게 사용할 수 있는 건강 지원금을 연 50만원 지원합니다.
+                                    {str.map((v, index) => {
+                                        return(
+                                            <>
+                                                <div key={index}>
+                                                    {v}
+                                                    <br />
+                                                </div>
+                                            </>
+                                        )
+                                    } )}
                                 </span>
                             </p>
                             <div>
@@ -212,17 +140,17 @@ const JobInfo = () => {
                             </div>
                             <div className="workplace-wrap">
                                 <span className="workplace-head">근무지역</span>
-                                <span className="workplace-body">강남구 테헤란로79길 6</span>
+                                <span className="workplace-body">{address}</span>
                             </div>
                             <div className="map-wrap">
                                 
                             </div>
                             <div className="company-info">
                                 <div className="company-box left" onClick={onClick}>
-                                    <img src="https://static.wanted.co.kr/images/wdes/0_5.5aa3e40a.jpg" width="50"/>
+                                    <img src={logo} width="50"/>
                                     <div>
-                                        <div className="company-name">텔라</div>
-                                        <div className="company-option">교육</div>
+                                        <div className="company-name">{companyName}</div>
+                                        <div className="company-option">{categoryName}</div>
                                     </div>
                                 </div>
                                 <div className="company-box right">
@@ -296,137 +224,38 @@ const JobInfo = () => {
                     </div>
                 </div>
                 <div className="position">
-                    <div className="position-head">ㅇㅇㅇ님, 이 포지션을 찾고 계셨나요?</div>
+                    <div className="position-head">{username}님, 이 포지션을 찾고 계셨나요?</div>
                     <List>
                     <div className="info">
                         <div className="position-wrap">
-                            <div className="head">
-                                <button><Bookmark/></button>
-                                <div className="img-wrap">
-                                    <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                                </div>
-                                <div className="txt-box">
-                                    <div className="job">개발리드</div>
-                                    <div className="company">텔라</div>
-                                    <div className="response-box">
-                                        <div className="response">응답률 매우 높음</div>
-                                    </div>
-                                    <div className="country">서울·한국</div>
-                                    <div className="money">채용 보상금 1,000,000원</div>
-                                </div>
-                            </div>
-                            <div className="head">
-                                <button><Bookmark/></button>
-                                <div className="img-wrap">
-                                    <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                                </div>
-                                <div className="txt-box">
-                                    <div className="job">개발리드</div>
-                                    <div className="company">텔라</div>
-                                    <div className="response-box">
-                                        <div className="response">응답률 매우 높음</div>
-                                    </div>
-                                    <div className="country">서울·한국</div>
-                                    <div className="money">채용 보상금 1,000,000원</div>
-                                </div>
-                            </div>
-                            <div className="head">
-                                <button><Bookmark/></button>
-                                <div className="img-wrap">
-                                    <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                                </div>
-                                <div className="txt-box">
-                                    <div className="job">개발리드</div>
-                                    <div className="company">텔라</div>
-                                    <div className="response-box">
-                                        <div className="response">응답률 매우 높음</div>
-                                    </div>
-                                    <div className="country">서울·한국</div>
-                                    <div className="money">채용 보상금 1,000,000원</div>
-                                </div>
-                            </div>
-                            <div className="head">
-                                <button><Bookmark/></button>
-                                <div className="img-wrap">
-                                    <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                                </div>
-                                <div className="txt-box">
-                                    <div className="job">개발리드</div>
-                                    <div className="company">텔라</div>
-                                    <div className="response-box">
-                                        <div className="response">응답률 매우 높음</div>
-                                    </div>
-                                    <div className="country">서울·한국</div>
-                                    <div className="money">채용 보상금 1,000,000원</div>
-                                </div>
-                            </div>
-                            <div className="head">
-                                <button><Bookmark/></button>
-                                <div className="img-wrap">
-                                    <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                                </div>
-                                <div className="txt-box">
-                                    <div className="job">개발리드</div>
-                                    <div className="company">텔라</div>
-                                    <div className="response-box">
-                                        <div className="response">응답률 매우 높음</div>
-                                    </div>
-                                    <div className="country">서울·한국</div>
-                                    <div className="money">채용 보상금 1,000,000원</div>
-                                </div>
-                            </div>
-                            <div className="head">
-                                <button><Bookmark/></button>
-                                <div className="img-wrap">
-                                    <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                                </div>
-                                <div className="txt-box">
-                                    <div className="job">개발리드</div>
-                                    <div className="company">텔라</div>
-                                    <div className="response-box">
-                                        <div className="response">응답률 매우 높음</div>
-                                    </div>
-                                    <div className="country">서울·한국</div>
-                                    <div className="money">채용 보상금 1,000,000원</div>
-                                </div>
-                            </div>
-                            <div className="head">
-                                <button><Bookmark/></button>
-                                <div className="img-wrap">
-                                    <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                                </div>
-                                <div className="txt-box">
-                                    <div className="job">개발리드</div>
-                                    <div className="company">텔라</div>
-                                    <div className="response-box">
-                                        <div className="response">응답률 매우 높음</div>
-                                    </div>
-                                    <div className="country">서울·한국</div>
-                                    <div className="money">채용 보상금 1,000,000원</div>
-                                </div>
-                            </div>
-                            <div className="head">
-                                <button><Bookmark/></button>
-                                <div className="img-wrap">
-                                    <img alt="" src="https://image.wanted.co.kr/optimize?src=https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__400_400.jpg&w=400&q=75"/>
-                                </div>
-                                <div className="txt-box">
-                                    <div className="job">개발리드</div>
-                                    <div className="company">텔라</div>
-                                    <div className="response-box">
-                                        <div className="response">응답률 매우 높음</div>
-                                    </div>
-                                    <div className="country">서울·한국</div>
-                                    <div className="money">채용 보상금 1,000,000원</div>
-                                </div>
-                            </div>
+                            {random ? (
+                                random.map((item) => {
+                                    return(
+                                        <>
+                                            <div className="head" key={item.employmentId}>
+                                                <button><Bookmark/></button>
+                                                <div className="img-wrap">
+                                                    <img alt="" src={item.employmentImgUrl}/>
+                                                </div>
+                                                <div className="txt-box">
+                                                    <div className="job">{item.jobName}</div>
+                                                    <div className="company">{item.companyName}</div>
+                                                    <div className="response-box">
+                                                        <div className="response">응답률 매우 높음</div>
+                                                    </div>
+                                                    <div className="country">{item.city}·{item.country}</div>
+                                                    <div className="money">채용 보상금 1,000,000원</div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            ) : null}
                         </div>
                     </div>
                 </List>
                 </div>
             </Wrap>
-
-            <Footer />
         </>
     )
 }
@@ -497,12 +326,12 @@ const Wrap = styled.div`
 
     .section.left{
         flex-grow:2;
-        height: 4218px;
+        /* height: 4258px; */
     }
 
     .section.right{
         flex-grow:1;
-        height: 4218px;
+        /* height: 4258px; */
         width: 340px;
 
         margin-left: 30px;
@@ -528,6 +357,7 @@ const Wrap = styled.div`
     }
 
     .tag-list > li {
+        list-style: none;
         margin-right: 6px;
         margin-bottom: 10px;
         padding: 9px 14px;
@@ -538,6 +368,7 @@ const Wrap = styled.div`
         color: #333;
         background-color: #f3f5f8;
         border-radius: 25px;
+        cursor: pointer;
     }
 
     .company{
@@ -548,8 +379,8 @@ const Wrap = styled.div`
     }
 
     .res{
-        border: 1px solid #855af0;
-        color: #855af0;
+        border: 1px solid #00aead;
+        color: #00aead;
         border-radius: 2px;
         background-color: #fff;
         display: inline-block;
@@ -636,7 +467,6 @@ const Wrap = styled.div`
     .workplace{
         /* border: 1px solid orange; */
         margin-top: 20px;
-        margin-bottom: 40px;
     }
 
     .workplace-wrap{
@@ -663,14 +493,15 @@ const Wrap = styled.div`
     .map-wrap{
         width: 700px;
         height: 254px;
-        border: 1px solid red;
+        background-color: #e1e2e3;
+        border-radius: 3px;
     }
 
     .company-info{
         border-radius: 3px;
         border: 1px solid #e1e2e3;
         padding: 20px;
-        margin-top: 80px;
+        margin-top: 40px;
 
         display:flex;
         align-items: center;

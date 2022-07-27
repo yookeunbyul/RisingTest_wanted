@@ -78,7 +78,7 @@ const Head = () => {
 
     const onLogout = () => {
         localStorage.removeItem("jwt");
-        location.reload();
+        navigate(`/`);
     }
 
     const onMenuOver  = (id) => {
@@ -422,9 +422,13 @@ const Wrap = styled.div`
 
     .profile-drop > ul{
         padding-top: 14px;
+        padding-left: 0;
+        margin: 0;
+        /* border: 1px solid red; */
     }
 
     .drop-menu{
+        /* width: 192px; */
         height: 34px!important;
         display: flex;
         align-items: center;

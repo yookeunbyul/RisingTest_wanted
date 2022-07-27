@@ -94,8 +94,8 @@ const Filter = () => {
         slidesToScroll: 3
     };
 
-    const onJonInfo = () => {
-        navigate(`/jobinfo`);
+    const onJonInfo = (id) => {
+        navigate(`/jobinfo/${id}`);
     }
 
     const onCateClick = () => {
@@ -507,7 +507,7 @@ const Filter = () => {
                             employmentList.map((item) => {
                                 return(
                                     <>
-                                        <div className="head" onClick={onJonInfo} key={item.employmentId}>
+                                        <div className="head" onClick={() => onJonInfo(item.employmentId)} key={item.employmentId}>
                                             <button><Bookmark/></button>
                                             <div className="img-wrap">
                                                 <img alt="" src={item.employmentImgUrl}/>

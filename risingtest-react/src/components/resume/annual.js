@@ -1,6 +1,16 @@
 import styled from 'styled-components';
+import axios from "axios";
+import { useEffect } from "react";
 
 const Annual = () => {
+    useEffect(() => {
+        axios.get("https://dev.zezeserver.shop/app/companies",{
+            })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => console.log(err))
+    },[])
     return(
         <Wrap>
             <div className="title">경력</div>

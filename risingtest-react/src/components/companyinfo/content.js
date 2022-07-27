@@ -1,7 +1,32 @@
 import styled from 'styled-components';
 import { ReactComponent as Bookmark } from '../../svg/ic-position-bookmark.svg';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Content = () => {
+    const { companyId } = useParams();
+
+    const [Employments, setEmployments] = useState("");
+    const [companyImgs, setCompanyImgs] = useState("");
+    const [companyTags, setCompanyTags] = useState("");
+    const [news, setNews] = useState("");
+    const [CompanyDetails, setCompanyDetails] = useState("");
+
+    useEffect(() => {
+        axios.get(`https://dev.zezeserver.shop/app/companies/${companyId}`,{
+            })
+            .then(res => {
+                console.log(res);
+                setEmployments(res.data.result.Employments);
+                setCompanyImgs(res.data.result.companyImgs);
+                setCompanyTags(res.data.result.companyTags);
+                setNews(res.data.result.news);
+                setCompanyDetails(res.data.result.CompanyDetails);
+            })
+            .catch(err => console.log(err))
+    }, [companyId])
+
     return(
         <Wrap>
             <div className="box">
@@ -10,43 +35,61 @@ const Content = () => {
                         채용 중인 포지션
                         <button>
                             <div className="box-wrap">
-                                <span>응답률 평균 이상</span>
+                                <span>응답률 매우 높음</span>
                             </div>
                         </button>
                     </div>
                     <div className="position">
-                        <div className="position-card">
-                            <div className="card-section left">
-                                <div className="position-title">개발리드</div>
-                                <div className="position-money">채용보상금 1,000,000원</div>
-                                <div className="position-option">상시채용</div>
-                            </div>
-                            <div className="card-section right">
-                                <button>
-                                    <Bookmark />
-                                </button>
-                            </div>
-                        </div>
+                        {Employments ? (
+                            Employments.map((item) => {
+                                return(
+                                    <>
+                                        <div className="position-card" key={item.employmentId}>
+                                            <div className="card-section left">
+                                                <div className="position-title">{item.jobName}</div>
+                                                <div className="position-money">채용보상금 1,000,000원</div>
+                                                <div className="position-option">상시채용</div>
+                                            </div>
+                                            <div className="card-section right">
+                                                <button>
+                                                    <Bookmark />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            })
+                        ) : null}
                     </div>
                     <div className="company-intro">
                         <div className="title">
                             회사 소개
                         </div>
                         <div className="company-img">
-                            <div className="img-btn">
-                                <img src="https://static.wanted.co.kr/images/company/2232/iveehwxoeek9dkoj__1080_790.jpg" />
-                            </div>
-                            <div className="img-btn second">
-                                <img src="https://static.wanted.co.kr/images/company/2232/9ihcay4o77z2cjlc__1080_790.jpg" />
-                            </div>
+                            {companyImgs ? (
+                                companyImgs.map((item, index) => {
+                                    return(
+                                        <>
+                                            <div className="img-btn" key={index}>
+                                                <img src={item} alt=""/>
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            ) : null}
                         </div>
                         <div className="company-text">
-                            <p>[텔라는 어떤 문제를 해결하는 회사인가요?]</p>
-                            <br />
-                            <p>텔라는 전세계 영어 학습자들이 목표를 달성하는 과정에서 부딪히는 모든 장벽을 허물고자 합니다.</p>
-                            <button>
-                                <span>더 보기</span>
-                            </button>
+                            {CompanyDetails ? (
+                                CompanyDetails.map((item, index) => {
+                                    return(
+                                        <>
+                                            <div className="desc" key={index}>
+                                                {item.description}
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            ) : null}
                         </div>
                     </div>
                     <div className="company-news">
@@ -54,30 +97,20 @@ const Content = () => {
                             이 회사의 뉴스
                         </div>
                         <div className="news">
-                            <div className="news-card">
-                                <div className="card-text">
-                                    <div className="news-title">[프리미어리그] 넘어지는 네이선 텔라</div>
-                                    <p>gukjenews.com 2022.1.12</p>
-                                </div>
-                            </div>
-                            <div className="news-card">
-                                <div className="card-text">
-                                    <div className="news-title">‘베이브 류스’에게 홈런 맞은 센사텔라, 콜로라도와 5년 600억원에 재계약</div>
-                                    <p>gukjenews.com 2022.1.12</p>
-                                </div>
-                            </div>
-                            <div className="news-card">
-                                <div className="card-text">
-                                    <div className="news-title">[아프로⑨] 반짝이는 아이디어로 우간다 취업률을 높이다 - 진유하 텔라 대표</div>
-                                    <p>gukjenews.com 2022.1.12</p>
-                                </div>
-                            </div>
-                            <div className="news-card">
-                                <div className="card-text">
-                                    <div className="news-title">채팅 기반 영어 교육 스타트업 ‘텔라’, 3개 기관에서 투자 유치</div>
-                                    <p>gukjenews.com 2022.1.12</p>
-                                </div>
-                            </div>
+                            {news ? (
+                                news.map((news) => {
+                                    return(
+                                        <>
+                                            <div className="news-card">
+                                                <div className="card-text">
+                                                    <div className="news-title">{news.newsName}</div>
+                                                    <p>{news.newsUrl} {news.uploadDate}</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            ) : null}
                         </div>
                     </div>
                 </div>
@@ -86,16 +119,15 @@ const Content = () => {
                         태그
                     </div>
                     <div>
-                        <div className="tag">#스타트업</div>
-                        <div className="tag">#와인</div>
-                        <div className="tag">#수면실</div>
-                        <div className="tag">#택시비</div>
-                        <div className="tag">#건강검진</div>
-                        <div className="tag">#자기계발</div>
-                        <div className="tag">#스터디지원</div>
-                        <div className="tag">#어학교육</div>
-                        <div className="tag">#노트북</div>
-                        <div className="tag">#교육</div>
+                        {companyTags ? (
+                            companyTags.map((tag) => {
+                                return(
+                                    <>
+                                        <div className="tag" key={tag.tagId}>#{tag.name}</div>
+                                    </>
+                                )
+                            })
+                        ) : null}
                         <div className="plus">+ 태그 의견보내기</div>
                     </div>
                 </div>
@@ -109,6 +141,10 @@ const Wrap = styled.div`
     margin: 0 auto;
     /* border: 1px solid #222; */
     padding: 40px 0;
+
+    .desc{
+        line-height: 30px;
+    }
 
     .box{
         display: flex;
@@ -144,8 +180,8 @@ const Wrap = styled.div`
     }
 
     .box-wrap{
-        border: 1px solid #855af0;
-        color: #855af0;
+        border: 1px solid #00aead;
+        color: #00aead;
         border-radius: 2px;
         background-color: #fff;
         display: inline-block;
@@ -163,6 +199,7 @@ const Wrap = styled.div`
         grid-template-columns: 351px 351px;
         grid-template-rows: 108px;
         column-gap: 15px;
+        row-gap: 15px;
 
         margin-bottom: 80px;
     }
@@ -283,9 +320,10 @@ const Wrap = styled.div`
     }
 
     .img-btn{
-        width: 173px;
+        width: 135px;
         height: 124px;
         cursor: pointer;
+        margin-right: 10px;
     }
 
     .img-btn.second{

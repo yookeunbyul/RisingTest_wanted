@@ -29,7 +29,7 @@ const ResumeList = () => {
 
     useEffect(() => {
         let isCompleted = false;
-        axios.get("https://dev.zezeserver.shop/app/resumes",{
+        axios.get(`https://dev.zezeserver.shop/app/userResumes/${userId}`,{
             headers: {
                 'x-access-token': token,
             }

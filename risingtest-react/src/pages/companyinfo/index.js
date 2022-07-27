@@ -10,13 +10,14 @@ const CompanyInfoPage = () => {
 
             <Content />
 
-            <Footer />
+            {/* <Footer /> */}
         </Wrap>
     )
 }
 
 const Wrap = styled.div`
     padding-top: 50px;
+    overflow-x: hidden;
 `;
 
 export default CompanyInfoPage;

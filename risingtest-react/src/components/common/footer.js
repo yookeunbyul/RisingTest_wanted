@@ -42,7 +42,7 @@ const Footer = () => {
 }
 
 const Wrap = styled.div`
-    width: 98.9vw;
+    width: 100vw;
     border: 1px solid #ececec;
     padding: 18px 0px 65px 0px;
 `;

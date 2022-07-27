@@ -33,8 +33,8 @@ const RootRoute = () => {
                         <Route path="/resume" element={<ResumePage />}></Route>
                         <Route path="/resume/write" element={<WritePage />}></Route>
                         <Route path="/joblist" element={<JobListPage />}></Route>
-                        <Route path="/jobinfo" element={<JobInfoPage />}></Route>
-                        <Route path="/companyinfo" element={<CompanyInfoPage />}></Route>
+                        <Route path="/jobinfo/:employmentId" element={<JobInfoPage />}></Route>
+                        <Route path="/companyinfo/:companyId" element={<CompanyInfoPage />}></Route>
                         <Route path="/profile" element={<ProfilePage />}></Route>
                     </Route>
                         
