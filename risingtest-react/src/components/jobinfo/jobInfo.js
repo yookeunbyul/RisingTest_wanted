@@ -37,7 +37,7 @@ const JobInfo = () => {
 
 
     useEffect(() => {
-        axios.get(`https://dev.zezeserver.shop/app/employments/${employmentId}`,{
+        axios.get(`https://prod.zezeserver.shop/app/employments/${employmentId}`,{
             headers: {
                 'x-access-token': token,
             }
@@ -76,7 +76,7 @@ const JobInfo = () => {
     }
 
     const onFollow = () => {
-        axios.post("https://dev.zezeserver.shop/app/users/follow",{
+        axios.post("https://prod.zezeserver.shop/app/users/follow",{
             userId: `${userId}`,
             companyId: `${companyId}`,
         },
@@ -88,7 +88,7 @@ const JobInfo = () => {
         .then(res => {
             console.log("팔로우 되었씁니다.");
             console.log(res);
-            axios.get(`https://dev.zezeserver.shop/app/employments/${employmentId}`,{
+            axios.get(`https://prod.zezeserver.shop/app/employments/${employmentId}`,{
             headers: {
                 'x-access-token': token,
             }
@@ -102,7 +102,7 @@ const JobInfo = () => {
     }
 
     const onUnFollow = () => {
-        axios.patch(`https://dev.zezeserver.shop/app/users/${userId}/companies/${companyId}/follow/status`,{
+        axios.patch(`https://prod.zezeserver.shop/app/users/${userId}/companies/${companyId}/follow/status`,{
         },
         {
             headers: {
@@ -112,7 +112,7 @@ const JobInfo = () => {
         .then(res => {
             console.log("언팔로우 했습니다.");
             console.log(res);
-            axios.get(`https://dev.zezeserver.shop/app/employments/${employmentId}`,{
+            axios.get(`https://prod.zezeserver.shop/app/employments/${employmentId}`,{
                 headers: {
                     'x-access-token': token,
                 }

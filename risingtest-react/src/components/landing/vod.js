@@ -19,7 +19,7 @@ const Vod = () => {
 
     useEffect(() => {
         if(token){
-            axios.get("https://dev.zezeserver.shop/app/posts",{
+            axios.get("https://prod.zezeserver.shop/app/posts",{
             headers: {
                 'x-access-token': token,
             }
@@ -30,7 +30,7 @@ const Vod = () => {
             })
             .catch(err => console.log(err))
         } else {
-            axios.get("https://dev.zezeserver.shop/app/posts",{
+            axios.get("https://prod.zezeserver.shop/app/posts",{
             })
             .then(res => {
                 console.log(res);

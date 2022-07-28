@@ -20,7 +20,7 @@ const Content = () => {
     const token = localStorage.getItem("jwt");
 
     useEffect(() => {
-        axios.get(`https://dev.zezeserver.shop/app/companies/${companyId}`,{
+        axios.get(`https://prod.zezeserver.shop/app/companies/${companyId}`,{
             headers: {
                 'x-access-token': token,
             }

@@ -73,7 +73,7 @@ const FirstBoard = () => {
                 career: Annual,
                 skills : skillIdList,
         }));
-        axios.post("https://dev.zezeserver.shop/app/job",{
+        axios.post("https://prod.zezeserver.shop/app/job",{
             userId : `${userId}`,
             JobGroupId : `${JobGroudID}`,
             JobId: `${JobID}`,
@@ -85,7 +85,7 @@ const FirstBoard = () => {
         })
         .catch(err => console.log(err))
 
-        axios.post("https://dev.zezeserver.shop/app/login",{
+        axios.post("https://prod.zezeserver.shop/app/login",{
             email: `${email}`,
             password: `${password}`,
         })
@@ -103,7 +103,7 @@ const FirstBoard = () => {
         console.log(e.target.value);
 
         if(e.target.value === "1"){
-            axios.get("https://dev.zezeserver.shop/app/jobgroup/1/jobcategories",{
+            axios.get("https://prod.zezeserver.shop/app/jobgroup/1/jobcategories",{
             })
             .then(res => {
                 console.log(res);
@@ -124,14 +124,14 @@ const FirstBoard = () => {
 
     const onAnnuChange = (e) => {
         setAnnuSelect(true);
-        setCarrer(e.target.value.skills);
+        setCarrer(e.target.value);
     }
 
     const onSkillChange = (e) => {
         setSkill(e.target.value);
         console.log(skill);
         setChange(true);
-        axios.get(`https://dev.zezeserver.shop/app/skills/${skill}`,{
+        axios.get(`https://prod.zezeserver.shop/app/skills/${skill}`,{
             })
             .then(res => {
                 console.log(res);

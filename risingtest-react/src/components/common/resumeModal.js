@@ -19,7 +19,7 @@ const ResumeModal = ({header, children}) => {
 
     const onDelete = () => {
         let isCompleted = false;
-        axios.patch(`https://dev.zezeserver.shop/app/resumes/${resumeId}/deleted`,{
+        axios.patch(`https://prod.zezeserver.shop/app/resumes/${resumeId}/deleted`,{
         },{
             headers: {
                 'x-access-token': token,

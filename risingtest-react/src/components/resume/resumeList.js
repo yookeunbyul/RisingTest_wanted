@@ -34,7 +34,7 @@ const ResumeList = () => {
     });
 
     useEffect(() => {
-        axios.get(`https://dev.zezeserver.shop/app/userResumes/${userId}`,{
+        axios.get(`https://prod.zezeserver.shop/app/userResumes/${userId}`,{
             headers: {
                 'x-access-token': token,
             }
@@ -55,7 +55,7 @@ const ResumeList = () => {
 
     const onWriteClick = () => {
         // navigate(`/resume/write`);
-        axios.post(`https://dev.zezeserver.shop/app/resumes/${userId}`,{
+        axios.post(`https://prod.zezeserver.shop/app/resumes/${userId}`,{
         },
         {
             headers: {
@@ -98,7 +98,7 @@ const ResumeList = () => {
         setNameClick(true);
         setNameId(clickid);
 
-        axios.get(`https://dev.zezeserver.shop/app/resumes/${clickid}/title`,{
+        axios.get(`https://prod.zezeserver.shop/app/resumes/${clickid}/title`,{
             headers: {
                 'x-access-token': token,
             }
@@ -116,7 +116,7 @@ const ResumeList = () => {
 
     const onKeyPress = (e) => {
         if(e.key === 'Enter'){
-            axios.patch(`https://dev.zezeserver.shop/app/resumes/${nameId}/title`,{
+            axios.patch(`https://prod.zezeserver.shop/app/resumes/${nameId}/title`,{
                 userId: `${userId}`,
                 resumeName: `${getName}`,
             },

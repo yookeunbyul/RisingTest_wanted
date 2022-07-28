@@ -8,7 +8,7 @@ const Head = () => {
     const [CompanyDetails, setCompanyDetails] = useState("");
 
     useEffect(() => {
-        axios.get(`https://dev.zezeserver.shop/app/companies/${companyId}`,{
+        axios.get(`https://prod.zezeserver.shop/app/companies/${companyId}`,{
             })
             .then(res => {
                 console.log(res);

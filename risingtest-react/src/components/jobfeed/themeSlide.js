@@ -17,7 +17,7 @@ const ThemeSlide = () => {
     };
 
     useEffect(() => {
-        axios.get("https://dev.zezeserver.shop/app/employment/mainpage",{
+        axios.get("https://prod.zezeserver.shop/app/employment/mainpage",{
             })
             .then(res => {
                 // console.log(res);

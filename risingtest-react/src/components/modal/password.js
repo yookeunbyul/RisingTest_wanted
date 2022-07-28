@@ -20,7 +20,7 @@ const Password = () => {
     };
 
     const onSubmit = (data) => {
-        axios.post("https://dev.zezeserver.shop/app/login",{
+        axios.post("https://prod.zezeserver.shop/app/login",{
             email: `${email}`,
             password: `${password}`,
         })

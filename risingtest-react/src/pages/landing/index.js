@@ -27,7 +27,7 @@ const LandingPage = () => {
 
     useEffect(() => {
         if(token){
-            axios.get("https://dev.zezeserver.shop/app/posts",{
+            axios.get("https://prod.zezeserver.shop/app/posts",{
             headers: {
                 'x-access-token': token,
             }
@@ -40,7 +40,7 @@ const LandingPage = () => {
             })
             .catch(err => console.log(err))
         } else {
-            axios.get("https://dev.zezeserver.shop/app/posts",{
+            axios.get("https://prod.zezeserver.shop/app/posts",{
             })
             .then(res => {
                 console.log("포스트 전체 불러오기");
@@ -56,7 +56,7 @@ const LandingPage = () => {
     const onClick = (id) => {
         console.log(id);
         setTagId(id);
-        axios.get(`https://dev.zezeserver.shop/app/posts/insitePostTags?tagId=${id}`,{
+        axios.get(`https://prod.zezeserver.shop/app/posts/insitePostTags?tagId=${id}`,{
             params: {
                 tagId: id,
             }

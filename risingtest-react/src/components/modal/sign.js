@@ -44,7 +44,7 @@ const Sign = () => {
     const onSubmit = (data) => {
         // alert(JSON.stringify(data));
 
-        axios.post("https://dev.zezeserver.shop/app/users",{
+        axios.post("https://prod.zezeserver.shop/app/users",{
             name : `${name}`,
             phoneNumber: `${phone}`,
             email: `${email}`,

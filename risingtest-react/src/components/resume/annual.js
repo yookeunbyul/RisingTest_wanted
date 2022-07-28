@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const Annual = () => {
     useEffect(() => {
-        axios.get("https://dev.zezeserver.shop/app/companies",{
+        axios.get("https://prod.zezeserver.shop/app/companies",{
             })
             .then(res => {
                 console.log(res);

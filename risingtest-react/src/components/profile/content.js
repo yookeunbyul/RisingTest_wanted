@@ -11,7 +11,7 @@ const Content = () => {
     const [selfIntro, setSelfIntro] = useState("");
 
     useEffect(() => {
-        axios.get(`https://dev.zezeserver.shop/app/users/${userId}`,{
+        axios.get(`https://prod.zezeserver.shop/app/users/${userId}`,{
             headers: {
                 'x-access-token': token,
             }
@@ -22,12 +22,13 @@ const Content = () => {
             })
             .catch(err => console.log(err))
         
-        axios.get(`https://dev.zezeserver.shop/app/users/${userId}/profile`,{
+        axios.get(`https://prod.zezeserver.shop/app/users/${userId}/profile`,{
             headers: {
                 'x-access-token': token,
             }
             })
             .then(res => {
+                console.log("프로필 조회");
                 console.log(res);
                 setSelfIntro(res.data.self_introduction);
             })

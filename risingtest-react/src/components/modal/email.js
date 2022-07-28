@@ -27,7 +27,7 @@ const Email = () => {
     const onSubmit = (data) => {
         window.localStorage.setItem("email", email);
 
-        axios.get(`https://dev.zezeserver.shop/app/users/is-member/${email}`,{
+        axios.get(`https://prod.zezeserver.shop/app/users/is-member/${email}`,{
             })
             .then(res => {
                 console.log(res);

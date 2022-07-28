@@ -59,7 +59,7 @@ const Filter = () => {
 
 
     useEffect(() => {
-        axios.get(`https://dev.zezeserver.shop/app/employments`,{
+        axios.get(`https://prod.zezeserver.shop/app/employments`,{
                 params: {
                     jobGroupId : `${jobCateId}`,
                     jobId: `${JobId}`,
@@ -81,7 +81,7 @@ const Filter = () => {
     }, [jobCateId, JobId])
 
     useEffect(() => {
-        axios.get(`https://dev.zezeserver.shop/app/resumes/popularSkills`,{
+        axios.get(`https://prod.zezeserver.shop/app/resumes/popularSkills`,{
             headers: {
                 'x-access-token': token,
             }
@@ -115,7 +115,7 @@ const Filter = () => {
 
     const onCateClick = () => {
         setShowCate(!showCate);
-        axios.get(`https://dev.zezeserver.shop/app/jobgroups`,{
+        axios.get(`https://prod.zezeserver.shop/app/jobgroups`,{
             })
             .then(res => {
                 console.log(res);
@@ -143,7 +143,7 @@ const Filter = () => {
 
     const onGroupClick = () => {
         setShowGroup(!showGroup);
-        axios.get(`https://dev.zezeserver.shop/app/jobgroup/1/jobcategories`,{
+        axios.get(`https://prod.zezeserver.shop/app/jobgroup/1/jobcategories`,{
             })
             .then(res => {
                 // console.log(res);
@@ -174,7 +174,7 @@ const Filter = () => {
 
     return(
         <>
-            {/* {scrollPosition > 250 ? <ScrollFilter /> : null} */}
+            {scrollPosition > 250 ? <ScrollFilter /> : null}
 
             <Wrap>
                 <div className="box">
