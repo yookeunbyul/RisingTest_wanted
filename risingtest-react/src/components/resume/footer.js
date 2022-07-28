@@ -25,7 +25,7 @@ const Footer = () => {
                 </div>
                 <div className="section right">
                     <button className="ing">임시 저장</button>
-                    <button className="done">저장 완료</button>
+                    <button className="done">작성 완료</button>
                 </div>
             </div>
         </Wrap>

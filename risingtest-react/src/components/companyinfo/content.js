@@ -3,9 +3,14 @@ import { ReactComponent as Bookmark } from '../../svg/ic-position-bookmark.svg';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { UpdateNameAction } from "../../store/actions/tagName";
 
 const Content = () => {
     const { companyId } = useParams();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [Employments, setEmployments] = useState("");
     const [companyImgs, setCompanyImgs] = useState("");
@@ -30,6 +35,15 @@ const Content = () => {
             })
             .catch(err => console.log(err))
     }, [companyId])
+
+    const onTagClick = (id, name) => {
+        navigate(`/tagsearch/${id}`);
+        dispatch(
+            UpdateNameAction({
+                tagName : name,
+            })
+        );
+    }
 
     return(
         <Wrap>
@@ -127,7 +141,7 @@ const Content = () => {
                             companyTags.map((tag) => {
                                 return(
                                     <>
-                                        <div className="tag" key={tag.tagId}>#{tag.name}</div>
+                                        <div className="tag" key={tag.tagId} onClick={() => onTagClick(tag.tagId, tag.name)}>#{tag.name}</div>
                                     </>
                                 )
                             })
@@ -386,6 +400,8 @@ const Wrap = styled.div`
         border-radius: 20px;
         margin-right: 6px;
         margin-bottom: 10px;
+
+        cursor: pointer;
     }
 
     .plus{

@@ -11,6 +11,7 @@ import JobListPage from "../pages/joblist";
 import JobInfoPage from "../pages/jobinfo";
 import CompanyInfoPage from "../pages/companyinfo";
 import ProfilePage from "../pages/profile";
+import TagSearchPage from "../pages/tagsearch";
 import FirstBoard from "../pages/onboarding/firstboard";
 import SecondBoard from "../pages/onboarding/secondboard";
 import ThridBoard from "../pages/onboarding/thirdboard";
@@ -38,6 +39,7 @@ const RootRoute = () => {
                         <Route path="/jobinfo/:employmentId" element={<JobInfoPage />}></Route>
                         <Route path="/companyinfo/:companyId" element={<CompanyInfoPage />}></Route>
                         <Route path="/profile" element={<ProfilePage />}></Route>
+                        <Route path="/tagsearch/:companyTagId" element={<TagSearchPage />}></Route>
                     </Route>
                         
                     <Route path="/first" element={<FirstBoard />}></Route>
