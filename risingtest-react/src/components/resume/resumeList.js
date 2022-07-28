@@ -54,7 +54,7 @@ const ResumeList = () => {
     };
 
     const onWriteClick = () => {
-        navigate(`/resume/write`);
+        // navigate(`/resume/write`);
         axios.post(`https://dev.zezeserver.shop/app/resumes/${userId}`,{
         },
         {
@@ -64,6 +64,7 @@ const ResumeList = () => {
         })
         .then(res => {
             console.log(res.data.result.resumeId);
+            navigate(`/resume/write/${res.data.result.resumeId}`);
             dispatch(
                 UpdateIDAction({
                     resumeId : res.data.result.resumeId,
@@ -132,6 +133,10 @@ const ResumeList = () => {
         }
     }
 
+    const OnResumeClick = (id) => {
+        navigate(`/resume/write/${id}`);
+    }
+
     return(
             <Wrap>
                     <div className="box">
@@ -159,7 +164,7 @@ const ResumeList = () => {
                             {resume ? (
                                 resume.map((item) => {
                                     return(
-                                        <div className="resume item" key={item.resumeId}>
+                                        <div className="resume item" key={item.resumeId} onClick={() => OnResumeClick(item.resumeId)}>
                                             {nameClick && item.resumeId === nameId ? (
                                                 <>
                                                     <div className="name"><input className="name-input" value={getName} onChange={onResumeNameChange} onKeyPress={onKeyPress}/></div>

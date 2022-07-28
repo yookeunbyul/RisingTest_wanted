@@ -2,17 +2,20 @@ import styled from 'styled-components';
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const ResumeHead = () => {
     const { resumeId } = useSelector((state) => state.ResumeIdReducer);
     const token = localStorage.getItem("jwt");
+    const { resumeID } = useParams();
+
     const [titleValue, setTitleValue] = useState("");
     const [NameValue, setNameValue] = useState("");
     const [EmailValue, setEmailValue] = useState("");
     const [PhoneValue, setPhoneValue] = useState("");
 
     useEffect(() => {
-        axios.get(`https://dev.zezeserver.shop/app/resumes/${resumeId}`,{
+        axios.get(`https://dev.zezeserver.shop/app/resumes/${resumeID}`,{
             headers: {
                 'x-access-token': token,
             }
@@ -25,7 +28,7 @@ const ResumeHead = () => {
             setPhoneValue(res.data.result.resumInfo.map(i=>i.userTel));
             })
             .catch(err => console.log(err))
-    }, [resumeId])
+    }, [resumeID])
 
     const onTitleChange = (e) => {
         setTitleValue(e.target.value);
