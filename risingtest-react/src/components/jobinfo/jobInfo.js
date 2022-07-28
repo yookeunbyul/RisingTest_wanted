@@ -15,6 +15,7 @@ const JobInfo = () => {
     const navigate = useNavigate();
     const { employmentId } = useParams();
     const { username } = useSelector((state) => state.UserReducer);
+    const { userId } = useSelector((state) => state.JobGroupReducer);
 
     const [imgUrl, setImgUrl] = useState("");
     const [jobName, setJobName] = useState("");
@@ -28,10 +29,18 @@ const JobInfo = () => {
     const [text, setText] = useState("");
     const [companyId, setCompanyId] = useState("");
     const [random, setRandom] = useState("");
+    const [isFollow, setIsFollow] = useState("");
+
+    
     const str = text.split('\n');
+    const token = localStorage.getItem("jwt");
+
 
     useEffect(() => {
         axios.get(`https://dev.zezeserver.shop/app/employments/${employmentId}`,{
+            headers: {
+                'x-access-token': token,
+            }
             })
             .then(res => {
                 console.log(res);
@@ -49,6 +58,7 @@ const JobInfo = () => {
                 }
                 setCompanyId(res.data.result.employmentDetails.companyId);
                 setRandom(res.data.result.randomEmployments);
+                setIsFollow(res.data.result.companyData.IsFollow);
             })
             .catch(err => console.log(err))
     }, [employmentId])
@@ -64,6 +74,58 @@ const JobInfo = () => {
     const onClick = () =>{
         navigate(`/companyinfo/${companyId}`);
     }
+
+    const onFollow = () => {
+        axios.post("https://dev.zezeserver.shop/app/users/follow",{
+            userId: `${userId}`,
+            companyId: `${companyId}`,
+        },
+        {
+            headers: {
+                'x-access-token': token,
+            }
+        })
+        .then(res => {
+            console.log("팔로우 되었씁니다.");
+            console.log(res);
+            axios.get(`https://dev.zezeserver.shop/app/employments/${employmentId}`,{
+            headers: {
+                'x-access-token': token,
+            }
+            })
+            .then(res => {
+                setIsFollow(res.data.result.companyData.IsFollow);
+            })
+            .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
+    }
+
+    const onUnFollow = () => {
+        axios.patch(`https://dev.zezeserver.shop/app/users/${userId}/companies/${companyId}/follow/status`,{
+        },
+        {
+            headers: {
+                'x-access-token': token,
+            }
+        })
+        .then(res => {
+            console.log("언팔로우 했습니다.");
+            console.log(res);
+            axios.get(`https://dev.zezeserver.shop/app/employments/${employmentId}`,{
+                headers: {
+                    'x-access-token': token,
+                }
+                })
+                .then(res => {
+                    setIsFollow(res.data.result.companyData.IsFollow);
+                })
+                .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
+    }
+
+    console.log(isFollow);
 
     return(
         <>
@@ -154,7 +216,15 @@ const JobInfo = () => {
                                     </div>
                                 </div>
                                 <div className="company-box right">
-                                    <button>팔로우</button>
+                                    {isFollow ? (
+                                        <>
+                                            <FollowBtn onClick={onUnFollow} className="followed-btn">팔로잉</FollowBtn>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FollowBtn onClick={onFollow}>팔로우</FollowBtn>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                             <div className="warning">
@@ -260,6 +330,18 @@ const JobInfo = () => {
     )
 }
 
+const FollowBtn = styled.button`
+    background-color: #fff;
+    border: 1px solid #e1e2e3;
+    height: 40px;
+    font-size: 15px;
+    color: #36f;
+    border-radius: 25px;
+    padding: 0 27px;
+    font-weight: 600;
+    cursor: pointer;
+`;
+
 const StyledSlide = styled(Slider)`
     .slick-list{
         width: 700px;
@@ -314,6 +396,13 @@ const Wrap = styled.div`
     margin: 0 auto;
 
     padding-top: 20px;
+
+    .followed-btn{
+        background-color: #f2f4f7!important;
+        color: #ccc!important;
+        border: 0;
+        font-weight: 600;
+    }
 
     .box{
         display:flex;
@@ -530,14 +619,7 @@ const Wrap = styled.div`
     }
 
     .company-box.right > button {
-        border: 1px solid #e1e2e3;
-        height: 40px;
-        font-size: 15px;
-        color: #36f;
-        background-color: #fff;
-        border-radius: 25px;
-        padding: 0 27px;
-        font-weight: 600;
+
     }
 
     .company-name{

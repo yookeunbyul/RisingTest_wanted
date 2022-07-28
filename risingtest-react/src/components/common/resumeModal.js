@@ -1,6 +1,7 @@
 import {useSelector, useDispatch} from "react-redux";
 import { closeDeMoAction } from "../../store/actions/resumeModal";
 import styled from 'styled-components';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
 
 const ResumeModal = ({header, children}) => {
@@ -10,7 +11,7 @@ const ResumeModal = ({header, children}) => {
     const { resumeId } = useSelector((state) => state.ResumeModalReducer);
     const dispatch = useDispatch();
     const token = localStorage.getItem("jwt");
-
+    const navigate = useNavigate();
 
     const closeMoRedux = () => {
         dispatch(closeDeMoAction());
@@ -18,7 +19,7 @@ const ResumeModal = ({header, children}) => {
 
     const onDelete = () => {
         let isCompleted = false;
-        axios.patch(`https://zezeserver.shop/app/resumes/${resumeId}/deleted`,{
+        axios.patch(`https://dev.zezeserver.shop/app/resumes/${resumeId}/deleted`,{
         },{
             headers: {
                 'x-access-token': token,
@@ -28,7 +29,7 @@ const ResumeModal = ({header, children}) => {
             if(!isCompleted){
                 console.log(res);
                 closeMoRedux();
-                window.location.replace(`/resume`);
+                navigate(`/resume`);
             }
         })
         .catch(err => console.log(err))

@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {closePWMoAction} from "../../store/actions/passwordModal";
+import { closePWMoAction } from "../../store/actions/passwordModal";
 import { ReactComponent as Close } from '../../svg/ic-close.svg';
 import styled from 'styled-components';
 

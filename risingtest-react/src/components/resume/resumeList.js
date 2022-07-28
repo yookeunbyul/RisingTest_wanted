@@ -13,6 +13,7 @@ const ResumeList = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem("jwt");
     const { userId } = useSelector((state) => state.JobGroupReducer);
+    const { isDeMoOpen } = useSelector((state) => state.ResumeModalReducer);
 
     // const [open, setOpen] = useState(false);
     const [id, setId] = useState("");
@@ -20,6 +21,8 @@ const ResumeList = () => {
     const [nameClick, setNameClick] = useState(false);
     const [nameId, setNameId] = useState("");
     const [getName, setGetName] = useState("");
+
+    console.log(isDeMoOpen);
 
     //Life Cycle 선언
     useEffect(() => {
@@ -31,26 +34,17 @@ const ResumeList = () => {
     });
 
     useEffect(() => {
-        let isCompleted = false;
         axios.get(`https://dev.zezeserver.shop/app/userResumes/${userId}`,{
             headers: {
                 'x-access-token': token,
             }
         })
         .then(res => {
-            if(!isCompleted){
-                console.log(res);
-                setResume(res.data.result);
-            }
-            
+            console.log(res);
+            setResume(res.data.result);
         })
         .catch(err => console.log(err))
-
-        return() => {
-            console.log("done");
-            isCompleted = true;
-        };
-    }, [nameClick])
+    }, [nameClick,isDeMoOpen])
 
     //함수 선언
     const clickOutside = event => {
@@ -61,7 +55,7 @@ const ResumeList = () => {
 
     const onWriteClick = () => {
         navigate(`/resume/write`);
-        axios.post("https://dev.zezeserver.shop/app/resumes",{
+        axios.post(`https://dev.zezeserver.shop/app/resumes/${userId}`,{
         },
         {
             headers: {

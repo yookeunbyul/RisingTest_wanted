@@ -12,9 +12,13 @@ const Content = () => {
     const [companyTags, setCompanyTags] = useState("");
     const [news, setNews] = useState("");
     const [CompanyDetails, setCompanyDetails] = useState("");
+    const token = localStorage.getItem("jwt");
 
     useEffect(() => {
         axios.get(`https://dev.zezeserver.shop/app/companies/${companyId}`,{
+            headers: {
+                'x-access-token': token,
+            }
             })
             .then(res => {
                 console.log(res);

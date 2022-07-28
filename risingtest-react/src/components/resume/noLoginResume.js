@@ -4,10 +4,11 @@ import Sample from "./sample";
 import Content from "./content";
 import AiPosition from "./aiposition";
 import Footer from "../../components/common/footer";
+import styled from 'styled-components';
 
 const NoLoginResume = () => {
     return(
-        <>
+        <Wrap>
             {/* 로그인안했어요 */}
             <Head />
 
@@ -24,8 +25,12 @@ const NoLoginResume = () => {
             <AiPosition />
 
             <Footer />
-        </>
+        </Wrap>
     );
 }
+
+const Wrap = styled.div`
+    overflow-x: hidden;
+`;
 
 export default NoLoginResume;

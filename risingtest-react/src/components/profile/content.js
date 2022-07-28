@@ -8,6 +8,7 @@ const Content = () => {
     const token = localStorage.getItem("jwt");
 
     const [userData, setUserData] = useState([]);
+    const [selfIntro, setSelfIntro] = useState("");
 
     useEffect(() => {
         axios.get(`https://dev.zezeserver.shop/app/users/${userId}`,{
@@ -20,7 +21,20 @@ const Content = () => {
                 setUserData(res.data);
             })
             .catch(err => console.log(err))
+        
+        axios.get(`https://dev.zezeserver.shop/app/users/${userId}/profile`,{
+            headers: {
+                'x-access-token': token,
+            }
+            })
+            .then(res => {
+                console.log(res);
+                setSelfIntro(res.data.self_introduction);
+            })
+            .catch(err => console.log(err))
     }, [])
+
+    console.log(selfIntro);
 
     return(
         <>
@@ -258,7 +272,7 @@ const Content = () => {
                                 <div className="intro-form">
                                     <div className="intro-form-head">간단 소개글</div>
                                     <div className="intro-form-sub">직무 내용, 경험, 목표 등을 추가해서 더욱 멋진 소개글을 작성해보세요.</div>
-                                    <textarea>안녕하세요. 신입 웹 개발자입니다.</textarea>
+                                    <textarea value={selfIntro}></textarea>
                                 </div>
                             </div>
                         </div>
