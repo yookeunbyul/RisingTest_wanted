@@ -107,7 +107,7 @@ const FirstBoard = () => {
             })
             .then(res => {
                 console.log(res);
-                setJobCate(res.data.result);
+                setJobCate(res.data.result.jobCategoryRows);
             })
             .catch(err => console.log(err))
         }
@@ -124,7 +124,7 @@ const FirstBoard = () => {
 
     const onAnnuChange = (e) => {
         setAnnuSelect(true);
-        setCarrer(e.target.value);
+        setCarrer(e.target.value.skills);
     }
 
     const onSkillChange = (e) => {

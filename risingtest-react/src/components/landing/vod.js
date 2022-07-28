@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 
 const Vod = () => {
     const [vodList, setVodList] = useState("");
+    const token = localStorage.getItem("jwt");
 
     const settings = {
         dots: false,
@@ -17,13 +18,27 @@ const Vod = () => {
     };
 
     useEffect(() => {
-        axios.get("https://dev.zezeserver.shop/app/posts",{
+        if(token){
+            axios.get("https://dev.zezeserver.shop/app/posts",{
+            headers: {
+                'x-access-token': token,
+            }
             })
             .then(res => {
                 console.log(res);
                 setVodList(res.data.vodPosts);
             })
             .catch(err => console.log(err))
+        } else {
+            axios.get("https://dev.zezeserver.shop/app/posts",{
+            })
+            .then(res => {
+                console.log(res);
+                setVodList(res.data.vodPosts);
+            })
+            .catch(err => console.log(err))
+        }
+        
     }, [])
 
     return(

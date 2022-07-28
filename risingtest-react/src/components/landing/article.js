@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 
 const Article = () => {
     const [articleList, setArticleList] = useState("");
+    const token = localStorage.getItem("jwt");
 
     const settings = {
         dots: false,
@@ -17,13 +18,29 @@ const Article = () => {
     };
 
     useEffect(() => {
-        axios.get("https://dev.zezeserver.shop/app/posts",{
+        if(token){
+            axios.get("https://dev.zezeserver.shop/app/posts",{
+            headers: {
+                'x-access-token': token,
+            }
             })
             .then(res => {
                 console.log(res);
+                console.log("아티클 입니다.");
                 setArticleList(res.data.articlePosts);
             })
             .catch(err => console.log(err))
+        } else {
+            axios.get("https://dev.zezeserver.shop/app/posts",{
+                })
+                .then(res => {
+                    console.log(res);
+                    console.log("아티클 입니다.");
+                    setArticleList(res.data.articlePosts);
+                })
+                .catch(err => console.log(err))
+        }
+        
     }, [])
 
     return(

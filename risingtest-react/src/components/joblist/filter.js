@@ -147,7 +147,7 @@ const Filter = () => {
             })
             .then(res => {
                 // console.log(res);
-                setJobGroupList(res.data.result);
+                setJobGroupList(res.data.result.jobCategoryRows);
             })
             .catch(err => console.log(err))
     }

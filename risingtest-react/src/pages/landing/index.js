@@ -18,19 +18,57 @@ import Slider from "react-slick";
 
 
 const LandingPage = () => {
+    const token = localStorage.getItem("jwt");
+
     const [slide, setSlide] = useState("");
     const [insiteTag, setInsiteTag] = useState("");
+    const [insiteList, setInsiteList] = useState([]);
+    const [tagId, setTagId] = useState("");
 
     useEffect(() => {
-        axios.get("https://dev.zezeserver.shop/app/posts",{
+        if(token){
+            axios.get("https://dev.zezeserver.shop/app/posts",{
+            headers: {
+                'x-access-token': token,
+            }
             })
             .then(res => {
+                console.log("포스트 전체 불러오기");
                 console.log(res);
                 setSlide(res.data.carousels);
                 setInsiteTag(res.data.insitePostTags);
             })
             .catch(err => console.log(err))
+        } else {
+            axios.get("https://dev.zezeserver.shop/app/posts",{
+            })
+            .then(res => {
+                console.log("포스트 전체 불러오기");
+                console.log(res);
+                setSlide(res.data.carousels);
+                setInsiteTag(res.data.insitePostTags);
+            })
+            .catch(err => console.log(err))
+        }
+        
     }, [])
+
+    const onClick = (id) => {
+        console.log(id);
+        setTagId(id);
+        axios.get(`https://dev.zezeserver.shop/app/posts/insitePostTags?tagId=${id}`,{
+            params: {
+                tagId: id,
+            }
+        })
+            .then(res => {
+                console.log(res);
+                setInsiteList(res.data.result);
+            })
+            .catch(err => console.log(err))
+    }
+
+    // console.log(insiteList);
 
     //옵션
     const settings = {
@@ -78,12 +116,12 @@ const LandingPage = () => {
             </Container>
 
             {/* 인사이트 */}
-            <Insites>
+            <Insites InsitesList={insiteList} tagId={tagId}>
                 {insiteTag ? (
                     insiteTag.map((menu) => {
                         return(
                             <Wrap key={menu.tagId}>
-                                <Menu>{menu.name}</Menu>
+                                <Menu onClick={() => onClick(menu.tagId)} isClick={menu.tagId === tagId}>{menu.name}</Menu>
                             </Wrap>
                         )
                     })
@@ -278,13 +316,16 @@ const StyledSlide = styled(Slider)`
 
 const Menu = styled.button`
     height: 50px;
-    border: 1px none;
-    background-color: #f2f4f7;
+    border: ${props=>props.isClick ? "1px solid #36f" : "1px none"};
+    background-color: ${props=>props.isClick ? "#fff" : "#f2f4f7"};
     border-radius: 5px;
     font-size: 13px;
     padding: 0px 20px;
     width: 100%;
     letter-spacing: -1px;
+    cursor: pointer;
+    color: ${props=>props.isClick ? "#36f" : "#333"};
+    font-weight: ${props=>props.isClick ? "700" : "none"};
 
     &:hover{
         font-weight: 700;

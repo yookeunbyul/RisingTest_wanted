@@ -7,7 +7,6 @@ import JobInfoReducer from "./jobinfo";
 import ResumeIdReducer from "./resumeId";
 import ResumeModalReducer from "./resumeModal";
 import PasswordModalReducer from "./passwordModal";
-import FollowReducer from "./follow";
 
 
 const RootReducer = combineReducers({
@@ -19,7 +18,6 @@ const RootReducer = combineReducers({
     ResumeIdReducer,
     ResumeModalReducer,
     PasswordModalReducer,
-    FollowReducer
 })
 
 export default RootReducer;

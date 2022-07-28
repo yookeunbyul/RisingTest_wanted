@@ -25,7 +25,7 @@ const Head = () => {
         axios.get("https://dev.zezeserver.shop/app/jobgroups",{
             })
             .then(res => {
-                // console.log(res);
+                console.log(res);
                 setCategory(res.data.result);
             })
             .catch(err => console.log(err))
@@ -86,7 +86,7 @@ const Head = () => {
             })
             .then(res => {
                 console.log(res);
-                setJobGroup(res.data.result);
+                setJobGroup(res.data.result.jobCategoryRows);
             })
             .catch(err => console.log(err))
     }

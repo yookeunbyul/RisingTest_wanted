@@ -7,8 +7,12 @@ import { ReactComponent as More } from '../../svg/ic-menu.svg';
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const Insites = ({children}) => {
+const Insites = ({children, InsitesList, tagId}) => {
     const [postList, setPostList] = useState("");
+    const token = localStorage.getItem("jwt");
+
+    console.log(InsitesList);
+    console.log(tagId);
 
     const settings = {
         dots: false,
@@ -19,13 +23,27 @@ const Insites = ({children}) => {
     };
 
     useEffect(() => {
-        axios.get("https://dev.zezeserver.shop/app/posts",{
+        if(token){
+            axios.get("https://dev.zezeserver.shop/app/posts",{
+            headers: {
+                'x-access-token': token,
+            }
             })
             .then(res => {
                 console.log(res);
                 setPostList(res.data.insitePosts);
             })
             .catch(err => console.log(err))
+        } else {
+            axios.get("https://dev.zezeserver.shop/app/posts",{
+            })
+            .then(res => {
+                console.log(res);
+                setPostList(res.data.insitePosts);
+            })
+            .catch(err => console.log(err))
+        }
+        
     }, [])
 
     return(
@@ -46,44 +64,89 @@ const Insites = ({children}) => {
                     </button>
                 </div>
                 <div className="post">
-                    {postList ? (
-                        postList.map((post) => {
-                            return(
-                                <div key={post.postName}>
-                                    <ImgWrap>
-                                        <Thumbnail src={post.postThumbnailUrl} />
-                                    </ImgWrap>
-                                    <Title>{post.postName}</Title>
-                                    <Sub>{post.postContent}</Sub>
-                                    <Writer>
-                                        <span>
-                                            <Logo src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Ft1.daumcdn.net%2Fbrunch%2Fstatic%2Ficon%2Fios%2Ficon120.png&w=60&q=90" />
-                                        </span>
-                                        <Name>{post.writer}</Name>
-                                    </Writer>
-                                </div>
-                            )
-                        })
-                    ) : null}
-                    {postList ? (
-                        postList.map((post) => {
-                            return(
-                                <div>
-                                    <ImgWrap>
-                                        <Thumbnail src={post.postThumbnailUrl} />
-                                    </ImgWrap>
-                                    <Title>{post.postName}</Title>
-                                    <Sub>{post.postContent}</Sub>
-                                    <Writer>
-                                        <span>
-                                            <Logo src="https://image.wanted.co.kr/optimize?src=https%3A%2F%2Ft1.daumcdn.net%2Fbrunch%2Fstatic%2Ficon%2Fios%2Ficon120.png&w=60&q=90" />
-                                        </span>
-                                        <Name>{post.writer}</Name>
-                                    </Writer>
-                                </div>
-                            )
-                        })
-                    ) : null}
+                    {tagId ? (
+                        <>
+                            {InsitesList ? (
+                                InsitesList.map((post) => {
+                                    return(
+                                        <div key={post.postName}>
+                                            <ImgWrap>
+                                                <Thumbnail src={post.postThumbnailUrl} />
+                                            </ImgWrap>
+                                            <Title>{post.postName}</Title>
+                                            <Sub>{post.postContent}</Sub>
+                                            <Writer>
+                                                <span>
+                                                    <Logo src={post.platformImgUrl} />
+                                                </span>
+                                                <Name>{post.writer}</Name>
+                                            </Writer>
+                                        </div>
+                                    )
+                                })
+                            ) : null}
+                            {InsitesList ? (
+                                InsitesList.map((post) => {
+                                    return(
+                                        <div key={post.postName}>
+                                            <ImgWrap>
+                                                <Thumbnail src={post.postThumbnailUrl} />
+                                            </ImgWrap>
+                                            <Title>{post.postName}</Title>
+                                            <Sub>{post.postContent}</Sub>
+                                            <Writer>
+                                                <span>
+                                                    <Logo src={post.platformImgUrl} />
+                                                </span>
+                                                <Name>{post.writer}</Name>
+                                            </Writer>
+                                        </div>
+                                    )
+                                })
+                            ) : null}
+                        </>
+                    ) : (
+                        <>
+                            {postList ? (
+                                postList.map((post) => {
+                                    return(
+                                        <div key={post.postName}>
+                                            <ImgWrap>
+                                                <Thumbnail src={post.postThumbnailUrl} />
+                                            </ImgWrap>
+                                            <Title>{post.postName}</Title>
+                                            <Sub>{post.postContent}</Sub>
+                                            <Writer>
+                                                <span>
+                                                    <Logo src={post.platformImgUrl} />
+                                                </span>
+                                                <Name>{post.writer}</Name>
+                                            </Writer>
+                                        </div>
+                                    )
+                                })
+                            ) : null}
+                            {postList ? (
+                                postList.map((post) => {
+                                    return(
+                                        <div key={post.postName}>
+                                            <ImgWrap>
+                                                <Thumbnail src={post.postThumbnailUrl} />
+                                            </ImgWrap>
+                                            <Title>{post.postName}</Title>
+                                            <Sub>{post.postContent}</Sub>
+                                            <Writer>
+                                                <span>
+                                                    <Logo src={post.platformImgUrl} />
+                                                </span>
+                                                <Name>{post.writer}</Name>
+                                            </Writer>
+                                        </div>
+                                    )
+                                })
+                            ) : null}
+                        </>
+                    )}
                 </div>
                 <div className="more-box">
                     <MoreContent>
