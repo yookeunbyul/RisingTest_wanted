@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 // store 생성
 import { createStore } from "redux";
 import RootReducer from './store/reducers';
+import "./font/pretendard.css";
 
 const store = createStore(RootReducer);
 

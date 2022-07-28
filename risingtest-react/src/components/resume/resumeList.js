@@ -165,7 +165,7 @@ const ResumeList = () => {
                                 resume.map((item) => {
                                     return(
                                         <div className="resume item" key={item.resumeId}>
-                                            <div onClick={() => OnResumeClick(item.resumeId)}>
+                                            <div>
                                             {nameClick && item.resumeId === nameId ? (
                                                 <>
                                                     <div className="name"><input className="name-input" value={getName} onChange={onResumeNameChange} onKeyPress={onKeyPress}/></div>
@@ -175,7 +175,7 @@ const ResumeList = () => {
                                                     <div className="name">{item.resumeName}</div>
                                                 </>
                                             )}
-                                            <div className="day">{item.updatedAt}</div>
+                                            <div className="day" onClick={() => OnResumeClick(item.resumeId)}>{item.updatedAt}</div>
                                             </div>
                                             <div className="under">
                                                 <div className="menu">
